@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { Container, Box } from '@mui/material';
 import HomePage from './pages/HomePage';
+import AnalysisResultsPage from './pages/AnalysisResultsPage';
 
 function App() {
   return (
@@ -8,8 +9,7 @@ function App() {
       <Container maxWidth="lg" sx={{ py: 4 }}>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          {/* Future routes */}
-          {/* <Route path="/analysis/:id" element={<AnalysisPage />} /> */}
+          <Route path="/results" element={<AnalysisResultsPage />} />
         </Routes>
       </Container>
     </Box>

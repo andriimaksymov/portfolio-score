@@ -1,40 +1,52 @@
-import { Typography, Paper, Box } from '@mui/material';
+import { Box } from '@mui/material';
+import PageHeader from '@/shared/components/PageHeader';
+import PortfolioInputForm from '@/features/portfolio/components/PortfolioInputForm';
 
 export default function HomePage() {
   return (
     <Box>
-      <Typography variant="h2" component="h1" gutterBottom>
-        Portfolio Analyzer
-      </Typography>
-      <Typography variant="h5" color="text.secondary" paragraph>
-        Analyze your developer portfolio and get actionable feedback
-      </Typography>
-      
-      <Paper sx={{ p: 4, mt: 4 }}>
-        <Typography variant="h6" gutterBottom>
-          Welcome! 🚀
-        </Typography>
-        <Typography variant="body1" paragraph>
-          This is the starting point for your Portfolio Analyzer application.
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          The project structure is ready. Next steps:
-        </Typography>
-        <Box component="ul" sx={{ mt: 2 }}>
-          <li>
-            <Typography variant="body2">Implement GitHub API integration</Typography>
-          </li>
-          <li>
-            <Typography variant="body2">Build portfolio input form</Typography>
-          </li>
-          <li>
-            <Typography variant="body2">Create analysis dashboard</Typography>
-          </li>
-          <li>
-            <Typography variant="body2">Develop scoring algorithm</Typography>
-          </li>
+      <PageHeader
+        title="Portfolio Analyzer"
+        subtitle="Get instant feedback on your developer portfolio with AI-powered insights"
+      />
+
+      <Box sx={{ maxWidth: 600, mx: 'auto' }}>
+        <PortfolioInputForm />
+      </Box>
+
+      {/* Features Section */}
+      <Box sx={{ mt: 6, textAlign: 'center' }}>
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: { xs: '1fr', md: 'repeat(3, 1fr)' },
+            gap: 3,
+            mt: 4,
+          }}
+        >
+          <Box>
+            <Box sx={{ fontSize: 40, mb: 1 }}>📊</Box>
+            <Box sx={{ fontWeight: 'medium', mb: 0.5 }}>Comprehensive Analysis</Box>
+            <Box sx={{ fontSize: 14, color: 'text.secondary' }}>
+              Get detailed scores across activity, quality, tech stack, and consistency
+            </Box>
+          </Box>
+          <Box>
+            <Box sx={{ fontSize: 40, mb: 1 }}>💡</Box>
+            <Box sx={{ fontWeight: 'medium', mb: 0.5 }}>Actionable Insights</Box>
+            <Box sx={{ fontSize: 14, color: 'text.secondary' }}>
+              Receive personalized recommendations to improve your portfolio
+            </Box>
+          </Box>
+          <Box>
+            <Box sx={{ fontSize: 40, mb: 1 }}>⚡</Box>
+            <Box sx={{ fontWeight: 'medium', mb: 0.5 }}>Instant Results</Box>
+            <Box sx={{ fontSize: 14, color: 'text.secondary' }}>
+              Analyze any GitHub profile in seconds with real-time data
+            </Box>
+          </Box>
         </Box>
-      </Paper>
+      </Box>
     </Box>
   );
 }
