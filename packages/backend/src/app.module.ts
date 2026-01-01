@@ -13,6 +13,7 @@ import { AiModule } from './modules/ai/ai.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: ['../.env', '.env'],
       load: [configuration],
     }),
     AnalysisModule,
