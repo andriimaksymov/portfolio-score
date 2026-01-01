@@ -2,19 +2,32 @@ import { Injectable } from '@nestjs/common';
 import { GithubService } from '../github/github.service';
 import { ScoringService } from '../scoring/scoring.service';
 
+import { AiService } from '../ai/ai.service';
+
+import { GithubData } from '../github/interfaces/github.interfaces';
+
 @Injectable()
 export class AnalysisService {
   constructor(
     private readonly githubService: GithubService,
     private readonly scoringService: ScoringService,
+    private readonly aiService: AiService,
   ) {}
 
   async analyzePortfolio(username: string) {
     // Fetch GitHub data
-    const githubData = await this.githubService.getUserData(username);
+    const githubData: GithubData =
+      await this.githubService.getUserData(username);
 
     // Calculate scores
     const scores = this.scoringService.calculateScore(githubData);
+
+    // AI Analysis (Optional, depends on API Key)
+    const aiAnalysis = await this.aiService.generateAiAnalysis(
+      githubData.profile,
+      githubData.repositories,
+      scores,
+    );
 
     // Generate recommendations
     const recommendations = this.generateRecommendations(scores, githubData);
@@ -28,6 +41,7 @@ export class AnalysisService {
         techStackDiversity: scores.techStackDiversity,
         consistency: scores.consistency,
       },
+      aiInsights: aiAnalysis,
       strengths: this.identifyStrengths(scores),
       weaknesses: this.identifyWeaknesses(scores),
       recommendations,
@@ -35,7 +49,10 @@ export class AnalysisService {
     };
   }
 
-  private generateRecommendations(scores: any, githubData: any): string[] {
+  private generateRecommendations(
+    scores: any,
+    githubData: GithubData,
+  ): string[] {
     const recommendations: string[] = [];
 
     if (scores.activity < 50) {

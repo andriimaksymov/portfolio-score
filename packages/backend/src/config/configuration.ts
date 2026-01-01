@@ -6,10 +6,10 @@ export default () => ({
     apiToken: process.env.GITHUB_API_TOKEN,
     apiBaseUrl: process.env.GITHUB_API_BASE_URL || 'https://api.github.com',
   },
+  openai: {
+    apiKey: process.env.OPENAI_API_KEY,
+  },
   // Future configurations
-  // openai: {
-  //   apiKey: process.env.OPENAI_API_KEY,
-  // },
   // database: {
   //   url: process.env.DATABASE_URL,
   // },

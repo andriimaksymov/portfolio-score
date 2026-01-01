@@ -7,6 +7,8 @@ import { AnalysisModule } from './modules/analysis/analysis.module';
 import { GithubModule } from './modules/github/github.module';
 import { ScoringModule } from './modules/scoring/scoring.module';
 
+import { AiModule } from './modules/ai/ai.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -16,6 +18,7 @@ import { ScoringModule } from './modules/scoring/scoring.module';
     AnalysisModule,
     GithubModule,
     ScoringModule,
+    AiModule,
   ],
   controllers: [AppController],
   providers: [AppService],

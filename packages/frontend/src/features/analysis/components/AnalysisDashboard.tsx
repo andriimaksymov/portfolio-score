@@ -3,6 +3,7 @@ import OverallScore from './OverallScore';
 import ScoreCard from './ScoreCard';
 import StrengthsWeaknesses from './StrengthsWeaknesses';
 import RecommendationsList from './RecommendationsList';
+import AiInsightsCard from './AiInsightsCard';
 import type { AnalysisResult } from '../types/analysis.types';
 
 interface AnalysisDashboardProps {
@@ -10,10 +11,13 @@ interface AnalysisDashboardProps {
 }
 
 export default function AnalysisDashboard({ analysis }: AnalysisDashboardProps) {
-  const { username, overallScore, scores, strengths, weaknesses, recommendations, analyzedAt } = analysis;
+  const { username, overallScore, scores, strengths, weaknesses, recommendations, analyzedAt, aiInsights } = analysis;
 
   return (
     <Box>
+      {/* AI Insights Section - Top Priority */}
+      {aiInsights && <AiInsightsCard insights={aiInsights} />}
+
       {/* Overall Score */}
       <OverallScore score={overallScore} username={username} />
 

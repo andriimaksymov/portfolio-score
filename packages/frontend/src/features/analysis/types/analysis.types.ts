@@ -15,6 +15,12 @@ export interface AnalysisResult {
     techStackDiversity: number;
     consistency: number;
   };
+  aiInsights?: {
+    summary: string;
+    careerPath: string;
+    keyStrengths: string[];
+    improvements: string[];
+  };
   strengths: string[];
   weaknesses: string[];
   recommendations: string[];
