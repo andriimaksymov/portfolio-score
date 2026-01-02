@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Container, Typography, Tab, Tabs, Paper, Chip, Stack, TextField, Button } from '@mui/material';
+import { Box, Container, Typography, Tab, Tabs, Paper, Chip, Button } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import DescriptionIcon from '@mui/icons-material/Description';
@@ -35,16 +35,9 @@ export default function HomePage() {
   const navigate = useNavigate();
   // Use local state for tabs
   const [value, setValue] = useState(0);
-  const [linkedinUrl, setLinkedinUrl] = useState('');
 
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
-  };
-
-  const handleLinkedinAnalyze = () => {
-    if (!linkedinUrl.trim()) return;
-    // Encode URL just in case, though navigate usually handles params well if we use search params
-    navigate(`/linkedin/results?url=${encodeURIComponent(linkedinUrl)}`);
   };
 
   return (

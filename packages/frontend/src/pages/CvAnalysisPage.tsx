@@ -77,12 +77,6 @@ export default function CvAnalysisPage() {
 
   const { analysis, text } = analysisState;
 
-  // Simple Highlighting Logic
-  // We split text and wrap matches. 
-  // Note: This is a robust-enough MVP approach for plain text.
-  let highlightedText = text;
-  // This would be replaced by a real robust render in production
-  
   return (
     <Box maxWidth="xl" sx={{ mx: 'auto', p: 3 }}>
        <Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/')} sx={{ mb: 2 }}>
