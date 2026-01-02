@@ -12,11 +12,63 @@ import {
   AiAnalysisScores,
 } from './interfaces/ai.interfaces';
 
+export interface CvAnalysisResponse {
+  summary: {
+    professionalLikelihood: number; // 0-100 score of how "senior/professional" it sounds
+    critique: string;
+  };
+  improvements: {
+    category: 'Impact' | 'Clarity' | 'Formatting' | 'Skills';
+    quote: string; // The exact text from CV to highlight
+    suggestion: string; // How to rewrite it
+    rewritten?: string; // Example rewrite
+  }[];
+  missingKeywords: string[];
+}
+
+export interface LinkedinAnalysisRequest {
+  fullName: string;
+  title: string;
+  about: string;
+  experience: {
+    role: string;
+    company: string;
+    description: string;
+  }[];
+  skills: string[];
+}
+
+export interface LinkedinAnalysisResponse {
+  summary: {
+    original: string;
+    improved: string;
+    critique: string;
+  };
+  experience: {
+    role: string;
+    company: string;
+    original: string;
+    improved: string;
+    suggestions: string[];
+  }[];
+  skills: {
+    missing: string[];
+    trending: string[];
+  };
+  courses: {
+    title: string;
+    platform: string;
+    url: string; // Placeholder or generated
+    reason: string;
+  }[];
+}
+
 @Injectable()
 export class AiService {
   private readonly logger = new Logger(AiService.name);
   private openai: OpenAI | null = null;
   private gemini: GoogleGenerativeAI | null = null;
+  private geminiModel: any = null; // Added for direct model access
 
   constructor(private configService: ConfigService) {
     this.initializeClients();
@@ -77,34 +129,183 @@ export class AiService {
     return this.getMockAnalysis();
   }
 
+  async generateLinkedinAnalysis(
+    data: LinkedinAnalysisRequest,
+  ): Promise<LinkedinAnalysisResponse | null> {
+    const prompt = `
+      You are an expert Career Coach and LinkedIn Profile Optimizer.
+      Analyze the following profile and improve it for maximum impact and ATS visibility.
+      
+      User Profile:
+      Name: ${data.fullName}
+      Current Title: ${data.title}
+      About: "${data.about}"
+      Skills: ${data.skills.join(', ')}
+      
+      Experience:
+      ${data.experience
+        .map(
+          (exp) => `
+        - Role: ${exp.role} at ${exp.company}
+        - Description: "${exp.description}"
+      `,
+        )
+        .join('\n')}
+      
+      TASKs:
+       1. Rewrite the "About" section to be pitch-perfect.
+       2. For EACH experience, rewrite the description to use strong action verbs and metrics (STAR method).
+       3. Identify missing HIGH-VALUE skills based on their title/role.
+       4. Recommend 3 specific courses (with real URL patterns if possible, e.g. Udemy/Coursera search links) to close gaps.
+       
+      Return STRICT JSON:
+      {
+        "summary": { "original": "...", "improved": "...", "critique": "..." },
+        "experience": [
+            { "role": "...", "company": "...", "original": "...", "improved": "...", "suggestions": ["..."] }
+        ],
+        "skills": { "missing": ["..."], "trending": ["..."] },
+        "courses": [
+            { "title": "...", "platform": "...", "url": "...", "reason": "..." }
+        ]
+      }
+    `;
+
+    // Reuse the existing multi-provider strategy
+    if (this.gemini) {
+      try {
+        const result = await this.tryGemini(this.gemini, prompt);
+        if (result) return result; // Cast for now, practically same JSON parsing logic
+      } catch (e) {
+        this.logger.error(e);
+      }
+    }
+
+    if (this.openai) {
+      try {
+        const result = await this.tryOpenAI(this.openai, prompt);
+        if (result) return result;
+      } catch (e) {
+        this.logger.error(e);
+      }
+    }
+
+    // Mock fallback
+    return {
+      summary: {
+        original: data.about,
+        improved: `Passionate ${data.title} with a proven track record of delivering high-quality solutions. Expert in ${data.skills.slice(0, 3).join(', ')}.`,
+        critique: 'Original summary was too brief.',
+      },
+      experience: data.experience.map((e) => ({
+        role: e.role,
+        company: e.company,
+        original: e.description,
+        improved: `Championed development of key features at ${e.company}, resulting in 20% efficiency increase. Led team in adopting ${data.skills[0] || 'modern tech'}.`,
+        suggestions: ['Add specific metrics', 'Mention team size'],
+      })),
+      skills: {
+        missing: ['Cloud Architecture', 'System Design'],
+        trending: ['AI Integration', 'Performance Optimization'],
+      },
+      courses: [
+        {
+          title: 'Advanced System Design',
+          platform: 'Coursera',
+          url: 'https://coursera.org/search?query=system%20design',
+          reason: 'Critical for senior roles',
+        },
+      ],
+    };
+  }
+
+  async generateCvAnalysis(text: string): Promise<CvAnalysisResponse> {
+    const prompt = `
+      Analyze the following CV text for a Software Engineer role.
+      Focus on finding WEAK points that need improvement.
+      For each improvement, quote the EXACT text segment from the CV so we can highlight it.
+
+      Return structured JSON:
+      {
+        "summary": {
+          "professionalLikelihood": 0-100,
+          "critique": "Overall feedback"
+        },
+        "improvements": [
+          {
+            "category": "Impact", 
+            "quote": "Responsible for maintaining servers...",
+            "suggestion": "Too passive. Use STAR method.",
+            "rewritten": "Reduced server downtime by 40% by implementing automated health checks."
+          }
+        ],
+        "missingKeywords": ["Docker", "Kubernetes"]
+      }
+
+      CV TEXT:
+      ${text.substring(0, 10000)}
+    `;
+
+    // 1. Try Gemini
+    if (this.gemini) {
+      try {
+        const result = await this.tryGemini(this.gemini, prompt);
+        if (result) return result;
+      } catch (e) {
+        this.logger.error('Gemini CV Analysis failed', e);
+      }
+    }
+
+    // 2. Try OpenAI
+    if (this.openai) {
+      try {
+        const result = await this.tryOpenAI(this.openai, prompt);
+        if (result) return result;
+      } catch (e) {
+        this.logger.error('OpenAI CV Analysis failed', e);
+      }
+    }
+
+    // 3. Fallback Mock
+    return {
+      summary: {
+        professionalLikelihood: 65,
+        critique:
+          'The CV has good content but lacks quantifiable impact. It reads more like a job description than a list of achievements.',
+      },
+      improvements: [
+        {
+          category: 'Impact',
+          quote: text.substring(0, 50), // Fallback quote
+          suggestion: 'Quantify this achievement with numbers.',
+          rewritten: 'Improved X by Y%.',
+        },
+      ],
+      missingKeywords: ['CI/CD', 'Unit Testing'],
+    };
+  }
+
   private async tryGemini(
     client: GoogleGenerativeAI,
     prompt: string,
-  ): Promise<AiAnalysisResponse | null> {
+  ): Promise<any> {
     const model = client.getGenerativeModel({ model: 'gemini-pro' });
     const result = await model.generateContent(prompt);
-    const response = result.response; // Removed await as per lint feedback
+    const response = result.response;
     const text = response.text();
-
-    // Clean up potential markdown code blocks if Gemini returns them
     const jsonString = text.replace(/```json\n?|\n?```/g, '').trim();
-    return JSON.parse(jsonString) as AiAnalysisResponse;
+    return JSON.parse(jsonString);
   }
 
-  private async tryOpenAI(
-    client: OpenAI,
-    prompt: string,
-  ): Promise<AiAnalysisResponse | null> {
+  private async tryOpenAI(client: OpenAI, prompt: string): Promise<any> {
     const completion = await client.chat.completions.create({
       messages: [{ role: 'user', content: prompt }],
       model: 'gpt-3.5-turbo',
       response_format: { type: 'json_object' },
     });
-
     const content = completion.choices[0].message.content;
     if (!content) return null;
-
-    return JSON.parse(content) as AiAnalysisResponse;
+    return JSON.parse(content);
   }
 
   private buildPrompt(

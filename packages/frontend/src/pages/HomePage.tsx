@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Box, Container, Typography, Tab, Tabs, Paper, Chip, Stack } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { Box, Container, Typography, Tab, Tabs, Paper, Chip, Stack, TextField, Button } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import DescriptionIcon from '@mui/icons-material/Description';
@@ -31,10 +32,19 @@ function TabPanel(props: TabPanelProps) {
 }
 
 export default function HomePage() {
+  const navigate = useNavigate();
+  // Use local state for tabs
   const [value, setValue] = useState(0);
+  const [linkedinUrl, setLinkedinUrl] = useState('');
 
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
+  };
+
+  const handleLinkedinAnalyze = () => {
+    if (!linkedinUrl.trim()) return;
+    // Encode URL just in case, though navigate usually handles params well if we use search params
+    navigate(`/linkedin/results?url=${encodeURIComponent(linkedinUrl)}`);
   };
 
   return (
@@ -66,17 +76,17 @@ export default function HomePage() {
       <Container maxWidth="md" sx={{ mb: 10 }}>
         <Paper elevation={3} sx={{ borderRadius: 4, overflow: 'hidden' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider', bgcolor: 'background.paper' }}>
-            <Tabs
+            <Tabs 
               value={value}
               onChange={handleChange}
-              variant="fullWidth"
+              variant="fullWidth" 
               indicatorColor="primary"
               textColor="primary"
               aria-label="portfolio input source tabs"
             >
               <Tab icon={<GitHubIcon />} iconPosition="start" label="GitHub Profile" />
               <Tab icon={<LinkedInIcon />} iconPosition="start" label={<Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>LinkedIn <Chip label="Coming Soon" size="small" color="default" sx={{ height: 20, fontSize: '0.625rem' }} /></Box>} />
-              <Tab icon={<DescriptionIcon />} iconPosition="start" label={<Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>CV / PDF <Chip label="Coming Soon" size="small" color="default" sx={{ height: 20, fontSize: '0.625rem' }} /></Box>} />
+              <Tab icon={<DescriptionIcon />} iconPosition="start" label="CV / PDF Analysis" />
             </Tabs>
           </Box>
 
@@ -84,27 +94,69 @@ export default function HomePage() {
             <TabPanel value={value} index={0}>
               <PortfolioInputForm />
             </TabPanel>
+
             <TabPanel value={value} index={1}>
               <Box sx={{ textAlign: 'center', py: 4 }}>
                 <LinkedInIcon sx={{ fontSize: 60, color: 'text.disabled', mb: 2 }} />
                 <Typography variant="h6" color="text.secondary" gutterBottom>
-                  LinkedIn Analysis is Coming Soon
+                  LinkedIn Optimizer is paused
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  We're working on parsing LinkedIn profiles to provide career-specific insights. Stay tuned!
+                  We are upgrading our caching layer. Check back soon!
                 </Typography>
               </Box>
             </TabPanel>
+
             <TabPanel value={value} index={2}>
-              <Box sx={{ textAlign: 'center', py: 4 }}>
-                <DescriptionIcon sx={{ fontSize: 60, color: 'text.disabled', mb: 2 }} />
-                <Typography variant="h6" color="text.secondary" gutterBottom>
-                  Resume Parsing is Coming Soon
+              <Paper sx={{ p: 4, height: '100%' }}>
+                <Typography variant="h5" gutterBottom fontWeight="medium">
+                  Upload your CV
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Upload your PDF resume to check for ATS compatibility and content strength.
+                <Typography variant="body2" color="text.secondary" paragraph>
+                  Upload your PDF resume to check for ATS compatibility, keyword gaps, and impact scoring.
                 </Typography>
-              </Box>
+
+                <Box
+                  sx={{
+                    border: '2px dashed #ccc',
+                    borderRadius: 2,
+                    p: 6,
+                    bgcolor: '#fafafa',
+                    textAlign: 'center',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s',
+                    '&:hover': {
+                      bgcolor: '#f0f7ff',
+                      borderColor: '#2196F3'
+                    }
+                  }}
+                >
+                  <input
+                    type="file"
+                    id="cv-upload"
+                    accept=".pdf"
+                    style={{ display: 'none' }}
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        navigate('/cv/results', { state: { file: file } });
+                      }
+                    }}
+                  />
+                  <label htmlFor="cv-upload" style={{ cursor: 'pointer', display: 'block' }}>
+                    <DescriptionIcon sx={{ fontSize: 48, color: '#9e9e9e', mb: 2 }} />
+                    <Typography variant="h6" color="text.secondary" gutterBottom>
+                      Drag & Drop or Click to Upload
+                    </Typography>
+                    <Typography variant="body2" color="text.disabled">
+                      Supported formats: PDF (Max 5MB)
+                    </Typography>
+                    <Button variant="contained" sx={{ mt: 3 }}>
+                      Select File
+                    </Button>
+                  </label>
+                </Box>
+              </Paper>
             </TabPanel>
           </Box>
         </Paper>

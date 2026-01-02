@@ -8,6 +8,8 @@ import { GithubModule } from './modules/github/github.module';
 import { ScoringModule } from './modules/scoring/scoring.module';
 
 import { AiModule } from './modules/ai/ai.module';
+import { LinkedinModule } from './modules/linkedin/linkedin.module';
+import { CvModule } from './modules/cv/cv.module';
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import { AiModule } from './modules/ai/ai.module';
     GithubModule,
     ScoringModule,
     AiModule,
+    LinkedinModule,
+    CvModule,
   ],
   controllers: [AppController],
   providers: [AppService],
