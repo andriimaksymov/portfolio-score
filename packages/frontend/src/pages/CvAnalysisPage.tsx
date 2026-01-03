@@ -38,7 +38,7 @@ export default function CvAnalysisPage() {
         
         setAnalysisState({
           loading: false,
-          text: res.data.textSnippet, // Ideally full text, but let's see how much backend sends
+          text: res.data.fullText,
           analysis: res.data.analysis,
           error: null
         });

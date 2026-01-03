@@ -243,7 +243,7 @@ export class AiService {
       }
 
       CV TEXT:
-      ${text.substring(0, 10000)}
+      ${text.substring(0, 30000)}
     `;
 
     // 1. Try Gemini

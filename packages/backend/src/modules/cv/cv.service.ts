@@ -22,7 +22,7 @@ export class CvService {
       const analysis = await this.aiService.generateCvAnalysis(text);
 
       return {
-        textSnippet: text.substring(0, 500) + '...', // Preview
+        fullText: text,
         analysis,
       };
     } catch (error) {
