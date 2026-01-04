@@ -1,15 +1,13 @@
-import { Box, Paper, Typography } from '@mui/material';
-import { CircularProgress as MuiCircularProgress } from '@mui/material';
+import { Box, Paper, Typography, Stack } from '@mui/material';
 
 interface OverallScoreProps {
   score: number;
-  username: string;
 }
 
 const getScoreColor = (score: number): string => {
   if (score >= 70) return '#4caf50';
   if (score >= 50) return '#ff9800';
-  return '#f44336';
+  return '#ef4444';
 };
 
 const getScoreGrade = (score: number): string => {
@@ -28,67 +26,87 @@ const getScoreMessage = (score: number): string => {
   return 'There\'s room for improvement. Follow the recommendations below.';
 };
 
-export default function OverallScore({ score, username }: OverallScoreProps) {
+export default function OverallScore({ score }: OverallScoreProps) {
+  const color = getScoreColor(score);
+  const grade = getScoreGrade(score);
+
   return (
     <Paper
+      className="glass-card"
       sx={{
-        p: 4,
-        textAlign: 'center',
-        background: `linear-gradient(135deg, ${getScoreColor(score)}15 0%, ${getScoreColor(score)}05 100%)`,
-        border: `2px solid ${getScoreColor(score)}30`,
+        p: { xs: 4, md: 6 },
+        borderRadius: '24px',
+        mb: 4,
+        position: 'relative',
+        overflow: 'hidden'
       }}
     >
-      <Typography variant="h4" gutterBottom>
-        Portfolio Analysis for{' '}
-        <Box component="span" sx={{ color: getScoreColor(score), fontWeight: 'bold' }}>
-          {username}
-        </Box>
-      </Typography>
+      {/* Decorative background circle */}
+      <Box
+        sx={{ 
+          position: 'absolute', 
+          top: '-50px',
+          right: '-50px',
+          width: '200px',
+          height: '200px',
+          borderRadius: '50%',
+          background: `radial-gradient(circle, ${color}33 0%, transparent 70%)`,
+          filter: 'blur(40px)',
+          zIndex: 0
+        }}
+      />
 
-      <Box sx={{ position: 'relative', display: 'inline-flex', my: 3 }}>
-        <MuiCircularProgress
-          variant="determinate"
-          value={100}
-          size={200}
-          thickness={4}
-          sx={{ color: 'grey.200' }}
-        />
-        <MuiCircularProgress
-          variant="determinate"
-          value={score}
-          size={200}
-          thickness={4}
-          sx={{
-            color: getScoreColor(score),
-            position: 'absolute',
-            left: 0,
-          }}
-        />
+      <Stack
+        direction={{ xs: 'column', md: 'row' }}
+        spacing={4}
+        alignItems="center"
+        sx={{ position: 'relative', zIndex: 1 }}
+      >
         <Box
-          sx={{
-            top: 0,
-            left: 0,
-            bottom: 0,
-            right: 0,
-            position: 'absolute',
+          sx={{ 
             display: 'flex',
-            alignItems: 'center',
+            alignItems: 'center', 
             justifyContent: 'center',
-            flexDirection: 'column',
+            width: 140,
+            height: 140,
+            borderRadius: '50%',
+            border: `8px solid ${color}22`,
+            bgcolor: `${color}11`,
+            flexShrink: 0
           }}
         >
-          <Typography variant="h2" component="div" fontWeight="bold" sx={{ color: getScoreColor(score) }}>
-            {score}
-          </Typography>
-          <Typography variant="h5" color="text.secondary">
-            {getScoreGrade(score)}
+          <Typography
+            variant="h1"
+            fontWeight="900"
+            sx={{ color: color, lineHeight: 1 }}
+          >
+            {grade}
           </Typography>
         </Box>
-      </Box>
 
-      <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 600, mx: 'auto' }}>
-        {getScoreMessage(score)}
-      </Typography>
+        <Box sx={{ textAlign: { xs: 'center', md: 'left' }, flexGrow: 1 }}>
+          <Typography variant="overline" sx={{ color: 'var(--text-secondary)', letterSpacing: 2 }}>
+            Overall Portfolio Score
+          </Typography>
+          <Stack
+            direction="row"
+            spacing={1}
+            alignItems="baseline"
+            justifyContent={{ xs: 'center', md: 'flex-start' }}
+            sx={{ mb: 1 }}
+          >
+            <Typography variant="h2" fontWeight="800" color="var(--text-primary)">
+              {score}
+            </Typography>
+            <Typography variant="h5" color="var(--text-secondary)">
+              / 100
+            </Typography>
+          </Stack>
+          <Typography variant="h6" sx={{ color: 'var(--text-secondary)', fontWeight: 400, maxWidth: 500 }}>
+            {getScoreMessage(score)}
+          </Typography>
+        </Box>
+      </Stack>
     </Paper>
   );
 }

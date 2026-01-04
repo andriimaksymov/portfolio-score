@@ -1,66 +1,80 @@
-import { Box, Card, CardContent, Typography, LinearProgress } from '@mui/material';
+import { Paper, Typography, Box, LinearProgress, Chip, Stack } from '@mui/material';
 
 interface ScoreCardProps {
   label: string;
   score: number;
-  description?: string;
+  description: string;
 }
 
-const getScoreColor = (score: number): string => {
-  if (score >= 70) return 'success.main';
-  if (score >= 50) return 'warning.main';
-  return 'error.main';
-};
-
-const getScoreLabel = (score: number): string => {
-  if (score >= 80) return 'Excellent';
-  if (score >= 70) return 'Good';
-  if (score >= 50) return 'Fair';
-  if (score >= 30) return 'Needs Improvement';
-  return 'Poor';
+const getStatusInfo = (score: number) => {
+  if (score >= 80) return { label: 'Excellent', color: '#4caf50' };
+  if (score >= 60) return { label: 'Good', color: '#2196f3' };
+  if (score >= 40) return { label: 'Average', color: '#ff9800' };
+  return { label: 'Poor', color: '#ef4444' };
 };
 
 export default function ScoreCard({ label, score, description }: ScoreCardProps) {
+  const { label: statusLabel, color: statusColor } = getStatusInfo(score);
+
   return (
-    <Card sx={{ height: '100%' }}>
-      <CardContent>
-        <Typography variant="h6" gutterBottom>
-          {label}
-        </Typography>
-        
-        <Box sx={{ display: 'flex', alignItems: 'baseline', mb: 1 }}>
-          <Typography variant="h3" component="div" sx={{ color: getScoreColor(score), fontWeight: 'bold' }}>
-            {score}
+    <Paper
+      className="glass-card"
+      sx={{
+        p: 3,
+        height: '100%',
+        borderRadius: '20px',
+        transition: 'transform 0.2s',
+        '&:hover': {
+          transform: 'translateY(-4px)'
+        }
+      }}
+    >
+      <Stack spacing={2}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+          <Typography variant="h6" fontWeight="700" color="var(--text-primary)">
+            {label}
           </Typography>
-          <Typography variant="h5" color="text.secondary" sx={{ ml: 0.5 }}>
-            /100
-          </Typography>
+          <Chip
+            label={statusLabel}
+            size="small"
+            sx={{
+              bgcolor: `${statusColor}22`,
+              color: statusColor,
+              fontWeight: 700,
+              fontSize: '0.7rem',
+              borderRadius: '6px'
+            }}
+          />
         </Box>
 
-        <LinearProgress
-          variant="determinate"
-          value={score}
-          sx={{
-            height: 8,
-            borderRadius: 1,
-            mb: 1,
-            bgcolor: 'grey.200',
-            '& .MuiLinearProgress-bar': {
-              bgcolor: getScoreColor(score),
-            },
-          }}
-        />
+        <Box>
+          <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 0.5, mb: 1 }}>
+            <Typography variant="h4" fontWeight="800" color="var(--text-primary)">
+              {score}
+            </Typography>
+            <Typography variant="body2" color="var(--text-secondary)">
+              / 100
+            </Typography>
+          </Box>
+          <LinearProgress
+            variant="determinate"
+            value={score}
+            sx={{
+              height: 8,
+              borderRadius: 4,
+              bgcolor: 'rgba(255, 255, 255, 0.05)',
+              '& .MuiLinearProgress-bar': {
+                bgcolor: statusColor,
+                borderRadius: 4
+              }
+            }}
+          />
+        </Box>
 
-        <Typography variant="body2" color="text.secondary" fontWeight="medium">
-          {getScoreLabel(score)}
+        <Typography variant="body2" sx={{ color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+          {description}
         </Typography>
-
-        {description && (
-          <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
-            {description}
-          </Typography>
-        )}
-      </CardContent>
-    </Card>
+      </Stack>
+    </Paper>
   );
 }
