@@ -2,9 +2,15 @@ import { Box, CircularProgress, Typography } from '@mui/material';
 
 interface LoadingSpinnerProps {
   message?: string;
+  size?: number;
+  color?: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning' | 'inherit';
 }
 
-export default function LoadingSpinner({ message = 'Loading...' }: LoadingSpinnerProps) {
+export default function LoadingSpinner({
+  message,
+  size = 48,
+  color = 'primary'
+}: LoadingSpinnerProps) {
   return (
     <Box
       sx={{
@@ -12,14 +18,16 @@ export default function LoadingSpinner({ message = 'Loading...' }: LoadingSpinne
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        minHeight: '200px',
+        minHeight: message ? '200px' : 'auto',
         gap: 2,
       }}
     >
-      <CircularProgress size={48} />
-      <Typography variant="body1" color="text.secondary">
-        {message}
-      </Typography>
+      <CircularProgress size={size} color={color} />
+      {message && (
+        <Typography variant="body1" color="text.secondary">
+          {message}
+        </Typography>
+      )}
     </Box>
   );
 }
