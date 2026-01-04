@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Box, Container, Typography, Grid, Paper, Button, Avatar, Tabs, Tab } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
@@ -10,47 +10,67 @@ import PortfolioInputForm from '@/features/portfolio/components/PortfolioInputFo
 import CvUploadForm from '@/features/portfolio/components/CvUploadForm';
 import LinkedinInputForm from '@/features/portfolio/components/LinkedinInputForm';
 
-const DashboardMockup = () => (
-  <Box sx={{ position: 'relative', width: '100%', height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-    {/* Main Card */}
+const AnalysisPreview = () => (
+  <Box sx={{ position: 'relative', width: '100%', minHeight: '450px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    {/* Background Glow */}
+    <Box sx={{ position: 'absolute', width: '120%', height: '120%', background: 'radial-gradient(circle at center, rgba(59, 130, 246, 0.1) 0%, transparent 70%)', filter: 'blur(40px)', zIndex: 0 }} />
+
     <Paper
       className="glass-card animate-float"
       sx={{
-        width: '80%',
-        p: 3,
+        width: '90%',
+        p: 4,
         zIndex: 2,
-        background: 'rgba(255, 255, 255, 0.08)',
-        backdropFilter: 'blur(16px)',
-        border: '1px solid rgba(255, 255, 255, 0.12)'
+        background: 'rgba(5, 8, 22, 0.6)',
+        backdropFilter: 'blur(24px)',
+        border: '1px solid rgba(255, 255, 255, 0.08)',
+        borderRadius: '24px',
+        boxShadow: '0 20px 50px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.05)'
       }}
     >
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 3, gap: 2 }}>
-        <Avatar sx={{ width: 56, height: 56, bgcolor: 'var(--accent-primary)' }}>JD</Avatar>
-        <Box>
-          <Typography variant="h6" fontWeight="bold">John Developer</Typography>
-          <Typography variant="body2" color="var(--text-secondary)">Overall Score: 88/100</Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 4 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <Avatar sx={{ width: 56, height: 56, bgcolor: '#a5bcc7', boxShadow: '0 0 20px rgba(165, 188, 199, 0.3)' }}>
+            <GitHubIcon sx={{ fontSize: 32, color: '#050816' }} />
+          </Avatar>
+          <Box>
+            <Typography variant="h6" fontWeight="900" sx={{ color: '#fff', letterSpacing: -0.5 }}>octocat/verified</Typography>
+            <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)', display: 'flex', alignItems: 'center', gap: 0.5 }}>
+              <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: '#22c55e', animation: 'pulse 2s infinite' }} />
+              Analysis Engine Online
+            </Typography>
+          </Box>
+        </Box>
+        <Box sx={{ textAlign: 'right' }}>
+          <Typography variant="h3" fontWeight="900" sx={{ color: '#a5bcc7', mt: -0.5 }}>94</Typography>
+          <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.4)', fontWeight: 700, textTransform: 'uppercase' }}>Precision Score</Typography>
         </Box>
       </Box>
-      <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2 }}>
+
+      <Grid container spacing={2}>
         {[
-          { label: 'Activity', value: 85, color: '#3b82f6' },
-          { label: 'Quality', value: 92, color: '#22c55e' },
-          { label: 'Diversity', value: 78, color: '#f59e0b' },
-          { label: 'Consistency', value: 95, color: '#8b5cf6' }
-        ].map((stat) => (
-          <Box key={stat.label} sx={{ p: 1.5, bgcolor: 'rgba(255, 255, 255, 0.05)', borderRadius: 2 }}>
-            <Typography variant="caption" color="var(--text-secondary)" display="block">{stat.label}</Typography>
-            <Typography variant="h6" fontWeight="bold" sx={{ color: stat.color }}>{stat.value}%</Typography>
-            <Box sx={{ width: '100%', height: 4, bgcolor: 'rgba(255, 255, 255, 0.1)', mt: 1, borderRadius: 1 }}>
-              <Box sx={{ width: `${stat.value}%`, height: '100%', bgcolor: stat.color, borderRadius: 1 }} />
+          { icon: <AutoGraphIcon />, label: 'Architecture', value: 'Exceptional', color: '#3b82f6' },
+          { icon: <InsightsIcon />, label: 'Impact', value: 'High Growth', color: '#22c55e' }
+        ].map((item) => (
+          <Grid item xs={6} key={item.label}>
+            <Box sx={{ p: 2, borderRadius: '16px', bgcolor: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)' }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1, color: item.color }}>
+                {item.icon}
+                <Typography variant="caption" fontWeight="700" sx={{ opacity: 0.8 }}>{item.label}</Typography>
+              </Box>
+              <Typography variant="subtitle1" fontWeight="800" sx={{ color: '#fff' }}>{item.value}</Typography>
             </Box>
-          </Box>
+          </Grid>
         ))}
+      </Grid>
+
+      <Box sx={{ mt: 3, p: 2, borderRadius: '16px', bgcolor: 'rgba(165, 188, 199, 0.05)', border: '1px solid rgba(165, 188, 199, 0.1)' }}>
+        <Typography variant="caption" sx={{ color: '#a5bcc7', fontWeight: 800, display: 'block', mb: 1 }}>AI INSIGHT</Typography>
+        <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', lineHeight: 1.5, fontStyle: 'italic' }}>
+          "Strong contribution consistency with focus on distributed systems. Recommend highlighting scalability patterns in top repositories."
+        </Typography>
       </Box>
     </Paper>
-    {/* Decorative blobs */}
-    <Box sx={{ position: 'absolute', top: '10%', right: '5%', width: 120, height: 120, background: 'radial-gradient(circle, #3b82f633 0%, transparent 70%)', borderRadius: '50%', filter: 'blur(20px)' }} />
-    <Box sx={{ position: 'absolute', bottom: '10%', left: '5%', width: 150, height: 150, background: 'radial-gradient(circle, #22c55e22 0%, transparent 70%)', borderRadius: '50%', filter: 'blur(30px)' }} />
   </Box>
 );
 
@@ -72,6 +92,23 @@ const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, titl
 
 export default function HomePage() {
   const [source, setSource] = useState(0);
+  const githubInputRef = useRef<{ focus: () => void }>(null);
+  const inputSectionRef = useRef<HTMLDivElement>(null);
+
+  const handleAnalyzeClick = () => {
+    // Switch to GitHub tab if not already there
+    setSource(0);
+
+    // Smooth scroll to input section
+    inputSectionRef.current?.scrollIntoView({
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+    });
+
+    // Focus input after a short delay to allow for scroll/tab change
+    setTimeout(() => {
+      githubInputRef.current?.focus();
+    }, 500);
+  };
 
   const handleSourceChange = (_: React.SyntheticEvent, newValue: number) => {
     setSource(newValue);
@@ -98,30 +135,18 @@ export default function HomePage() {
                   WebkitTextFillColor: 'transparent',
                 }}
               >
-                AI-powered analysis of your GitHub portfolio.
+                Elevate Your Career with AI-Powered Portfolio Analysis.
               </Typography>
-              <Typography variant="h6">
-                Transform your developer profile into actionable insights. Get AI-powered feedback, score your activity, and boost your career potential.
+              <Typography variant="h6" sx={{ mb: 4, color: 'var(--text-secondary)', maxWidth: '90%', lineHeight: 1.6 }}>
+                Gain a competitive edge with deep insights into your GitHub, LinkedIn, and CV. Let AI-guided analysis transform your professional presence.
               </Typography>
 
-              <Box sx={{ mb: 6 }}>
+              <Box id="analyzer-input" ref={inputSectionRef} sx={{ mb: 6 }}>
                 <Tabs
                   value={source}
                   onChange={handleSourceChange}
                   sx={{
                     mb: 4,
-                    '& .MuiTabs-indicator': {
-                      bgcolor: 'var(--accent-primary)',
-                      height: 3,
-                      borderRadius: '3px'
-                    },
-                    '& .MuiTab-root': {
-                      color: 'var(--text-secondary)',
-                      textTransform: 'none',
-                      fontWeight: 600,
-                      fontSize: '1rem',
-                      '&.Mui-selected': { color: 'var(--text-primary)' }
-                    }
                   }}
                 >
                   <Tab icon={<GitHubIcon />} iconPosition="start" label="GitHub" />
@@ -130,14 +155,14 @@ export default function HomePage() {
                 </Tabs>
 
                 <Box className="animate-fade-up" key={source}>
-                  {source === 0 && <PortfolioInputForm />}
+                  {source === 0 && <PortfolioInputForm ref={githubInputRef} />}
                   {source === 1 && <LinkedinInputForm />}
                   {source === 2 && <CvUploadForm />}
                 </Box>
               </Box>
             </Grid>
             <Grid item xs={12} md={6} sx={{ display: { xs: 'none', md: 'block' } }}>
-              <DashboardMockup />
+              <AnalysisPreview />
             </Grid>
           </Grid>
         </Container>
@@ -225,9 +250,16 @@ export default function HomePage() {
           <Button
             variant="contained"
             size="large"
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            onClick={handleAnalyzeClick}
+            sx={{
+              py: 2,
+              px: 6,
+              borderRadius: '12px',
+              fontWeight: 700,
+              textTransform: 'none'
+            }}
           >
-            Analyze my profile
+            Analyze my GitHub
           </Button>
         </Container>
       </Box>

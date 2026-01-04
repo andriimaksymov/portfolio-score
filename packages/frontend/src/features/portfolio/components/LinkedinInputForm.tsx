@@ -46,12 +46,6 @@ export default function LinkedinInputForm() {
                 <LinkedInIcon sx={{ color: 'var(--text-secondary)' }} />
               </InputAdornment>
             ),
-            sx: {
-              bgcolor: 'rgba(255, 255, 255, 0.05)',
-              borderRadius: '12px',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              '& fieldset': { border: 'none' }
-            }
           }}
         />
         <Button
@@ -64,7 +58,6 @@ export default function LinkedinInputForm() {
             borderRadius: '12px',
             textTransform: 'none',
             fontWeight: 700,
-            boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
           }}
         >
           Analyze Profile

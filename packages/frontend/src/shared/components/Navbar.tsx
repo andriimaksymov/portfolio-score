@@ -1,5 +1,6 @@
 import { AppBar, Toolbar, Typography, Button, Container, Box } from '@mui/material';
 import { NavLink } from 'react-router-dom';
+import logo from '@/assets/logo.png';
 
 export const Navbar = () => {
   return (
@@ -15,24 +16,40 @@ export const Navbar = () => {
     >
       <Container maxWidth="lg">
         <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
-          <Typography
-            variant="h6"
-            noWrap
+          <Box
             component={NavLink}
             to="/"
             sx={{
-              fontWeight: 800,
-              letterSpacing: '.1rem',
-              color: 'inherit',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 1.5,
               textDecoration: 'none',
-              background: 'linear-gradient(45deg, #3b82f6 30%, #22c55e 90%)',
-              backgroundClip: 'text',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
+              '&:hover': { opacity: 0.9 }
             }}
           >
-            PORTFOLIO ANALYZER
-          </Typography>
+            <Box
+              component="img"
+              src={logo}
+              alt="Portfolio Analyzer Logo"
+              sx={{ width: 32, height: 32, borderRadius: '6px' }}
+            />
+            <Typography
+              variant="h6"
+              noWrap
+              sx={{
+                fontWeight: 800,
+                letterSpacing: '.05rem',
+                color: 'inherit',
+                background: 'linear-gradient(45deg, #a5bcc7ff 20%, #b6c2d7ff 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                display: { xs: 'none', sm: 'block' }
+              }}
+            >
+              PORTFOLIO ANALYZER
+            </Typography>
+          </Box>
 
           <Box sx={{ display: 'flex', gap: 2 }}>
             <Button component={NavLink} to="/" color="inherit" sx={{ fontWeight: 500 }}>

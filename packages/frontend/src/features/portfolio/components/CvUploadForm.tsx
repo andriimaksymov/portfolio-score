@@ -30,18 +30,13 @@ export default function CvUploadForm() {
         onDragLeave={() => setIsDragging(false)}
         onDrop={handleDrop}
         sx={{
-          border: '2px dashed',
-          borderColor: isDragging ? 'var(--accent-primary)' : 'rgba(255, 255, 255, 0.1)',
+          border: '2px dashed #a5bcc7ff',
           borderRadius: '16px',
           p: 4,
           textAlign: 'center',
-          bgcolor: isDragging ? 'rgba(59, 130, 246, 0.05)' : 'rgba(255, 255, 255, 0.02)',
+          bgcolor: isDragging ? '#a5bcc7ff' : '#fff',
           transition: 'all 0.2s',
           cursor: 'pointer',
-          '&:hover': {
-            borderColor: 'var(--accent-primary)',
-            bgcolor: 'rgba(255, 255, 255, 0.05)'
-          }
         }}
         onClick={() => document.getElementById('cv-upload-input')?.click()}
       >
@@ -66,7 +61,8 @@ export default function CvUploadForm() {
             borderRadius: '12px',
             textTransform: 'none',
             fontWeight: 700,
-            px: 4
+            px: 5,
+            py: 2
           }}
         >
           Select PDF

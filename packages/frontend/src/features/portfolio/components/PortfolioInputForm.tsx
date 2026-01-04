@@ -1,14 +1,21 @@
-import { useState } from 'react';
+import { useState, forwardRef, useImperativeHandle, useRef } from 'react';
 import { Box, TextField, Button, InputAdornment } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { useAnalyzePortfolio } from '@/features/analysis/hooks/useAnalyzePortfolio';
 import LoadingSpinner from '@/shared/components/LoadingSpinner';
 import ErrorAlert from '@/shared/components/ErrorAlert';
 
-export default function PortfolioInputForm() {
+const PortfolioInputForm = forwardRef((_, ref) => {
   const [username, setUsername] = useState('');
   const [error, setError] = useState('');
   const { mutate, isPending, isError, error: apiError } = useAnalyzePortfolio();
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useImperativeHandle(ref, () => ({
+    focus: () => {
+      inputRef.current?.focus();
+    }
+  }));
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,6 +64,7 @@ export default function PortfolioInputForm() {
           onChange={(e) => setUsername(e.target.value)}
           error={!!error}
           disabled={isPending}
+          inputRef={inputRef}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -94,4 +102,6 @@ export default function PortfolioInputForm() {
       )}
     </Box>
   );
-}
+});
+
+export default PortfolioInputForm;
