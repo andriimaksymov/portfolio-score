@@ -41,18 +41,30 @@ export class LinkedinService {
 
   constructor(private readonly aiService: AiService) {}
 
+  /**
+   * High-level method that scrapes a profile and runs AI analysis
+   */
+  async analyzeProfileFromUrl(url: string) {
+    this.logger.log(`Starting full LinkedIn analysis for: ${url}`);
+
+    // 1. Fetch/Scrape data
+    const profileData = await this.fetchProfile(url);
+
+    // 2. Run AI Analysis
+    const aiAnalysis = await this.aiService.generateLinkedinAnalysis(profileData);
+
+    return {
+      profile: profileData,
+      analysis: aiAnalysis,
+      timestamp: new Date().toISOString(),
+      url
+    };
+  }
+
   async analyzeProfile(data: LinkedInProfileDto) {
     this.logger.log(`Analyzing LinkedIn profile for ${data.fullName}`);
 
-    // In a real app, we might store this in a DB or perform additional validation
-
-    const aiAnalysis = await this.aiService.generateLinkedinAnalysis({
-      fullName: data.fullName,
-      title: data.title,
-      about: data.about,
-      experience: data.experience,
-      skills: data.skills,
-    });
+    const aiAnalysis = await this.aiService.generateLinkedinAnalysis(data);
 
     return {
       profile: data,
@@ -64,12 +76,8 @@ export class LinkedinService {
   async fetchProfile(url: string) {
     this.logger.log(`Fetching LinkedIn profile from ${url}`);
 
-    // In a production environment with proper legal compliance and proxy infrastructure,
-    // we would use Puppeteer or a third-party API here.
-    // For this portfolio demonstration, we simulate the scraping process to show the architecture
-    // while respecting LinkedIn's Terms of Service regarding unauthorized scraping.
-
-    await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulate network delay
+    // Simulate network delay
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
     const usernameMatch = url.match(/linkedin\.com\/in\/([^/]+)/);
     const username = usernameMatch ? usernameMatch[1] : 'User';
@@ -78,23 +86,23 @@ export class LinkedinService {
       .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
       .join(' ');
 
+    // Mocked data extracted from a "public profile"
     return {
       fullName: formattedName,
-      title: 'Senior Software Engineer', // Simulated scraping result
-      about: `Passionate ${formattedName} with a strong background in web development. (Simulated data extracted from public profile)`,
-      skills: ['JavaScript', 'TypeScript', 'React', 'Node.js', 'System Design'],
+      title: 'Software Engineer at Innovative Solutions',
+      about: `Software Engineer with 4+ years of experience in full-stack development. I love building scalable web applications and exploring new technologies. Looking for my next big challenge in the fintech space.`,
+      skills: ['JavaScript', 'TypeScript', 'React', 'Node.js', 'PostgreSQL', 'Docker'],
       experience: [
         {
-          role: 'Senior Developer',
-          company: 'Tech Giant Corp',
-          description:
-            'Leading frontend architecture and mentoring junior developers.',
+          role: 'Junior Software Engineer',
+          company: 'Innovative Solutions',
+          description: 'Developed and maintained various web applications using React and Node.js. Improved application performance by 20%.',
         },
         {
-          role: 'Software Engineer',
-          company: 'StartUp Inc',
-          description: 'Built full-stack features using React and NestJS.',
-        },
+          role: 'Frontend Developer Intern',
+          company: 'WebCraft Agency',
+          description: 'Assisted in building responsive websites for clients. Learned the basics of modern web development and version control.',
+        }
       ],
     };
   }

@@ -5,6 +5,11 @@ import { LinkedinService, LinkedInProfileDto } from './linkedin.service';
 export class LinkedinController {
   constructor(private readonly linkedinService: LinkedinService) {}
 
+  @Post('analyze-url')
+  async analyzeUrl(@Body('url') url: string) {
+    return this.linkedinService.analyzeProfileFromUrl(url);
+  }
+
   @Post('analyze')
   async analyze(@Body() profile: LinkedInProfileDto) {
     return this.linkedinService.analyzeProfile(profile);

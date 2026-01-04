@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import OpenAI from 'openai';
 import { GoogleGenAI } from '@google/genai';
+import Groq from 'groq-sdk';
 import {
   GithubProfile,
   GithubRepo,
@@ -38,29 +39,43 @@ export interface LinkedinAnalysisRequest {
   skills: string[];
 }
 
+export interface LinkedinDimension {
+  score: number;
+  status: string;
+  insights: string[];
+}
+
 export interface LinkedinAnalysisResponse {
   summary: {
-    original: string;
-    improved: string;
-    critique: string;
+    text: string;
+    seniorityGuess: string;
   };
-  experience: {
-    role: string;
-    company: string;
-    original: string;
-    improved: string;
-    suggestions: string[];
-  }[];
-  skills: {
-    missing: string[];
-    trending: string[];
+  dimensions: {
+    profile: LinkedinDimension;
+    headline: LinkedinDimension;
+    experience: LinkedinDimension;
+    skills: LinkedinDimension;
+    branding: LinkedinDimension;
+    overall: number;
   };
-  courses: {
-    title: string;
-    platform: string;
-    url: string; // Placeholder or generated
-    reason: string;
-  }[];
+  recommendations: {
+    headlines: string[];
+    aboutSuggestions: {
+      missing: string;
+      rewritten: string;
+    };
+    experienceEdits: {
+      role: string;
+      company: string;
+      improvements: string[];
+    }[];
+  };
+  missingKeywords: string[];
+  actionPlan: {
+    thisWeek: string[];
+    next30Days: string[];
+    next60Days: string[];
+  };
 }
 
 @Injectable()
@@ -68,6 +83,7 @@ export class AiService {
   private readonly logger = new Logger(AiService.name);
   private openai: OpenAI | null = null;
   private gemini: GoogleGenAI | null = null;
+  private groq: Groq | null = null;
 
   constructor(private configService: ConfigService) {
     this.initializeClients();
@@ -96,7 +112,14 @@ export class AiService {
       this.logger.log('OpenAI initialized');
     }
 
-    if (!this.gemini && !this.openai) {
+    // Initialize Groq (Fallback for Gemini)
+    const groqKey = this.configService.get<string>('GROQ_API_KEY');
+    if (groqKey) {
+      this.groq = new Groq({ apiKey: groqKey });
+      this.logger.log('Groq AI initialized');
+    }
+
+    if (!this.gemini && !this.openai && !this.groq) {
       this.logger.warn(
         'No AI API keys found. AI features will be unavailable.',
       );
@@ -123,7 +146,20 @@ export class AiService {
       }
     }
 
-    // 2. Try OpenAI Second
+    // 2. Try Groq Second (if Gemini fails)
+    if (this.groq) {
+      try {
+        const result = (await this.tryGroq(
+          this.groq,
+          prompt,
+        )) as AiAnalysisResponse;
+        if (result) return result;
+      } catch (error) {
+        this.logger.error('Groq analysis failed, falling back...', error);
+      }
+    }
+
+    // 3. Try OpenAI Third
     if (this.openai) {
       try {
         const result = (await this.tryOpenAI(
@@ -136,7 +172,7 @@ export class AiService {
       }
     }
 
-    // 3. No providers succeeded
+    // 4. No providers succeeded
     this.logger.error('All AI analysis providers failed.');
     return null;
   }
@@ -146,7 +182,7 @@ export class AiService {
   ): Promise<LinkedinAnalysisResponse | null> {
     const prompt = `
       You are an expert Career Coach and LinkedIn Profile Optimizer.
-      Analyze the following profile and improve it for maximum impact and ATS visibility.
+      Analyze the following profile and improve it for maximum impact and recruitment visibility.
       
       User Profile:
       Name: ${data.fullName}
@@ -165,50 +201,85 @@ export class AiService {
         .join('\n')}
       
       TASKs:
-       1. Rewrite the "About" section to be pitch-perfect.
-       2. For EACH experience, rewrite the description to use strong action verbs and metrics (STAR method).
-       3. Identify missing HIGH-VALUE skills based on their title/role.
-       4. Recommend 3 specific courses (with real URL patterns if possible, e.g. Udemy/Coursera search links) to close gaps.
+       1. Rate the profile across 5 dimensions (0-100): Profile Completeness, Headline Quality, Experience Impact, Skills Relevance, Personal Branding.
+       2. Provide 2-3 specific insights for each dimension.
+       3. Suggest 3-5 high-impact headlines tailored to their seniority.
+       4. Analyze the "About" section: identify what is missing (metrics, outcomes) and provide a polished rewrite.
+       5. For each job role, provide 2-3 improved bullet points using the STAR method with metrics.
+       6. Suggest missing high-value keywords (only if truthful).
+       7. Generate a 30-60 day LinkedIn action plan.
+       8. Guess their current seniority level (Junior, Mid, Senior, Lead/Staff, Manager).
        
       Return STRICT JSON:
       {
-        "summary": { "original": "...", "improved": "...", "critique": "..." },
-        "experience": [
-            { "role": "...", "company": "...", "original": "...", "improved": "...", "suggestions": ["..."] }
-        ],
-        "skills": { "missing": ["..."], "trending": ["..."] },
-        "courses": [
-            { "title": "...", "platform": "...", "url": "...", "reason": "..." }
-        ]
+        "summary": { "text": "1-2 paragraph professional summary", "seniorityGuess": "..." },
+        "dimensions": {
+          "profile": { "score": 85, "status": "Strong", "insights": ["...", "..."] },
+          "headline": { "score": 70, "status": "Good", "insights": ["...", "..."] },
+          "experience": { "score": 60, "status": "Needs Improvement", "insights": ["...", "..."] },
+          "skills": { "score": 90, "status": "Excellent", "insights": ["...", "..."] },
+          "branding": { "score": 50, "status": "Average", "insights": ["...", "..."] },
+          "overall": 71
+        },
+        "recommendations": {
+          "headlines": ["...", "..."],
+          "aboutSuggestions": { "missing": "...", "rewritten": "..." },
+          "experienceEdits": [
+            { "role": "...", "company": "...", "improvements": ["Bullet 1", "Bullet 2"] }
+          ]
+        },
+        "missingKeywords": ["...", "..."],
+        "actionPlan": {
+          "thisWeek": ["...", "..."],
+          "next30Days": ["...", "..."],
+          "next60Days": ["...", "..."]
+        }
       }
     `;
 
-    // Reuse the existing multi-provider strategy
-    if (this.gemini) {
-      try {
-        const result = (await this.tryGemini(
-          this.gemini,
-          prompt,
-        )) as LinkedinAnalysisResponse;
-        if (result) return result;
-      } catch (e) {
-        this.logger.error(e);
-      }
-    }
-
+    // 1. Try OpenAI First (since Gemini/Groq might have quota issues)
     if (this.openai) {
       try {
         const result = (await this.tryOpenAI(
           this.openai,
           prompt,
         )) as LinkedinAnalysisResponse;
+        this.logger.log(`OpenAI LinkedIn analysis success: ${!!result}`);
         if (result) return result;
       } catch (e) {
-        this.logger.error(e);
+        this.logger.error('OpenAI LinkedIn analysis failed', e);
       }
     }
 
-    // 3. No providers succeeded
+    // 2. Try Gemini Second
+    if (this.gemini) {
+      try {
+        const result = (await this.tryGemini(
+          this.gemini,
+          prompt,
+        )) as LinkedinAnalysisResponse;
+        this.logger.log(`Gemini LinkedIn analysis success: ${!!result}`);
+        if (result) return result;
+      } catch (e) {
+        this.logger.error('Gemini LinkedIn analysis failed, trying Groq...', e);
+      }
+    }
+
+    // 3. Try Groq Third
+    if (this.groq) {
+      try {
+        const result = (await this.tryGroq(
+          this.groq,
+          prompt,
+        )) as LinkedinAnalysisResponse;
+        this.logger.log(`Groq LinkedIn analysis success: ${!!result}`);
+        if (result) return result;
+      } catch (e) {
+        this.logger.error('Groq LinkedIn analysis failed', e);
+      }
+    }
+
+    // 4. No providers succeeded
     this.logger.error('All LinkedIn AI analysis providers failed.');
     return null;
   }
@@ -255,11 +326,27 @@ export class AiService {
           return result;
         }
       } catch (e) {
-        this.logger.error('Gemini CV Analysis failed', e);
+        this.logger.error('Gemini CV Analysis failed, trying Groq...', e);
       }
     }
 
-    // 2. Try OpenAI
+    // 2. Try Groq
+    if (this.groq) {
+      try {
+        const result = (await this.tryGroq(
+          this.groq,
+          prompt,
+        )) as CvAnalysisResponse;
+        if (result) {
+          this.logger.log('Groq CV analysis succeeded');
+          return result;
+        }
+      } catch (e) {
+        this.logger.error('Groq CV Analysis failed', e);
+      }
+    }
+
+    // 3. Try OpenAI
     if (this.openai) {
       try {
         const result = (await this.tryOpenAI(
@@ -272,7 +359,7 @@ export class AiService {
       }
     }
 
-    // 3. No providers succeeded
+    // 4. No providers succeeded
     this.logger.error('All CV AI analysis providers failed.');
     throw new Error(
       'AI Analysis failed. Please ensure your API keys are configured correctly.',
@@ -280,27 +367,69 @@ export class AiService {
   }
 
   private async tryGemini(client: GoogleGenAI, prompt: string): Promise<any> {
-    const modelName = 'gemini-2.5-flash';
+    const modelName = 'gemini-2.0-flash'; // Fixed from 2.5 which doesn't exist yet
     this.logger.log(`Calling Gemini API (New SDK) with model: ${modelName}`);
-    const response = await client.models.generateContent({
-      model: modelName,
-      contents: prompt,
-    });
-    const text = response.text;
-    if (!text) return null;
-    const jsonString = text.replace(/```json\n?|\n?```/g, '').trim();
-    return JSON.parse(jsonString);
+    try {
+      const response = await client.models.generateContent({
+        model: modelName,
+        contents: prompt,
+      });
+      const text = response.text;
+      if (!text) {
+        this.logger.warn(
+          `Gemini returned empty response for model ${modelName}`,
+        );
+        return null;
+      }
+
+      this.logger.debug(`Gemini Response Text: ${text}`);
+      const jsonString = text.replace(/```json\n?|\n?```/g, '').trim();
+      return JSON.parse(jsonString);
+    } catch (error: any) {
+      this.logger.error(
+        `Gemini generation/parsing failed for ${modelName}: ${(error as Error)?.message || 'Unknown error'}`,
+      );
+      return null;
+    }
+  }
+
+  private async tryGroq(client: Groq, prompt: string): Promise<any> {
+    const modelName = 'llama-3.3-70b-versatile';
+    this.logger.log(`Calling Groq API with model: ${modelName}`);
+    try {
+      const completion = await client.chat.completions.create({
+        messages: [{ role: 'user', content: prompt }],
+        model: modelName,
+        response_format: { type: 'json_object' },
+      });
+      const content = completion.choices[0].message.content;
+      if (!content) return null;
+      return JSON.parse(content);
+    } catch (error: any) {
+      this.logger.error(
+        `Groq generation/parsing failed for ${modelName}: ${(error as Error)?.message || 'Unknown error'}`,
+      );
+      return null;
+    }
   }
 
   private async tryOpenAI(client: OpenAI, prompt: string): Promise<any> {
-    const completion = await client.chat.completions.create({
-      messages: [{ role: 'user', content: prompt }],
-      model: 'gpt-3.5-turbo',
-      response_format: { type: 'json_object' },
-    });
-    const content = completion.choices[0].message.content;
-    if (!content) return null;
-    return JSON.parse(content);
+    this.logger.log('Calling OpenAI API (gpt-4o)');
+    try {
+      const completion = await client.chat.completions.create({
+        messages: [{ role: 'user', content: prompt }],
+        model: 'gpt-4o',
+        response_format: { type: 'json_object' },
+      });
+      const content = completion.choices[0].message.content;
+      if (!content) return null;
+      return JSON.parse(content);
+    } catch (error: any) {
+      this.logger.error(
+        `OpenAI generation/parsing failed: ${(error as Error)?.message || 'Unknown error'}`,
+      );
+      return null;
+    }
   }
 
   private buildPrompt(
