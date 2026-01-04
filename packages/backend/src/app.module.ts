@@ -15,7 +15,7 @@ import { CvModule } from './modules/cv/cv.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: ['../.env', '.env'],
+      envFilePath: ['../../.env', '../.env', '.env'],
       load: [configuration],
     }),
     AnalysisModule,

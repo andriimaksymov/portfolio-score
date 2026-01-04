@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { AiService } from '../ai/ai.service';
 
-const pdf = require('pdf-parse');
+import pdf from 'pdf-parse';
 
 @Injectable()
 export class CvService {
@@ -13,7 +13,7 @@ export class CvService {
     this.logger.log('Processing CV PDF...');
 
     try {
-      const data = await pdf(buffer);
+      const data: pdf.Result = await pdf(buffer);
       const text = data.text;
 
       this.logger.log(`Extracted ${text.length} characters from PDF.`);
@@ -25,9 +25,11 @@ export class CvService {
         fullText: text,
         analysis,
       };
-    } catch (error) {
-      this.logger.error('Failed to parse PDF', error);
-      throw new Error('Failed to parse PDF file.');
+    } catch (error: any) {
+      this.logger.error('Error during CV processing', error);
+      const errorMessage =
+        error instanceof Error ? error.message : 'Failed to process CV.';
+      throw new Error(errorMessage);
     }
   }
 }

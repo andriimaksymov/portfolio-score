@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import OpenAI from 'openai';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenAI } from '@google/genai';
 import {
   GithubProfile,
   GithubRepo,
@@ -67,8 +67,7 @@ export interface LinkedinAnalysisResponse {
 export class AiService {
   private readonly logger = new Logger(AiService.name);
   private openai: OpenAI | null = null;
-  private gemini: GoogleGenerativeAI | null = null;
-  private geminiModel: any = null; // Added for direct model access
+  private gemini: GoogleGenAI | null = null;
 
   constructor(private configService: ConfigService) {
     this.initializeClients();
@@ -78,8 +77,13 @@ export class AiService {
     // Initialize Gemini (High Priority)
     const geminiKey = this.configService.get<string>('GEMINI_API_KEY');
     if (geminiKey) {
-      this.gemini = new GoogleGenerativeAI(geminiKey);
-      this.logger.log('Gemini AI initialized');
+      this.gemini = new GoogleGenAI({
+        apiKey: geminiKey,
+        apiVersion: 'v1',
+      });
+      this.logger.log('Gemini AI initialized successfully (New SDK, v1)');
+    } else {
+      this.logger.warn('GEMINI_API_KEY not found in configuration');
     }
 
     // Initialize OpenAI (Fallback)
@@ -93,7 +97,9 @@ export class AiService {
     }
 
     if (!this.gemini && !this.openai) {
-      this.logger.warn('No AI API keys found. Using Mock Mode.');
+      this.logger.warn(
+        'No AI API keys found. AI features will be unavailable.',
+      );
     }
   }
 
@@ -107,7 +113,10 @@ export class AiService {
     // 1. Try Gemini First
     if (this.gemini) {
       try {
-        const result = await this.tryGemini(this.gemini, prompt);
+        const result = (await this.tryGemini(
+          this.gemini,
+          prompt,
+        )) as AiAnalysisResponse;
         if (result) return result;
       } catch (error) {
         this.logger.error('Gemini analysis failed, falling back...', error);
@@ -117,16 +126,19 @@ export class AiService {
     // 2. Try OpenAI Second
     if (this.openai) {
       try {
-        const result = await this.tryOpenAI(this.openai, prompt);
+        const result = (await this.tryOpenAI(
+          this.openai,
+          prompt,
+        )) as AiAnalysisResponse;
         if (result) return result;
       } catch (error) {
         this.logger.error('OpenAI analysis failed, falling back...', error);
       }
     }
 
-    // 3. Fallback to Mock Data
-    this.logger.warn('Returning mock AI analysis data.');
-    return this.getMockAnalysis();
+    // 3. No providers succeeded
+    this.logger.error('All AI analysis providers failed.');
+    return null;
   }
 
   async generateLinkedinAnalysis(
@@ -174,8 +186,11 @@ export class AiService {
     // Reuse the existing multi-provider strategy
     if (this.gemini) {
       try {
-        const result = await this.tryGemini(this.gemini, prompt);
-        if (result) return result; // Cast for now, practically same JSON parsing logic
+        const result = (await this.tryGemini(
+          this.gemini,
+          prompt,
+        )) as LinkedinAnalysisResponse;
+        if (result) return result;
       } catch (e) {
         this.logger.error(e);
       }
@@ -183,40 +198,19 @@ export class AiService {
 
     if (this.openai) {
       try {
-        const result = await this.tryOpenAI(this.openai, prompt);
+        const result = (await this.tryOpenAI(
+          this.openai,
+          prompt,
+        )) as LinkedinAnalysisResponse;
         if (result) return result;
       } catch (e) {
         this.logger.error(e);
       }
     }
 
-    // Mock fallback
-    return {
-      summary: {
-        original: data.about,
-        improved: `Passionate ${data.title} with a proven track record of delivering high-quality solutions. Expert in ${data.skills.slice(0, 3).join(', ')}.`,
-        critique: 'Original summary was too brief.',
-      },
-      experience: data.experience.map((e) => ({
-        role: e.role,
-        company: e.company,
-        original: e.description,
-        improved: `Championed development of key features at ${e.company}, resulting in 20% efficiency increase. Led team in adopting ${data.skills[0] || 'modern tech'}.`,
-        suggestions: ['Add specific metrics', 'Mention team size'],
-      })),
-      skills: {
-        missing: ['Cloud Architecture', 'System Design'],
-        trending: ['AI Integration', 'Performance Optimization'],
-      },
-      courses: [
-        {
-          title: 'Advanced System Design',
-          platform: 'Coursera',
-          url: 'https://coursera.org/search?query=system%20design',
-          reason: 'Critical for senior roles',
-        },
-      ],
-    };
+    // 3. No providers succeeded
+    this.logger.error('All LinkedIn AI analysis providers failed.');
+    return null;
   }
 
   async generateCvAnalysis(text: string): Promise<CvAnalysisResponse> {
@@ -247,10 +241,19 @@ export class AiService {
     `;
 
     // 1. Try Gemini
+    this.logger.log(
+      `Attempting Gemini CV analysis (Gemini Client: ${!!this.gemini})`,
+    );
     if (this.gemini) {
       try {
-        const result = await this.tryGemini(this.gemini, prompt);
-        if (result) return result;
+        const result = (await this.tryGemini(
+          this.gemini,
+          prompt,
+        )) as CvAnalysisResponse;
+        if (result) {
+          this.logger.log('Gemini CV analysis succeeded');
+          return result;
+        }
       } catch (e) {
         this.logger.error('Gemini CV Analysis failed', e);
       }
@@ -259,40 +262,32 @@ export class AiService {
     // 2. Try OpenAI
     if (this.openai) {
       try {
-        const result = await this.tryOpenAI(this.openai, prompt);
+        const result = (await this.tryOpenAI(
+          this.openai,
+          prompt,
+        )) as CvAnalysisResponse;
         if (result) return result;
       } catch (e) {
         this.logger.error('OpenAI CV Analysis failed', e);
       }
     }
 
-    // 3. Fallback Mock
-    return {
-      summary: {
-        professionalLikelihood: 65,
-        critique:
-          'The CV has good content but lacks quantifiable impact. It reads more like a job description than a list of achievements.',
-      },
-      improvements: [
-        {
-          category: 'Impact',
-          quote: text.substring(0, 50), // Fallback quote
-          suggestion: 'Quantify this achievement with numbers.',
-          rewritten: 'Improved X by Y%.',
-        },
-      ],
-      missingKeywords: ['CI/CD', 'Unit Testing'],
-    };
+    // 3. No providers succeeded
+    this.logger.error('All CV AI analysis providers failed.');
+    throw new Error(
+      'AI Analysis failed. Please ensure your API keys are configured correctly.',
+    );
   }
 
-  private async tryGemini(
-    client: GoogleGenerativeAI,
-    prompt: string,
-  ): Promise<any> {
-    const model = client.getGenerativeModel({ model: 'gemini-pro' });
-    const result = await model.generateContent(prompt);
-    const response = result.response;
-    const text = response.text();
+  private async tryGemini(client: GoogleGenAI, prompt: string): Promise<any> {
+    const modelName = 'gemini-2.5-flash';
+    this.logger.log(`Calling Gemini API (New SDK) with model: ${modelName}`);
+    const response = await client.models.generateContent({
+      model: modelName,
+      contents: prompt,
+    });
+    const text = response.text;
+    if (!text) return null;
     const jsonString = text.replace(/```json\n?|\n?```/g, '').trim();
     return JSON.parse(jsonString);
   }
@@ -350,23 +345,5 @@ export class AiService {
         "improvements": ["Improvement 1", "Improvement 2", "Improvement 3"]
       }
     `;
-  }
-
-  private getMockAnalysis(): AiAnalysisResponse {
-    return {
-      summary:
-        'This developer demonstrates a solid foundation in web development with a focus on modern JavaScript frameworks. Their portfolio shows inconsistent activity but high-quality individual projects.',
-      careerPath: 'Frontend Developer or Junior Full Stack Engineer',
-      keyStrengths: [
-        'Strong understanding of component-based architecture',
-        'Experience with modern build tools',
-        'Attention to project documentation',
-      ],
-      improvements: [
-        'Increase consistency of contributions',
-        'Expand technical breadth beyond primary stack',
-        'Engage more with the open source community',
-      ],
-    };
   }
 }
