@@ -6,9 +6,9 @@ NestJS backend API for the Portfolio Analyzer application.
 
 - **NestJS** - Progressive Node.js framework
 - **TypeScript** - Type safety
+- **Google Gemini (Generative AI)** - Portfolio analysis and career insights
 - **Axios** - HTTP client for GitHub API
 - **Class Validator** - DTO validation
-- **Class Transformer** - Object transformation
 - **@nestjs/config** - Configuration management
 
 ## Project Structure
@@ -16,17 +16,20 @@ NestJS backend API for the Portfolio Analyzer application.
 ```
 src/
 ├── modules/              # Feature modules
-│   ├── analysis/         # Portfolio analysis
+│   ├── analysis/         # Analysis orchestration
 │   │   ├── dto/          # Data transfer objects
 │   │   ├── analysis.controller.ts
 │   │   ├── analysis.service.ts
 │   │   └── analysis.module.ts
+│   ├── ai/               # Gemini AI integration
+│   │   ├── interfaces/   # AI response schemas
+│   │   ├── ai.service.ts
+│   │   └── ai.module.ts
 │   ├── github/           # GitHub API integration
-│   │   ├── types/        # GitHub-specific types
 │   │   ├── github.service.ts
 │   │   └── github.module.ts
 │   └── scoring/          # Scoring algorithms
-│       ├── strategies/   # Different scoring strategies
+│       ├── strategies/   # Modular scoring strategies
 │       ├── scoring.service.ts
 │       └── scoring.module.ts
 ├── common/               # Shared utilities
@@ -140,37 +143,47 @@ Content-Type: application/json
 }
 ```
 
-Analyzes a GitHub user's portfolio and returns:
-- Overall score
-- Individual scores (activity, project quality, tech stack diversity, consistency)
-- Strengths
-- Weaknesses
-- Recommendations
+Analyzes a GitHub user's portfolio using modular scoring and AI-powered insights.
 
-**Response:**
-
+**Response Schema:**
 ```json
 {
   "username": "example_user",
-  "overallScore": 75,
+  "overallScore": 85,
   "scores": {
-    "activity": 80,
-    "projectQuality": 70,
-    "techStackDiversity": 75,
-    "consistency": 75
+    "activity": 90,
+    "projectQuality": 80,
+    "techStackDiversity": 85,
+    "consistency": 85
   },
-  "strengths": [
-    "High GitHub activity",
-    "Diverse technology stack"
-  ],
-  "weaknesses": [
-    "Projects need better documentation"
-  ],
-  "recommendations": [
-    "Add comprehensive README files to your projects",
-    "Include documentation and examples in your repositories"
-  ],
-  "analyzedAt": "2026-01-01T09:32:47.000Z"
+  "strengths": ["Consistent contribution history", "Strong README documentation"],
+  "weaknesses": ["Lack of recent project activity", "Limited variety in UI frameworks"],
+  "recommendations": ["Expand your frontend portfolio with React/Vue projects", "Enhance repository documentation"],
+  "aiInsights": {
+    "overview": {
+      "current": "You have a solid technical base with clear documentation.",
+      "working": "Your documentation style is exceptionally clear and structured.",
+      "fixFirst": "Improve the 'Stack' score by diversifying beyond vanilla JS."
+    },
+    "profileSummary": "A disciplined developer with a high focus on documentation quality.",
+    "flagshipProjects": [
+      {
+        "name": "project-alpha",
+        "reason": "Showcases complex algorithm implementation",
+        "improvements": ["Add unit tests", "Include setup guide"]
+      }
+    ],
+    "metricInsights": {
+      "activity": "Your activity has been stable over the last 6 months.",
+      "quality": "Documentation is a major strength.",
+      "stack": "Consider exploring modern frameworks like React.",
+      "consistency": "Good weekly commitment to coding."
+    },
+    "checklist": [
+      { "item": "Add unit tests to Project Alpha", "metricTag": "Quality" }
+    ]
+  },
+  "analyzedAt": "2026-01-05T20:00:00.000Z"
 }
 ```
 

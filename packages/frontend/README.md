@@ -9,9 +9,9 @@ React + TypeScript frontend for the Portfolio Analyzer application.
 - **Vite** - Build tool and dev server
 - **TanStack Query** - Server state management
 - **Material-UI (MUI)** - Component library
+- **Recharts** - Data visualization (Radar charts)
 - **React Router v6** - Routing
 - **Axios** - HTTP client
-- **Emotion** - CSS-in-JS (MUI dependency)
 
 ## Project Structure
 
@@ -38,7 +38,7 @@ src/
 ├── pages/                 # Route components
 │   └── HomePage.tsx
 ├── App.tsx                # Main app component
-└── main.tsx               # Entry point
+│   └── main.tsx           # Entry point
 ```
 
 ## Getting Started
@@ -159,16 +159,22 @@ import Button from '@/shared/components/Button';
 
 Development server proxies `/api` requests to `http://localhost:3001`
 
-## Future Enhancements
+## ✨ Visual Components
 
-- [ ] Add authentication flow
-- [ ] Implement error boundaries
-- [ ] Add loading skeletons
-- [ ] Create reusable form components
-- [ ] Add unit tests (Vitest)
-- [ ] Add E2E tests (Playwright)
-- [ ] Implement dark mode toggle
-- [ ] Add internationalization (i18n)
+### Radar Metrics Chart
+Visualizes the "shape" of a developer's profile across four key dimensions: **Activity**, **Quality**, **Stack**, and **Consistency**. Built with `recharts`.
+
+### Action Checklist
+Interactive, per-user checklist for portfolio improvements. Features metric tags and persistence using `localStorage`.
+
+### Role Selector
+Allows users to specify their target career path (e.g., Frontend, Backend), adjusting AI analysis priorities and recommendations.
+
+### Profile Snapshot
+Identity card showcasing GitHub metadata (avatar, bio, stats) combined with an AI-generated professional summary.
+
+### AI Follow-up Question
+Contextual chat interface allowing users to ask specific questions about their analysis results.
 
 ## Environment Variables
 
@@ -193,3 +199,19 @@ Create a `.env.local` file for local development:
 - All components should be functional components with hooks
 - Prefer composition over inheritance
 - Keep components small and focused
+
+## 🗺️ Roadmap & Progress
+
+- [x] Interactive AI-powered analysis
+- [x] Visual metric charts with Recharts
+- [x] Role-based personalization
+- [x] Actionable checklist with local persistence
+- [x] LinkedIn/Export placeholder actions
+- [ ] Add authentication flow (GitHub OAuth)
+- [ ] Implement error boundaries and improved error states
+- [ ] Add loading skeletons for better UX
+- [ ] Create reusable form components
+- [ ] Add unit tests (Vitest)
+- [ ] Add E2E tests (Playwright)
+- [ ] Implement dark mode toggle
+- [ ] Add internationalization (i18n)

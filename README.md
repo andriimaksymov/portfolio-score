@@ -8,19 +8,21 @@ Portfolio Analyzer helps junior to mid-level developers understand their portfol
 
 ## ✨ Features
 
-### Current (MVP)
-- **GitHub Integration**: Fetch and analyze public GitHub profiles
-- **Portfolio Analysis**: Evaluate projects, activity, tech stack diversity, and consistency
-- **Scoring System**: Generate overall portfolio scores with detailed breakdowns
-- **Recommendations**: Provide actionable suggestions for improvement
-- **Modern UI**: Clean, responsive dashboard with loading and empty states
+### Current Features
+- **AI-Powered Analysis**: Deep insights into profile reputation using **Google Gemini**
+- **Visual Metrics Visualization**: Radar charts comparing Activity, Quality, Stack, and Consistency
+- **Interactive Action Checklist**: Strategic 30-60 day plan with local progress tracking
+- **GitHub Integration**: Fetch and analyze public profiles with metadata (avatar, bio, followers)
+- **Flagship Project Analysis**: Automated identification of top repos with specific improvement advice
+- **Role Personalization**: Tailored recommendations based on target career path (Frontend, Backend, etc.)
+- **Modern UI**: Polished, glassmorphism dashboard with smooth animations and responsive design
 
 ### Planned
-- **AI-Powered Analysis**: Enhanced insights using OpenAI integration
-- **Authentication**: GitHub OAuth for personalized experiences
+- **Authentication**: GitHub OAuth for persistent user profiles
 - **History Tracking**: Store and compare analysis over time
-- **CV Analysis**: Parse and evaluate resume data
-- **Progress Reports**: Track improvement metrics
+- **CV & LinkedIn Analysis**: Parse and match resume data with GitHub presence
+- **Exportable Reports**: Professional PDF and LinkedIn summary generation (Currently handles copy-to-clipboard)
+- **Email Notifications**: Weekly progress updates and recommendations
 
 ## 🏗️ Architecture
 
@@ -199,16 +201,18 @@ Testing infrastructure is prepared for:
 
 ### Phase 1: MVP ✅
 - [x] Project initialization
-- [ ] GitHub API integration
-- [ ] Basic scoring algorithm
-- [ ] Results dashboard UI
-- [ ] Portfolio input form
+- [x] GitHub API integration
+- [x] Basic scoring algorithm
+- [x] Results dashboard UI
+- [x] Portfolio input form
 
-### Phase 2: Enhancement
-- [ ] AI-powered analysis (OpenAI)
-- [ ] Advanced scoring strategies
-- [ ] Detailed recommendations
-- [ ] UI polish and animations
+### Phase 2: Enhancement ✅
+- [x] AI-powered analysis (Google Gemini)
+- [x] Visual Metric Charts (Radar charts)
+- [x] Detailed "Flagship Project" recommendations
+- [x] Interactive Action Checklist with persistence
+- [x] AI Follow-up Question feature
+- [x] UI polish and glassmorphism design
 
 ### Phase 3: Persistence
 - [ ] Database integration (PostgreSQL + Prisma)
