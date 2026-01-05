@@ -1,152 +1,113 @@
-import { Box, Grid, Typography, Paper, Stack, Checkbox, FormControlLabel } from '@mui/material';
+import { Box, Grid, Typography, Stack } from '@mui/material';
 import OverallScore from './OverallScore';
 import ScoreCard from './ScoreCard';
+import ProfileSnapshot from './ProfileSnapshot';
+import MetricsChart from './MetricsChart';
+import FlagshipProjects from './FlagshipProjects';
 import StrengthsWeaknesses from './StrengthsWeaknesses';
 import RecommendationsList from './RecommendationsList';
 import AiInsightsCard from './AiInsightsCard';
-import TimelineIcon from '@mui/icons-material/Timeline';
 import ChecklistIcon from '@mui/icons-material/Checklist';
 import type { AnalysisResult } from '../types/analysis.types';
+
+import type { TargetRole } from './RoleSelector';
+import RoleSelector from './RoleSelector';
+import ActionChecklist from './ActionChecklist';
+import FollowUpQuestion from './FollowUpQuestion';
+import { useState } from 'react';
 
 interface AnalysisDashboardProps {
   analysis: AnalysisResult;
 }
 
 export default function AnalysisDashboard({ analysis }: AnalysisDashboardProps) {
-  const { overallScore, scores, strengths, weaknesses, recommendations, aiInsights } = analysis;
+  const { scores, strengths, weaknesses, recommendations, aiInsights } = analysis;
+  const [_targetRole, setTargetRole] = useState<TargetRole>('Full-stack');
 
   return (
     <Box>
+      {/* Profile Snapshot - Top Identity */}
+      <ProfileSnapshot analysis={analysis} />
+
+      {/* Target Role & Personalization */}
+      <RoleSelector onRoleChange={setTargetRole} />
+
       {/* Overall Score & Top Level Stats */}
-      <OverallScore score={overallScore} />
+      <OverallScore analysis={analysis} />
 
-      {/* AI Insights - Primary Value */}
-      {aiInsights && <AiInsightsCard insights={aiInsights} />}
-
-      {/* Detailed Scores Grid */}
+      {/* Profile Shape & Detailed Metrics */}
       <Box sx={{ mb: 6 }}>
         <Typography variant="h5" fontWeight="800" sx={{ mb: 3, color: 'var(--text-primary)' }}>
-          📊 Detailed Activity Metrics
+          📊 Metrics & Analysis
         </Typography>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} md={3}>
-            <ScoreCard
-              label="Activity"
-              score={scores.activity}
-              description="Frequency and recency of your contributions."
-            />
+          <Grid item xs={12} md={5} lg={4}>
+            <MetricsChart scores={scores} />
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <ScoreCard
-              label="Quality"
-              score={scores.projectQuality}
-              description="Documentation and structure of your projects."
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <ScoreCard
-              label="Stack"
-              score={scores.techStackDiversity}
-              description="Breadth and depth of your technologies."
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <ScoreCard
-              label="Consistency"
-              score={scores.consistency}
-              description="Predictability of your coding habits."
-            />
+          <Grid item xs={12} md={7} lg={8}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={6}>
+                <ScoreCard
+                  label="Activity"
+                  score={scores.activity}
+                  description="Frequency and recency of your contributions."
+                  insight={aiInsights?.metricInsights.activity}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <ScoreCard
+                  label="Quality"
+                  score={scores.projectQuality}
+                  description="Documentation and structure of your projects."
+                  insight={aiInsights?.metricInsights.quality}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <ScoreCard
+                  label="Stack"
+                  score={scores.techStackDiversity}
+                  description="Breadth and depth of your technologies."
+                  insight={aiInsights?.metricInsights.stack}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <ScoreCard
+                  label="Consistency"
+                  score={scores.consistency}
+                  description="Predictability of your coding habits."
+                  insight={aiInsights?.metricInsights.consistency}
+                />
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </Box>
+
+      {/* Flagship Projects */}
+      {aiInsights?.flagshipProjects && (
+        <FlagshipProjects projects={aiInsights.flagshipProjects} />
+      )}
+
+      {/* AI Insights - Primary Value */}
+      {aiInsights && <AiInsightsCard insights={aiInsights} />}
 
       {/* Strengths & Weaknesses */}
       <StrengthsWeaknesses strengths={strengths} weaknesses={weaknesses} />
 
       {/* 30-60 Day Action Plan */}
-      <Paper className="glass-card" sx={{ p: { xs: 3, md: 5 }, mb: 4, borderRadius: '24px' }}>
-        <Stack direction="row" spacing={1.5} alignItems="center" sx={{ mb: 3 }}>
-          <TimelineIcon sx={{ color: 'var(--accent-primary)', fontSize: 32 }} />
-          <Typography variant="h4" fontWeight="800" color="var(--text-primary)">
-            30–60 Day Strategic Action Plan
-          </Typography>
-        </Stack>
-
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={4}>
-            <Box sx={{ p: 2, borderRadius: '16px', bgcolor: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', height: '100%' }}>
-              <Typography variant="h6" fontWeight="700" color="var(--accent-primary)" gutterBottom>
-                Phase 1: Foundation (Days 1–15)
-              </Typography>
-              <Typography variant="body2" sx={{ color: 'var(--text-secondary)' }}>
-                Focus on high-impact visual wins. Update READMEs for your top 3 repos and pin them to your profile. Clean up repository descriptions and add clear project titles.
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Box sx={{ p: 2, borderRadius: '16px', bgcolor: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', height: '100%' }}>
-              <Typography variant="h6" fontWeight="700" color="var(--accent-primary)" gutterBottom>
-                Phase 2: Depth (Days 16–45)
-              </Typography>
-              <Typography variant="body2" sx={{ color: 'var(--text-secondary)' }}>
-                Ship one significant feature or refactor per week. Aim to increase your commit frequency. Deploy at least two projects to live URLs (Vercel, Netlify) and add links to repo descriptions.
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Box sx={{ p: 2, borderRadius: '16px', bgcolor: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', height: '100%' }}>
-              <Typography variant="h6" fontWeight="700" color="var(--accent-primary)" gutterBottom>
-                Phase 3: Impact (Days 46–60)
-              </Typography>
-              <Typography variant="body2" sx={{ color: 'var(--text-secondary)' }}>
-                Contribute to one external open-source project. Summarize your top achievements into a LinkedIn post. Refine your bio to reflect the tech stack you want to be hired for.
-              </Typography>
-            </Box>
-          </Grid>
-        </Grid>
-      </Paper>
-
-      {/* Portfolio Checklist */}
-      <Paper className="glass-card" sx={{ p: { xs: 3, md: 5 }, borderRadius: '24px', mb: 4 }}>
+      <Box sx={{ mb: 6 }}>
         <Stack direction="row" spacing={1.5} alignItems="center" sx={{ mb: 3 }}>
           <ChecklistIcon sx={{ color: 'var(--accent-primary)', fontSize: 32 }} />
           <Typography variant="h4" fontWeight="800" color="var(--text-primary)">
-            Portfolio Readiness Checklist
+            Strategic Action Plan
           </Typography>
         </Stack>
+        <ActionChecklist items={aiInsights?.checklist} username={analysis.username} />
+        <RecommendationsList recommendations={recommendations} />
+      </Box>
 
-        <Grid container spacing={2}>
-          {[
-            'Polished READMEs for top 3 repositories',
-            'Live demo links for all current major projects',
-            'Professional profile photo and bio',
-            'Accurate skill tags on repositories',
-            'Pinned repositories reflecting current expertise',
-            'Clean and consistent commit history'
-          ].map((item, idx) => (
-            <Grid item xs={12} sm={6} key={idx}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    sx={{
-                      color: 'rgba(255, 255, 255, 0.3)',
-                      '&.Mui-checked': { color: 'var(--accent-primary)' }
-                    }}
-                  />
-                }
-                label={
-                  <Typography variant="body1" sx={{ color: 'var(--text-secondary)' }}>
-                    {item}
-                  </Typography>
-                }
-              />
-            </Grid>
-          ))}
-        </Grid>
-      </Paper>
-
-      {/* Recommendations */}
-      <RecommendationsList recommendations={recommendations} />
+      {/* Follow-up Question */}
+      <FollowUpQuestion />
     </Box>
   );
 }

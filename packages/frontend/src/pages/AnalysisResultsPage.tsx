@@ -36,9 +36,7 @@ export default function AnalysisResultsPage() {
               p: { xs: 4, md: 6 },
               borderRadius: '24px',
               display: 'flex',
-              flexDirection: { xs: 'column', md: 'row' },
-              alignItems: { xs: 'flex-start', md: 'center' },
-              justifyContent: 'space-between',
+              flexDirection: 'column',
               gap: 4
             }}
           >
@@ -83,23 +81,61 @@ export default function AnalysisResultsPage() {
               </Typography>
             </Box>
 
-            <Button
-              variant="contained"
-              size="large"
-              color="secondary"
-              startIcon={<ArrowBackIcon />}
-              onClick={() => navigate('/')}
-              sx={{
-                borderRadius: '12px',
-                px: 4,
-                py: 1.5,
-                fontWeight: 700,
-                textTransform: 'none',
-                boxShadow: '0 8px 20px rgba(0, 0, 0, 0.2)'
-              }}
-            >
-              Analyze another portfolio
-            </Button>
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={() => alert('LinkedIn Summary copied to clipboard!')}
+                sx={{
+                  borderRadius: '12px',
+                  px: 3,
+                  py: 1,
+                  fontWeight: 600,
+                  textTransform: 'none',
+                  borderColor: 'rgba(59, 130, 246, 0.3)',
+                  color: 'var(--text-primary)',
+                  '&:hover': {
+                    borderColor: 'var(--accent-primary)',
+                    bgcolor: 'rgba(59, 130, 246, 0.05)',
+                  }
+                }}
+              >
+                Share on LinkedIn
+              </Button>
+              <Button
+                variant="outlined"
+                color="inherit"
+                onClick={() => alert('Exporting to PDF...')}
+                sx={{
+                  borderRadius: '12px',
+                  px: 3,
+                  py: 1,
+                  fontWeight: 600,
+                  textTransform: 'none',
+                  borderColor: 'rgba(255, 255, 255, 0.1)',
+                  color: 'var(--text-secondary)',
+                }}
+              >
+                Export PDF
+              </Button>
+              <Button
+                variant="contained"
+                size="large"
+                color="secondary"
+                startIcon={<ArrowBackIcon />}
+                onClick={() => navigate('/')}
+                sx={{
+                  borderRadius: '12px',
+                  px: 4,
+                  py: 1.5,
+                  fontWeight: 700,
+                  textTransform: 'none',
+                  boxShadow: '0 8px 20px rgba(0, 0, 0, 0.2)'
+                }}
+              >
+                New Analysis
+              </Button>
+            </Stack>
           </Paper>
         </Container>
       </Box>

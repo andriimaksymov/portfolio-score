@@ -1,9 +1,11 @@
 import { Paper, Typography, Box, LinearProgress, Chip, Stack } from '@mui/material';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 interface ScoreCardProps {
   label: string;
   score: number;
   description: string;
+  insight?: string;
 }
 
 const getStatusInfo = (score: number) => {
@@ -13,7 +15,7 @@ const getStatusInfo = (score: number) => {
   return { label: 'Poor', color: '#ef4444' };
 };
 
-export default function ScoreCard({ label, score, description }: ScoreCardProps) {
+export default function ScoreCard({ label, score, description, insight }: ScoreCardProps) {
   const { label: statusLabel, color: statusColor } = getStatusInfo(score);
 
   return (
@@ -74,6 +76,23 @@ export default function ScoreCard({ label, score, description }: ScoreCardProps)
         <Typography variant="body2" sx={{ color: 'var(--text-secondary)', lineHeight: 1.5 }}>
           {description}
         </Typography>
+
+        {insight && (
+          <Box
+            sx={{
+              mt: 1,
+              pt: 2,
+              borderTop: '1px solid rgba(255,255,255,0.05)',
+              display: 'flex',
+              gap: 1
+            }}
+          >
+            <InfoOutlinedIcon sx={{ fontSize: '1rem', color: 'var(--accent-primary)', mt: 0.2 }} />
+            <Typography variant="caption" sx={{ color: 'var(--text-secondary)', fontStyle: 'italic', lineHeight: 1.4 }}>
+              <strong>Why this score?</strong> {insight}
+            </Typography>
+          </Box>
+        )}
       </Stack>
     </Paper>
   );

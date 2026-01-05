@@ -3,7 +3,7 @@ import { GithubService } from '../github/github.service';
 import { ScoringService } from '../scoring/scoring.service';
 
 import { AiService } from '../ai/ai.service';
-
+import { AiAnalysisScores } from '../ai/interfaces/ai.interfaces';
 import { GithubData } from '../github/interfaces/github.interfaces';
 
 @Injectable()
@@ -34,6 +34,14 @@ export class AnalysisService {
 
     return {
       username,
+      profile: {
+        avatarUrl: githubData.profile.avatar_url,
+        bio: githubData.profile.bio,
+        followers: githubData.profile.followers,
+        company: githubData.profile.company,
+        location: githubData.profile.location,
+        publicRepos: githubData.profile.public_repos,
+      },
       overallScore: scores.overall,
       scores: {
         activity: scores.activity,
@@ -50,8 +58,8 @@ export class AnalysisService {
   }
 
   private generateRecommendations(
-    scores: any,
-    githubData: GithubData,
+    scores: AiAnalysisScores,
+    _githubData: GithubData,
   ): string[] {
     const recommendations: string[] = [];
 
@@ -81,7 +89,7 @@ export class AnalysisService {
     return recommendations;
   }
 
-  private identifyStrengths(scores: any): string[] {
+  private identifyStrengths(scores: AiAnalysisScores): string[] {
     const strengths: string[] = [];
 
     if (scores.activity >= 70) {
@@ -103,7 +111,7 @@ export class AnalysisService {
     return strengths;
   }
 
-  private identifyWeaknesses(scores: any): string[] {
+  private identifyWeaknesses(scores: AiAnalysisScores): string[] {
     const weaknesses: string[] = [];
 
     if (scores.activity < 50) {

@@ -448,16 +448,27 @@ export class AiService {
         topics: repo.topics,
       }));
 
+    const primaryTech = [
+      ...new Set(repos.map((r) => r.language).filter(Boolean)),
+    ].slice(0, 5);
+    const lastRepo = repos.sort(
+      (a, b) =>
+        new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime(),
+    )[0];
+
     return `
-      Analyze this developer portfolio:
+      Analyze this developer's GitHub portfolio to provide a personalized, encouraging, and honest assessment.
       
-      Profile:
+      User Profile:
+      - Username: ${profile.login}
       - Bio: ${profile.bio || 'None'}
       - Public Repos: ${profile.public_repos}
       - Followers: ${profile.followers}
       - Company: ${profile.company || 'None'}
+      - Primary Tech (detected): ${primaryTech.join(', ')}
+      - Most recently updated repo: ${lastRepo?.name || 'N/A'} (last updated: ${lastRepo?.updated_at || 'N/A'})
       
-      Scores (0-100):
+      Metric Scores (0-100):
       - Activity: ${scores.activity}
       - Project Quality: ${scores.projectQuality}
       - Tech Stack Diversity: ${scores.techStackDiversity}
@@ -466,12 +477,38 @@ export class AiService {
       Top Repositories:
       ${JSON.stringify(topRepos, null, 2)}
       
-      Please provide a JSON response with the following structure:
+      IMPORTANT: In your response, mention specific repository names (e.g., "${topRepos[0]?.name || 'your projects'}"), technologies you see used (like ${primaryTech[0] || 'your core stack'}), and specific activity patterns.
+      Avoid generic advice. If they use Next.js, talk about Next.js. If their last commit was 3 months ago, mention that.
+
+      Provide a JSON response with the following structure:
       {
         "summary": "2-3 sentences professional summary of their coding style and strengths",
-        "careerPath": "Suggestion for potential career paths or roles they fit best (e.g. Senior Frontend Engineer, Full Stack Developer)",
+        "careerPath": "Suggestion for potential career paths or roles they fit best",
         "keyStrengths": ["Strength 1", "Strength 2", "Strength 3"],
-        "improvements": ["Improvement 1", "Improvement 2", "Improvement 3"]
+        "improvements": ["Improvement 1", "Improvement 2", "Improvement 3"],
+        "overview": {
+          "current": "1-sentence summary of where they are now",
+          "working": "1-sentence summary of what is working well",
+          "fixFirst": "1-sentence summary of the most critical thing to improve"
+        },
+        "profileSummary": "A one-line punchy AI-written summary for a profile card (e.g., 'Full-stack builder with a passion for UX')",
+        "flagshipProjects": [
+          {
+            "name": "Repo Name representing a flagship project",
+            "reason": "Why this should be a flagship project",
+            "improvements": ["Specific improvement 1", "Specific improvement 2"]
+          }
+        ],
+        "metricInsights": {
+          "activity": "Explain why they got the activity score of ${scores.activity}, citing evidence",
+          "quality": "Explain why they got the quality score of ${scores.projectQuality}, citing evidence like READMEs or structure",
+          "stack": "Explain why they got the stack score of ${scores.techStackDiversity}, mentioning their specific tech",
+          "consistency": "Explain why they got the consistency score of ${scores.consistency}, citing their commit patterns"
+        },
+        "checklist": [
+          { "item": "Specific task like 'Update README for ${topRepos[0]?.name || 'your main project'}'", "metricTag": "Quality" },
+          { "item": "Another specific task", "metricTag": "Activity" }
+        ]
       }
     `;
   }
