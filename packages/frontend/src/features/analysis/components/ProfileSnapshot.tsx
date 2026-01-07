@@ -38,7 +38,7 @@ export default function ProfileSnapshot({ analysis }: ProfileSnapshotProps) {
       />
 
       <Avatar
-        src={profile.avatarUrl}
+        src={profile?.avatarUrl}
         alt={username}
         sx={{
           width: 100,
@@ -60,12 +60,12 @@ export default function ProfileSnapshot({ analysis }: ProfileSnapshotProps) {
           <Typography variant="h4" fontWeight="800" color="var(--text-primary)">
             {username}
           </Typography>
-          {profile.company && (
+          {profile?.company && (
             <Typography
               variant="subtitle1"
               sx={{ color: 'var(--text-secondary)', opacity: 0.8 }}
             >
-              at {profile.company}
+              at {profile?.company}
             </Typography>
           )}
         </Stack>
@@ -89,10 +89,10 @@ export default function ProfileSnapshot({ analysis }: ProfileSnapshotProps) {
           sx={{
             color: 'var(--text-secondary)',
             maxWidth: '800px',
-            fontStyle: profile.bio ? 'normal' : 'italic',
+            fontStyle: profile?.bio ? 'normal' : 'italic',
           }}
         >
-          {profile.bio || 'No bio provided on GitHub.'}
+          {profile?.bio || 'No bio provided on GitHub.'}
         </Typography>
 
         <Stack
@@ -117,7 +117,7 @@ export default function ProfileSnapshot({ analysis }: ProfileSnapshotProps) {
               Followers
             </Typography>
           </Box>
-          {profile.location && (
+          {profile?.location && (
             <Box>
               <Typography variant="h6" fontWeight="700" color="var(--text-primary)">
                 {profile.location}
