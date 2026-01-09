@@ -1,78 +1,15 @@
-import { useState, useRef } from 'react';
-import { Box, Container, Typography, Grid, Paper, Button, Avatar, Tabs, Tab } from '@mui/material';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import DescriptionIcon from '@mui/icons-material/Description';
-import AutoGraphIcon from '@mui/icons-material/AutoGraph';
-import InsightsIcon from '@mui/icons-material/Insights';
-import SpeedIcon from '@mui/icons-material/Speed';
-import PortfolioInputForm from '@/features/portfolio/components/PortfolioInputForm';
+import Illustration from '@/assets/illustration.svg?react';
 import CvUploadForm from '@/features/portfolio/components/CvUploadForm';
 import LinkedinInputForm from '@/features/portfolio/components/LinkedinInputForm';
-
-const AnalysisPreview = () => (
-  <Box sx={{ position: 'relative', width: '100%', minHeight: '450px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-    {/* Background Glow */}
-    <Box sx={{ position: 'absolute', width: '120%', height: '120%', background: 'radial-gradient(circle at center, rgba(59, 130, 246, 0.1) 0%, transparent 70%)', filter: 'blur(40px)', zIndex: 0 }} />
-
-    <Paper
-      className="glass-card animate-float"
-      sx={{
-        width: '90%',
-        p: 4,
-        zIndex: 2,
-        background: 'rgba(5, 8, 22, 0.6)',
-        backdropFilter: 'blur(24px)',
-        border: '1px solid rgba(255, 255, 255, 0.08)',
-        borderRadius: '24px',
-        boxShadow: '0 20px 50px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.05)'
-      }}
-    >
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 4 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <Avatar sx={{ width: 56, height: 56, bgcolor: '#a5bcc7', boxShadow: '0 0 20px rgba(165, 188, 199, 0.3)' }}>
-            <GitHubIcon sx={{ fontSize: 32, color: '#050816' }} />
-          </Avatar>
-          <Box>
-            <Typography variant="h6" fontWeight="900" sx={{ color: '#fff', letterSpacing: -0.5 }}>octocat/verified</Typography>
-            <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)', display: 'flex', alignItems: 'center', gap: 0.5 }}>
-              <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: '#22c55e', animation: 'pulse 2s infinite' }} />
-              Analysis Engine Online
-            </Typography>
-          </Box>
-        </Box>
-        <Box sx={{ textAlign: 'right' }}>
-          <Typography variant="h3" fontWeight="900" sx={{ color: '#a5bcc7', mt: -0.5 }}>94</Typography>
-          <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.4)', fontWeight: 700, textTransform: 'uppercase' }}>Precision Score</Typography>
-        </Box>
-      </Box>
-
-      <Grid container spacing={2}>
-        {[
-          { icon: <AutoGraphIcon />, label: 'Architecture', value: 'Exceptional', color: '#3b82f6' },
-          { icon: <InsightsIcon />, label: 'Impact', value: 'High Growth', color: '#22c55e' }
-        ].map((item) => (
-          <Grid item xs={6} key={item.label}>
-            <Box sx={{ p: 2, borderRadius: '16px', bgcolor: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)' }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1, color: item.color }}>
-                {item.icon}
-                <Typography variant="caption" fontWeight="700" sx={{ opacity: 0.8 }}>{item.label}</Typography>
-              </Box>
-              <Typography variant="subtitle1" fontWeight="800" sx={{ color: '#fff' }}>{item.value}</Typography>
-            </Box>
-          </Grid>
-        ))}
-      </Grid>
-
-      <Box sx={{ mt: 3, p: 2, borderRadius: '16px', bgcolor: 'rgba(165, 188, 199, 0.05)', border: '1px solid rgba(165, 188, 199, 0.1)' }}>
-        <Typography variant="caption" sx={{ color: '#a5bcc7', fontWeight: 800, display: 'block', mb: 1 }}>AI INSIGHT</Typography>
-        <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', lineHeight: 1.5, fontStyle: 'italic' }}>
-          "Strong contribution consistency with focus on distributed systems. Recommend highlighting scalability patterns in top repositories."
-        </Typography>
-      </Box>
-    </Paper>
-  </Box>
-);
+import PortfolioInputForm from '@/features/portfolio/components/PortfolioInputForm';
+import AutoGraphIcon from '@mui/icons-material/AutoGraph';
+import DescriptionIcon from '@mui/icons-material/Description';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import InsightsIcon from '@mui/icons-material/Insights';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import SpeedIcon from '@mui/icons-material/Speed';
+import { Box, Button, Container, Grid, Paper, Tab, Tabs, Typography } from '@mui/material';
+import { useRef, useState } from 'react';
 
 const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) => (
   <Paper
@@ -117,55 +54,45 @@ export default function HomePage() {
   return (
     <Box sx={{ overflowX: 'hidden' }}>
       {/* Hero Section */}
-      <Box sx={{ pt: { xs: 8, md: 12 }, pb: { xs: 10, md: 16 } }}>
-        <Container maxWidth="lg">
-          <Grid container spacing={8} alignItems="center">
-            <Grid item xs={12} md={6} className="animate-fade-up">
-              <Typography
-                component="h1"
-                variant="h2"
-                fontWeight="800"
+      <Box bgcolor='#F5F7FA' sx={{ py: { xs: 8, md: 12 }, px: { xs: 2, md: 6 } }}>
+        <Grid container spacing={8} justifyContent="space-between" alignItems="center">
+          <Grid item xs={12} md={7} className="animate-fade-up">
+            <Typography
+              component="h1"
+              variant="h2"
+              fontWeight="800"
+              gutterBottom
+            >
+              Elevate Your Career with AI-Powered Portfolio Analysis.
+            </Typography>
+            <Typography variant="h6">
+              Gain a competitive edge with deep insights into your GitHub, LinkedIn, and CV. Let AI-guided analysis transform your professional presence.
+            </Typography>
+
+            <Box id="analyzer-input" ref={inputSectionRef} sx={{ mb: 6 }}>
+              <Tabs
+                value={source}
+                onChange={handleSourceChange}
                 sx={{
-                  fontSize: { xs: '2.5rem', md: '3.5rem' },
-                  lineHeight: 1.1,
-                  mb: 3,
-                  background: 'linear-gradient(45deg, #a5bcc7ff 20%, #b6c2d7ff 100%)',
-                  backgroundClip: 'text',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
+                  mb: 4,
                 }}
               >
-                Elevate Your Career with AI-Powered Portfolio Analysis.
-              </Typography>
-              <Typography variant="h6" sx={{ mb: 4, color: 'var(--text-secondary)', maxWidth: '90%', lineHeight: 1.6 }}>
-                Gain a competitive edge with deep insights into your GitHub, LinkedIn, and CV. Let AI-guided analysis transform your professional presence.
-              </Typography>
+                <Tab icon={<GitHubIcon />} iconPosition="start" label="GitHub" />
+                <Tab icon={<LinkedInIcon />} iconPosition="start" label="LinkedIn" />
+                <Tab icon={<DescriptionIcon />} iconPosition="start" label="CV / Resume" />
+              </Tabs>
 
-              <Box id="analyzer-input" ref={inputSectionRef} sx={{ mb: 6 }}>
-                <Tabs
-                  value={source}
-                  onChange={handleSourceChange}
-                  sx={{
-                    mb: 4,
-                  }}
-                >
-                  <Tab icon={<GitHubIcon />} iconPosition="start" label="GitHub" />
-                  <Tab icon={<LinkedInIcon />} iconPosition="start" label="LinkedIn" />
-                  <Tab icon={<DescriptionIcon />} iconPosition="start" label="CV / Resume" />
-                </Tabs>
-
-                <Box className="animate-fade-up" key={source}>
-                  {source === 0 && <PortfolioInputForm ref={githubInputRef} />}
-                  {source === 1 && <LinkedinInputForm />}
-                  {source === 2 && <CvUploadForm />}
-                </Box>
+              <Box key={source}>
+                {source === 0 && <PortfolioInputForm ref={githubInputRef} />}
+                {source === 1 && <LinkedinInputForm />}
+                {source === 2 && <CvUploadForm />}
               </Box>
-            </Grid>
-            <Grid item xs={12} md={6} sx={{ display: { xs: 'none', md: 'block' } }}>
-              <AnalysisPreview />
-            </Grid>
+            </Box>
           </Grid>
-        </Container>
+          <Grid item xs={12} md="auto">
+            <Illustration />
+          </Grid>
+        </Grid>
       </Box>
 
       {/* How it works */}
@@ -207,7 +134,7 @@ export default function HomePage() {
       </Box>
 
       {/* Why analyze your portfolio */}
-      <Box id="why-analyze" sx={{ py: { xs: 10, md: 16 }, bgcolor: 'rgba(255, 255, 255, 0.02)' }}>
+      <Box id="why-analyze" sx={{ py: { xs: 10, md: 16 }, bgcolor: '#F5F7FA' }}>
         <Container maxWidth="lg">
           <Typography variant="h3" align="center" fontWeight="800" gutterBottom sx={{ mb: 8 }}>
             Why analyze your portfolio?
@@ -245,7 +172,7 @@ export default function HomePage() {
             Ready to level up?
           </Typography>
           <Typography sx={{ color: 'var(--text-secondary)', mb: 6 }}>
-            Join thousands of developers using Portfolio Analyzer to improve their professional presence.
+            Join thousands of developers using SparkFolio to improve their professional presence.
           </Typography>
           <Button
             variant="contained"

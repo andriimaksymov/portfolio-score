@@ -78,7 +78,7 @@ const PortfolioInputForm = forwardRef((_, ref) => {
           type="submit"
           variant="contained"
           size="large"
-          color='secondary'
+          color='primary'
           disabled={isPending}
           sx={{
             minWidth: 160,

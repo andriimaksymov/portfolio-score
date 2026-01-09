@@ -1,6 +1,6 @@
-# Frontend - Portfolio Analyzer
+# Frontend - Sparkfolio
 
-React + TypeScript frontend for the Portfolio Analyzer application.
+React + TypeScript frontend for the Sparkfolio application.
 
 ## Tech Stack
 

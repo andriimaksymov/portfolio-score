@@ -1,7 +1,7 @@
 import { Box, Container, Typography, Link, Grid, IconButton } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import logo from '@/assets/logo.png';
+import Logo from '@/assets/innovation-creativity-icon.svg?react';
 
 export const Footer = () => {
   return (
@@ -10,7 +10,7 @@ export const Footer = () => {
       sx={{ 
         py: 6, 
         mt: 'auto',
-        bgcolor: 'rgb(5, 8, 22)',
+        bgcolor: '#263238',
         color: '#fff'
       }}
     >
@@ -18,14 +18,11 @@ export const Footer = () => {
         <Grid container spacing={4} justifyContent="space-between">
           <Grid item xs={12} md={4}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2 }}>
-              <Box
-                component="img"
-                src={logo}
-                alt="Logo"
-                sx={{ width: 28, height: 28, borderRadius: '4px' }}
+              <Logo
+                style={{ width: 28, height: 28, fill: '#fff' }}
               />
-              <Typography variant="h6" sx={{ fontWeight: 800, background: 'linear-gradient(45deg, #a5bcc7ff 20%, #b6c2d7ff 100%)', backgroundClip: 'text', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-                PORTFOLIO ANALYZER
+              <Typography variant="h6">
+                SPARKFOLIO
               </Typography>
             </Box>
             <Typography variant="body2" sx={{ color: 'var(--text-secondary)', mb: 3 }}>
@@ -47,7 +44,7 @@ export const Footer = () => {
               <Grid item xs={6} sm={4}>
                 <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 2 }}>Links</Typography>
                 <Link href="https://github.com/andriimaksymov/portfolio-score" target="_blank" color="inherit" display="block" sx={{ mb: 1, variant: 'body2', color: 'var(--text-secondary)' }}>GitHub</Link>
-                <Link href="https://linkedin.com/in/andriimaksymov" target="_blank" color="inherit" display="block" sx={{ mb: 1, variant: 'body2', color: 'var(--text-secondary)' }}>LinkedIn</Link>
+                <Link href="https://linkedin.com/in/maksymov-andrii" target="_blank" color="inherit" display="block" sx={{ mb: 1, variant: 'body2', color: 'var(--text-secondary)' }}>LinkedIn</Link>
                 <Link href="mailto:support@andrii.maksymov.1@gmail.com" color="inherit" display="block" sx={{ mb: 1, variant: 'body2', color: 'var(--text-secondary)' }}>Contact</Link>
               </Grid>
             </Grid>
@@ -56,7 +53,7 @@ export const Footer = () => {
         
         <Box sx={{ mt: 6, pt: 3, borderTop: '1px solid rgba(255, 255, 255, 0.05)', textAlign: 'center' }}>
           <Typography variant="body2" sx={{ color: 'var(--text-secondary)' }}>
-            © {new Date().getFullYear()} Portfolio Analyzer. Built with ♥ for developers.
+            © {new Date().getFullYear()} SparkFolio. Built with ♥ for developers.
           </Typography>
         </Box>
       </Container>

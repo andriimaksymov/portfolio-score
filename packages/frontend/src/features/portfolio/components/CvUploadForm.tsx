@@ -56,7 +56,7 @@ export default function CvUploadForm() {
         </Typography>
         <Button
           variant="contained"
-          color="secondary"
+          color="primary"
           sx={{ 
             borderRadius: '12px',
             textTransform: 'none',

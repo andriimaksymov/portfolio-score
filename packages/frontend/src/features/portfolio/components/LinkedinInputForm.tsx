@@ -51,7 +51,7 @@ export default function LinkedinInputForm() {
         <Button
           type="submit"
           variant="contained"
-          color="secondary"
+          color="primary"
           size="large"
           sx={{
             minWidth: 160,

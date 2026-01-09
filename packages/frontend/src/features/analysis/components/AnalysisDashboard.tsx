@@ -1,20 +1,15 @@
-import { Box, Grid, Typography, Stack } from '@mui/material';
-import OverallScore from './OverallScore';
-import ScoreCard from './ScoreCard';
-import ProfileSnapshot from './ProfileSnapshot';
-import MetricsChart from './MetricsChart';
-import FlagshipProjects from './FlagshipProjects';
-import StrengthsWeaknesses from './StrengthsWeaknesses';
-import RecommendationsList from './RecommendationsList';
-import AiInsightsCard from './AiInsightsCard';
 import ChecklistIcon from '@mui/icons-material/Checklist';
+import { Box, Grid, Stack, Typography } from '@mui/material';
 import type { AnalysisResult } from '../types/analysis.types';
-
-import type { TargetRole } from './RoleSelector';
-import RoleSelector from './RoleSelector';
 import ActionChecklist from './ActionChecklist';
-import FollowUpQuestion from './FollowUpQuestion';
-import { useState } from 'react';
+import AiInsightsCard from './AiInsightsCard';
+import FlagshipProjects from './FlagshipProjects';
+import MetricsChart from './MetricsChart';
+import OverallScore from './OverallScore';
+import ProfileSnapshot from './ProfileSnapshot';
+import RecommendationsList from './RecommendationsList';
+import ScoreCard from './ScoreCard';
+import StrengthsWeaknesses from './StrengthsWeaknesses';
 
 interface AnalysisDashboardProps {
   analysis: AnalysisResult;
@@ -22,15 +17,11 @@ interface AnalysisDashboardProps {
 
 export default function AnalysisDashboard({ analysis }: AnalysisDashboardProps) {
   const { scores, strengths, weaknesses, recommendations, aiInsights } = analysis;
-  const [_targetRole, setTargetRole] = useState<TargetRole>('Full-stack');
 
   return (
     <Box>
       {/* Profile Snapshot - Top Identity */}
       <ProfileSnapshot analysis={analysis} />
-
-      {/* Target Role & Personalization */}
-      <RoleSelector onRoleChange={setTargetRole} />
 
       {/* Overall Score & Top Level Stats */}
       <OverallScore analysis={analysis} />
@@ -105,9 +96,6 @@ export default function AnalysisDashboard({ analysis }: AnalysisDashboardProps) 
         <ActionChecklist items={aiInsights?.checklist} username={analysis.username} />
         <RecommendationsList recommendations={recommendations} />
       </Box>
-
-      {/* Follow-up Question */}
-      <FollowUpQuestion />
     </Box>
   );
 }
