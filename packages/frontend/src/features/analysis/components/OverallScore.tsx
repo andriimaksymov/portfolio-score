@@ -36,9 +36,8 @@ export default function OverallScore({ analysis }: OverallScoreProps) {
   const label = getScoreLabel(score);
 
   return (
-    <Box sx={{ mb: 4 }}>
+    <Box p={6}>
       <Paper
-        className="glass-card animate-fade-up"
         sx={{
           p: { xs: 4, md: 5 },
           borderRadius: '24px',
@@ -47,21 +46,6 @@ export default function OverallScore({ analysis }: OverallScoreProps) {
           mb: 3
         }}
       >
-        {/* Decorative background circle */}
-        <Box
-          sx={{
-            position: 'absolute',
-            top: '-50px',
-            right: '-50px',
-            width: '200px',
-            height: '200px',
-            borderRadius: '50%',
-            background: `radial-gradient(circle, ${color}33 0%, transparent 70%)`,
-            filter: 'blur(40px)',
-            zIndex: 0
-          }}
-        />
-
         <Stack
           direction={{ xs: 'column', md: 'row' }}
           spacing={6}

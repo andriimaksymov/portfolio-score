@@ -114,12 +114,6 @@ export default function ActionChecklist({ items = [], username }: ActionChecklis
             >
               <Checkbox
                 checked={!!completed[idx]}
-                sx={{
-                  p: 0,
-                  mr: 1.5,
-                  color: 'rgba(255, 255, 255, 0.2)',
-                  '&.Mui-checked': { color: 'var(--accent-secondary)' }
-                }}
               />
               <Box sx={{ flex: 1 }}>
                 <Typography 

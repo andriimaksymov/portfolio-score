@@ -1,5 +1,6 @@
-import ChecklistIcon from '@mui/icons-material/Checklist';
-import { Box, Grid, Stack, Typography } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Box, Button, Grid, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import type { AnalysisResult } from '../types/analysis.types';
 import ActionChecklist from './ActionChecklist';
 import AiInsightsCard from './AiInsightsCard';
@@ -16,10 +17,23 @@ interface AnalysisDashboardProps {
 }
 
 export default function AnalysisDashboard({ analysis }: AnalysisDashboardProps) {
+  const navigate = useNavigate();
+
   const { scores, strengths, weaknesses, recommendations, aiInsights } = analysis;
 
   return (
     <Box>
+      <Box px={6} py={2}>
+        <Button
+          size="large"
+          color="secondary"
+          startIcon={<ArrowBackIcon />}
+          onClick={() => navigate('/')}
+        >
+          New Analysis
+        </Button>
+      </Box>
+
       {/* Profile Snapshot - Top Identity */}
       <ProfileSnapshot analysis={analysis} />
 
@@ -27,7 +41,7 @@ export default function AnalysisDashboard({ analysis }: AnalysisDashboardProps) 
       <OverallScore analysis={analysis} />
 
       {/* Profile Shape & Detailed Metrics */}
-      <Box sx={{ mb: 6 }}>
+      <Box px={6}>
         <Typography variant="h5" fontWeight="800" sx={{ mb: 3, color: 'var(--text-primary)' }}>
           📊 Metrics & Analysis
         </Typography>
@@ -74,27 +88,23 @@ export default function AnalysisDashboard({ analysis }: AnalysisDashboardProps) 
         </Grid>
       </Box>
 
-      {/* Flagship Projects */}
-      {aiInsights?.flagshipProjects && (
-        <FlagshipProjects projects={aiInsights.flagshipProjects} />
-      )}
+      <Box px={6}>
+        {/* Flagship Projects */}
+        {aiInsights?.flagshipProjects && (
+          <FlagshipProjects projects={aiInsights.flagshipProjects} />
+        )}
 
-      {/* AI Insights - Primary Value */}
-      {aiInsights && <AiInsightsCard insights={aiInsights} />}
+        {/* AI Insights - Primary Value */}
+        {aiInsights && <AiInsightsCard insights={aiInsights} />}
 
-      {/* Strengths & Weaknesses */}
-      <StrengthsWeaknesses strengths={strengths} weaknesses={weaknesses} />
+        {/* Strengths & Weaknesses */}
+        <StrengthsWeaknesses strengths={strengths} weaknesses={weaknesses} />
 
-      {/* 30-60 Day Action Plan */}
-      <Box sx={{ mb: 6 }}>
-        <Stack direction="row" spacing={1.5} alignItems="center" sx={{ mb: 3 }}>
-          <ChecklistIcon sx={{ color: 'var(--accent-primary)', fontSize: 32 }} />
-          <Typography variant="h4" fontWeight="800" color="var(--text-primary)">
-            Strategic Action Plan
-          </Typography>
-        </Stack>
-        <ActionChecklist items={aiInsights?.checklist} username={analysis.username} />
-        <RecommendationsList recommendations={recommendations} />
+        {/* 30-60 Day Action Plan */}
+        <Box sx={{ mb: 6 }}>
+          <ActionChecklist items={aiInsights?.checklist} username={analysis.username} />
+          <RecommendationsList recommendations={recommendations} />
+        </Box>
       </Box>
     </Box>
   );

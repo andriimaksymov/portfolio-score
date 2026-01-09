@@ -1,7 +1,5 @@
 import AnalysisDashboard from '@/features/analysis/components/AnalysisDashboard';
 import type { AnalysisResult } from '@/features/analysis/types/analysis.types';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Button, Stack } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function AnalysisResultsPage() {
@@ -16,19 +14,6 @@ export default function AnalysisResultsPage() {
   }
 
   return (
-    <Stack spacing={2} p={6}>
-      <div>
-        <Button
-          size="large"
-          color="secondary"
-          startIcon={<ArrowBackIcon />}
-          onClick={() => navigate('/')}
-        >
-          New Analysis
-        </Button>
-      </div>
-
-      <AnalysisDashboard analysis={analysis} />
-    </Stack>
+    <AnalysisDashboard analysis={analysis} />
   );
 }
