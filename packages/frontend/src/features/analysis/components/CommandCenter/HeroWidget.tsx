@@ -76,7 +76,7 @@ export default function HeroWidget({ analysis }: HeroWidgetProps) {
                 stroke="none"
               >
                 <Cell key="score" fill={scoreColor} />
-                <Cell key="remaining" fill="rgba(255,255,255,0.1)" />
+                <Cell key="remaining" fill="rgba(229, 222, 222, 1)" />
               </Pie>
             </PieChart>
           </ResponsiveContainer>

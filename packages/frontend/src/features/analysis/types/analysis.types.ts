@@ -20,6 +20,9 @@ export interface AiInsights {
   flagshipProjects: {
     name: string;
     reason: string;
+    url: string;
+    stars: number;
+    technologies: string[];
     improvements: string[];
   }[];
   metricInsights: {

@@ -55,7 +55,7 @@ export default function HomePage() {
     <Box sx={{ overflowX: 'hidden' }}>
       {/* Hero Section */}
       <Box bgcolor='#F5F7FA' sx={{ py: { xs: 8, md: 12 } }}>
-        <Container maxWidth="lg">
+        <Container maxWidth="xl">
           <Grid container spacing={8} justifyContent="space-between" alignItems="center">
             <Grid item xs={12} md={7} className="animate-fade-up">
               <Typography
@@ -100,7 +100,7 @@ export default function HomePage() {
 
       {/* How it works */}
       <Box id="how-it-works" sx={{ py: { xs: 10, md: 16 } }}>
-        <Container maxWidth="lg">
+        <Container maxWidth="xl">
           <Typography variant="h3" align="center" fontWeight="800" gutterBottom sx={{ mb: 8 }}>
             How it works
           </Typography>
@@ -138,7 +138,7 @@ export default function HomePage() {
 
       {/* Why analyze your portfolio */}
       <Box id="why-analyze" sx={{ py: { xs: 10, md: 16 }, bgcolor: '#F5F7FA' }}>
-        <Container maxWidth="lg">
+        <Container maxWidth="xl">
           <Typography variant="h3" align="center" fontWeight="800" gutterBottom sx={{ mb: 8 }}>
             Why analyze your portfolio?
           </Typography>

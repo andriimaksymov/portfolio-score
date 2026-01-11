@@ -125,7 +125,7 @@ export default function LinkedinAnalysisPage() {
           mb: 6
         }}
       >
-        <Container maxWidth="lg">
+        <Container maxWidth="xl">
           <Paper
             className="glass-card animate-fade-up"
             sx={{
@@ -171,7 +171,7 @@ export default function LinkedinAnalysisPage() {
         </Container>
       </Box>
 
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
         <Grid container spacing={4}>
           {/* Main Score & Dimensions */}
           <Grid item xs={12} md={5}>

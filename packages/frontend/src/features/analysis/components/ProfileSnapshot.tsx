@@ -10,7 +10,7 @@ export default function ProfileSnapshot({ analysis }: ProfileSnapshotProps) {
 
   return (
     <Box bgcolor="#F5F7FA">
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
         <Stack direction="row" spacing={4} p={6}>
           <Avatar
             src={profile?.avatarUrl}

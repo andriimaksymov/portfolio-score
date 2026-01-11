@@ -496,6 +496,9 @@ export class AiService {
           {
             "name": "Repo Name representing a flagship project",
             "reason": "Why this should be a flagship project",
+            "url": "https://github.com/username/repo",
+            "stars": 12,
+            "technologies": Array of stack technologies from repo,
             "improvements": ["Specific improvement 1", "Specific improvement 2"]
           }
         ],

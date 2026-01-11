@@ -14,7 +14,7 @@ export const Navbar = () => {
       position="sticky" 
       elevation={0}
     >
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
           <Box
             component={NavLink}
