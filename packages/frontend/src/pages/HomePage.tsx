@@ -1,4 +1,4 @@
-import Illustration from '@/assets/illustration.svg?react';
+import Illustration from '@/assets/Illustration.svg?react';
 import CvUploadForm from '@/features/portfolio/components/CvUploadForm';
 import LinkedinInputForm from '@/features/portfolio/components/LinkedinInputForm';
 import PortfolioInputForm from '@/features/portfolio/components/PortfolioInputForm';
