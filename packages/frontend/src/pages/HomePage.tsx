@@ -54,45 +54,48 @@ export default function HomePage() {
   return (
     <Box sx={{ overflowX: 'hidden' }}>
       {/* Hero Section */}
-      <Box bgcolor='#F5F7FA' sx={{ py: { xs: 8, md: 12 }, px: { xs: 2, md: 6 } }}>
-        <Grid container spacing={8} justifyContent="space-between" alignItems="center">
-          <Grid item xs={12} md={7} className="animate-fade-up">
-            <Typography
-              component="h1"
-              variant="h2"
-              fontWeight="800"
-              gutterBottom
-            >
-              Elevate Your Career with AI-Powered Portfolio Analysis.
-            </Typography>
-            <Typography variant="h6">
-              Gain a competitive edge with deep insights into your GitHub, LinkedIn, and CV. Let AI-guided analysis transform your professional presence.
-            </Typography>
-
-            <Box id="analyzer-input" ref={inputSectionRef} sx={{ mb: 6 }}>
-              <Tabs
-                value={source}
-                onChange={handleSourceChange}
-                sx={{
-                  mb: 4,
-                }}
+      <Box bgcolor='#F5F7FA' sx={{ py: { xs: 8, md: 12 } }}>
+        <Container maxWidth="lg">
+          <Grid container spacing={8} justifyContent="space-between" alignItems="center">
+            <Grid item xs={12} md={7} className="animate-fade-up">
+              <Typography
+                component="h1"
+                variant="h2"
+                fontWeight="800"
+                gutterBottom
+                sx={{ fontSize: { xs: '2.5rem', md: '4rem' } }}
               >
-                <Tab icon={<GitHubIcon />} iconPosition="start" label="GitHub" />
-                <Tab icon={<LinkedInIcon />} iconPosition="start" label="LinkedIn" />
-                <Tab icon={<DescriptionIcon />} iconPosition="start" label="CV / Resume" />
-              </Tabs>
+                Elevate Your Career with AI-Powered Portfolio Analysis.
+              </Typography>
+              <Typography variant="h6">
+                Gain a competitive edge with deep insights into your GitHub, LinkedIn, and CV. Let AI-guided analysis transform your professional presence.
+              </Typography>
 
-              <Box key={source}>
-                {source === 0 && <PortfolioInputForm ref={githubInputRef} />}
-                {source === 1 && <LinkedinInputForm />}
-                {source === 2 && <CvUploadForm />}
+              <Box id="analyzer-input" ref={inputSectionRef}>
+                <Tabs
+                  value={source}
+                  onChange={handleSourceChange}
+                  sx={{
+                    mb: 2,
+                  }}
+                >
+                  <Tab icon={<GitHubIcon />} iconPosition="start" label="GitHub" />
+                  <Tab icon={<LinkedInIcon />} iconPosition="start" label="LinkedIn" />
+                  <Tab icon={<DescriptionIcon />} iconPosition="start" label="CV / Resume" />
+                </Tabs>
+
+                <Box key={source}>
+                  {source === 0 && <PortfolioInputForm ref={githubInputRef} />}
+                  {source === 1 && <LinkedinInputForm />}
+                  {source === 2 && <CvUploadForm />}
+                </Box>
               </Box>
-            </Box>
+            </Grid>
+            <Grid item xs={12} sx={{ display: { xs: 'none', md: 'block' } }} md="auto">
+              <Box component={Illustration} sx={{ maxWidth: '100%' }} />
+            </Grid>
           </Grid>
-          <Grid item xs={12} md="auto">
-            <Illustration />
-          </Grid>
-        </Grid>
+        </Container>
       </Box>
 
       {/* How it works */}

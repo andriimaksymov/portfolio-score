@@ -28,7 +28,7 @@ export default function LinkedinInputForm() {
         sx={{
           display: 'flex',
           flexDirection: { xs: 'column', sm: 'row' },
-          gap: 1.5
+          gap: 2
         }}
       >
         <TextField

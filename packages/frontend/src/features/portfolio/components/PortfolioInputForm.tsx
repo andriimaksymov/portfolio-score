@@ -52,7 +52,7 @@ const PortfolioInputForm = forwardRef((_, ref) => {
         sx={{
           display: 'flex',
           flexDirection: { xs: 'column', sm: 'row' },
-          gap: 3,
+          gap: 2,
           position: 'relative'
         }}
       >
