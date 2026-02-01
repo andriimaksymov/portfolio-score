@@ -14,19 +14,20 @@ import { Navbar } from '@/components/landing/Navbar';
 import { Footer } from '@/components/landing/Footer';
 
 interface LinkedInAnalysisDashboardProps {
-    analysis: any; // We'll use any for now or refine based on backend response
+    analysis: any;
+    profile: any;
 }
 
-const LinkedInAnalysisDashboard = ({ analysis }: LinkedInAnalysisDashboardProps) => {
+const LinkedInAnalysisDashboard = ({ analysis, profile }: LinkedInAnalysisDashboardProps) => {
     const navigate = useNavigate();
 
     // Helper to map backend data to UI
     const {
         summary = { text: '', seniorityGuess: '' },
-        dimensions = { overall: 0, profile: { score: 0, status: '' }, headline: { score: 0, status: '' }, branding: { score: 0, status: '' } },
-        recommendations = { headlines: [], aboutSuggestions: { missing: '', rewritten: '' } },
+        dimensions = { overall: 0, profile: { score: 0, status: '', insights: [] }, headline: { score: 0, status: '', insights: [] }, experience: { score: 0, status: '', insights: [] }, skills: { score: 0, status: '', insights: [] }, branding: { score: 0, status: '', insights: [] } },
+        recommendations = { headlines: [], aboutSuggestions: { missing: '', rewritten: '' }, experienceEdits: [] },
         missingKeywords = [],
-        actionPlan = { thisWeek: [], next30Days: [] }
+        actionPlan = { thisWeek: [], next30Days: [], next60Days: [] }
     } = analysis || {};
 
     const stats = [
@@ -47,13 +48,23 @@ const LinkedInAnalysisDashboard = ({ analysis }: LinkedInAnalysisDashboardProps)
 
                     <div className="relative flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
                         <div className="flex flex-col md:flex-row items-center gap-8">
-                            <div className="w-32 h-32 rounded-3xl bg-blue-600/10 p-1 flex items-center justify-center border border-blue-500/20">
-                                <Users size={60} className="text-blue-400" />
-                            </div>
+                            {profile?.avatarUrl ? (
+                                <img
+                                    src={profile.avatarUrl}
+                                    alt={profile.fullName}
+                                    className="w-32 h-32 rounded-3xl border border-blue-500/20 object-cover shadow-2xl"
+                                />
+                            ) : (
+                                <div className="w-32 h-32 rounded-3xl bg-blue-600/10 p-1 flex items-center justify-center border border-blue-500/20">
+                                    <Users size={60} className="text-blue-400" />
+                                </div>
+                            )}
                             <div className="text-center md:text-left">
-                                <h1 className="text-4xl font-black text-white tracking-tight mb-2">Network Influence Audit</h1>
+                                <h1 className="text-4xl font-black text-white tracking-tight mb-2">
+                                    {profile?.fullName ? `${profile.fullName}'s Influence Audit` : 'Network Influence Audit'}
+                                </h1>
                                 <p className="text-slate-500 font-mono text-[11px] tracking-widest uppercase flex items-center gap-2">
-                                    <Globe size={14} className="text-blue-400" /> {summary.seniorityGuess} <span className="text-slate-800">|</span> <span className="text-emerald-500">OPTIMIZATION_READY</span>
+                                    <Globe size={14} className="text-blue-400" /> {summary.seniorityGuess}
                                 </p>
                             </div>
                         </div>
@@ -72,15 +83,26 @@ const LinkedInAnalysisDashboard = ({ analysis }: LinkedInAnalysisDashboardProps)
                 {/* Stats Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
                     {stats.map((stat, i) => (
-                        <div key={i} className="p-6 rounded-3xl bg-slate-900 border border-slate-800 shadow-xl group hover:border-blue-500/30 transition-all">
+                        <div key={i} className="p-6 rounded-3xl bg-slate-900 border border-slate-800 shadow-xl group hover:border-blue-500/30 transition-all flex flex-col">
                             <div className="flex justify-between items-start mb-4">
                                 <div className="p-2 bg-slate-950 rounded-xl border border-slate-800">{stat.icon}</div>
                                 <div className="text-[10px] font-black text-slate-600 uppercase tracking-widest">Live Audit</div>
                             </div>
                             <div className="text-3xl font-black text-white mb-1">{stat.val}</div>
-                            <div className="text-xs text-slate-500 font-bold">{stat.label}</div>
-                            <div className="mt-4 pt-4 border-t border-slate-800/50 text-[10px] text-slate-400 italic">
-                                {stat.sub}
+                            <div className="text-xs text-slate-500 font-bold mb-4">{stat.label}</div>
+
+                            {/* Insight List */}
+                            <div className="space-y-2 mt-auto">
+                                {(stat.label === 'Overall Reach' ? [summary.seniorityGuess] :
+                                    stat.label === 'Profile Strength' ? dimensions.profile?.insights :
+                                        stat.label === 'Market Visibility' ? dimensions.headline?.insights :
+                                            stat.label === 'Trust Factor' ? dimensions.branding?.insights : []
+                                )?.map((insight: string, idx: number) => (
+                                    <div key={idx} className="flex gap-2 items-start text-[10px] text-slate-400 leading-tight">
+                                        <div className="w-1 h-1 rounded-full bg-blue-500 mt-1 flex-shrink-0" />
+                                        {insight}
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     ))}
@@ -130,6 +152,40 @@ const LinkedInAnalysisDashboard = ({ analysis }: LinkedInAnalysisDashboardProps)
                                 </div>
                             </div>
                         </div>
+
+                        {/* Experience Optimization */}
+                        <div className="p-8 rounded-[2.5rem] bg-slate-900 border border-slate-800 shadow-xl">
+                            <h3 className="text-lg font-black uppercase tracking-widest flex items-center gap-3 mb-8">
+                                <Briefcase size={20} className="text-blue-500" /> Work Experience Optimization
+                            </h3>
+                            <div className="space-y-8">
+                                {recommendations.experienceEdits?.length ? (
+                                    recommendations.experienceEdits.map((edit: any, i: number) => (
+                                        <div key={i} className="p-6 rounded-2xl bg-slate-950/50 border border-slate-800 hover:border-blue-500/30 transition-colors">
+                                            <div className="flex justify-between items-start mb-4">
+                                                <div>
+                                                    <h4 className="text-white font-black text-sm uppercase tracking-tight">{edit.role}</h4>
+                                                    <p className="text-blue-400 text-xs font-bold">{edit.company}</p>
+                                                </div>
+                                            </div>
+                                            <div className="space-y-3">
+                                                <div className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-2">Optimized Bullet Points (STAR Method)</div>
+                                                {edit.improvements.map((imp: string, j: number) => (
+                                                    <div key={j} className="flex gap-3 text-sm text-slate-300 leading-relaxed font-medium">
+                                                        <span className="text-emerald-500 font-bold">•</span>
+                                                        {imp}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="py-12 text-center border border-dashed border-slate-800 rounded-3xl">
+                                        <p className="text-slate-500 font-mono text-xs uppercase tracking-widest italic">No experience edits identified</p>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
                     </div>
 
                     {/* Sidebar */}
@@ -137,10 +193,10 @@ const LinkedInAnalysisDashboard = ({ analysis }: LinkedInAnalysisDashboardProps)
                         {/* Action Plan */}
                         <div className="p-8 rounded-[2rem] bg-slate-900 border border-slate-800">
                             <h4 className="text-xs font-black uppercase tracking-widest text-slate-500 mb-8 flex items-center gap-2">
-                                <Briefcase size={16} /> Roadmap (Next 30 Days)
+                                <TrendingUp size={16} /> Roadmap (Next 60 Days)
                             </h4>
                             <div className="space-y-6">
-                                {actionPlan.thisWeek.concat(actionPlan.next30Days).slice(0, 5).map((plan: string, i: number) => (
+                                {actionPlan.thisWeek.concat(actionPlan.next30Days).concat(actionPlan.next60Days).map((plan: string, i: number) => (
                                     <div key={i} className="flex gap-4 items-start">
                                         <div className="w-5 h-5 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                                             <CheckCircle2 size={12} className="text-blue-500" />
@@ -161,13 +217,6 @@ const LinkedInAnalysisDashboard = ({ analysis }: LinkedInAnalysisDashboardProps)
                                     </span>
                                 ))}
                             </div>
-                        </div>
-
-                        {/* Signature */}
-                        <div className="p-6 rounded-[2rem] bg-slate-900 border border-slate-800 text-center">
-                            <ShieldCheck size={32} className="text-emerald-500 opacity-50 mx-auto mb-4" />
-                            <div className="text-[10px] font-bold text-white mb-2 uppercase tracking-widest">Verified Impact Score</div>
-                            <p className="text-[9px] text-slate-600 font-mono">AUDIT_TOKEN: {Math.random().toString(36).substring(7).toUpperCase()}</p>
                         </div>
                     </div>
                 </div>

@@ -72,5 +72,5 @@ export default function LinkedinAnalysisPage() {
     );
   }
 
-  return <LinkedInAnalysisDashboard analysis={data.analysis} />;
+  return <LinkedInAnalysisDashboard analysis={data.analysis} profile={data.profile} />;
 }

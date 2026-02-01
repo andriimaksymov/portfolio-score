@@ -33,13 +33,16 @@ export class LinkedInProfileDto {
   @IsArray()
   @IsString({ each: true })
   skills: string[];
+
+  @IsString()
+  avatarUrl?: string;
 }
 
 @Injectable()
 export class LinkedinService {
   private readonly logger = new Logger(LinkedinService.name);
 
-  constructor(private readonly aiService: AiService) {}
+  constructor(private readonly aiService: AiService) { }
 
   /**
    * High-level method that scrapes a profile and runs AI analysis
@@ -92,6 +95,7 @@ export class LinkedinService {
       title: 'Software Engineer at Innovative Solutions',
       about: `Software Engineer with 4+ years of experience in full-stack development. I love building scalable web applications and exploring new technologies. Looking for my next big challenge in the fintech space.`,
       skills: ['JavaScript', 'TypeScript', 'React', 'Node.js', 'PostgreSQL', 'Docker'],
+      avatarUrl: `https://ui-avatars.com/api/?name=${encodeURIComponent(formattedName)}&background=0284c7&color=fff&size=256`,
       experience: [
         {
           role: 'Junior Software Engineer',

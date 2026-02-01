@@ -13,9 +13,10 @@ import { Footer } from '@/components/landing/Footer';
 interface CvAnalysisDashboardProps {
     analysis: any;
     text: string;
+    fileName?: string;
 }
 
-const CvAnalysisDashboard = ({ analysis, text }: CvAnalysisDashboardProps) => {
+const CvAnalysisDashboard = ({ analysis, text, fileName }: CvAnalysisDashboardProps) => {
     const navigate = useNavigate();
 
     // Mapping backend data to UI
@@ -54,9 +55,9 @@ const CvAnalysisDashboard = ({ analysis, text }: CvAnalysisDashboardProps) => {
                                 </div>
                             </div>
                             <div className="text-center md:text-left">
-                                <h1 className="text-4xl font-black text-white tracking-tight mb-2">ATS Compatibility Audit</h1>
+                                <h1 className="text-4xl font-black text-white tracking-tight mb-2">CV Compatibility Audit</h1>
                                 <p className="text-slate-500 font-mono text-[11px] tracking-widest uppercase flex items-center gap-2">
-                                    <Layers size={14} className="text-purple-400" /> RESUME_VERSION_FINAL <span className="text-slate-800">|</span> <span className="text-emerald-500">PARSING_SUCCESS</span>
+                                    <Layers size={14} className="text-purple-400" /> {fileName || ''}
                                 </p>
                             </div>
                         </div>

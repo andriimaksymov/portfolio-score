@@ -88,5 +88,5 @@ export default function CvAnalysisPage() {
     );
   }
 
-  return <CvAnalysisDashboard analysis={analysisState.analysis} text={analysisState.text} />;
+  return <CvAnalysisDashboard analysis={analysisState.analysis} text={analysisState.text} fileName={file?.name} />;
 }
