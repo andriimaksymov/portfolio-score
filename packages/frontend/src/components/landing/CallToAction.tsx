@@ -8,7 +8,7 @@ export const CallToAction = () => {
 
     return (
         <section className="max-w-7xl mx-auto px-6 py-24">
-            <div className="bg-gradient-to-b from-slate-900 to-slate-950 rounded-[4rem] p-20 text-center border border-slate-800 relative overflow-hidden">
+            <div className="bg-gradient-to-b from-slate-900 to-slate-950 rounded-[4rem] p-8 md:p-20 text-center border border-slate-800 relative overflow-hidden">
                 <div className="absolute inset-0 bg-grid-pattern opacity-5" />
                 <Heart className="mx-auto mb-8 text-emerald-500 drop-shadow-[0_0_20px_rgba(16,185,129,0.3)]" size={64} />
                 <h2 className="text-5xl md:text-7xl font-black mb-8 tracking-tighter text-white">

@@ -26,13 +26,13 @@ const CvAnalysisDashboard = ({ analysis, text, fileName }: CvAnalysisDashboardPr
     return (
         <div className="min-h-screen bg-slate-950 text-slate-200 animate-fade-in">
             <Navbar />
-            <div className="max-w-7xl mx-auto px-6 pt-28 pb-20">
+            <div className="max-w-7xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-20">
 
                 {/* Header Section */}
-                <div className="relative p-8 md:p-12 rounded-[3.5rem] bg-slate-900 border border-slate-800 shadow-3xl mb-12 overflow-hidden">
+                <div className="relative p-4 md:p-8 rounded-[1.5rem] bg-slate-900 border border-slate-800 shadow-3xl mb-12 overflow-hidden">
                     <div className="absolute top-0 right-0 w-96 h-96 bg-purple-600/5 blur-[100px] rounded-full -mr-20 -mt-20" />
 
-                    <div className="relative flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+                    <div className="relative flex flex-col md:flex-row justify-between items-center md:items-center gap-8">
                         <div className="flex flex-col md:flex-row items-center gap-8">
                             <div className="relative w-32 h-32 flex-shrink-0">
                                 <svg className="w-full h-full transform -rotate-90">
@@ -77,7 +77,7 @@ const CvAnalysisDashboard = ({ analysis, text, fileName }: CvAnalysisDashboardPr
                     {/* Main Insights */}
                     <div className="md:col-span-8 space-y-8">
                         {/* AI Executive Summary */}
-                        <div className="p-8 rounded-[2.5rem] bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 shadow-2xl relative overflow-hidden">
+                        <div className="p-4 md:p-8 rounded-[1.5rem] bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 shadow-2xl relative overflow-hidden">
                             <div className="absolute top-0 right-0 p-8 opacity-5"><BrainCircuit size={120} /></div>
                             <div className="flex items-center gap-3 mb-6">
                                 <Sparkles className="text-purple-400" size={20} />
@@ -94,7 +94,7 @@ const CvAnalysisDashboard = ({ analysis, text, fileName }: CvAnalysisDashboardPr
                                 <FileSearch size={22} className="text-emerald-500" /> Strategic Enhancements
                             </h3>
                             {improvements.map((imp: any, i: number) => (
-                                <div key={i} className="p-8 rounded-[2.5rem] bg-slate-900 border border-slate-800 group hover:border-purple-500/30 transition-all">
+                                <div key={i} className="p-4 md:p-8 rounded-[1.5rem] bg-slate-900 border border-slate-800 group hover:border-purple-500/30 transition-all">
                                     <div className="flex justify-between items-start mb-4">
                                         <span className="px-3 py-1 bg-purple-500/10 border border-purple-500/20 rounded-full text-[10px] font-black text-purple-400 uppercase tracking-widest">
                                             {imp.category}
@@ -121,7 +121,7 @@ const CvAnalysisDashboard = ({ analysis, text, fileName }: CvAnalysisDashboardPr
                     {/* Sidebar */}
                     <div className="md:col-span-4 space-y-8">
                         {/* Industry Keywords */}
-                        <div className="p-8 rounded-[2rem] bg-slate-900 border border-slate-800">
+                        <div className="p-4 md:p-8 rounded-[1.5rem] bg-slate-900 border border-slate-800">
                             <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-8 flex items-center gap-2 font-mono">
                                 Keyword Density Gap
                             </h4>
@@ -136,7 +136,7 @@ const CvAnalysisDashboard = ({ analysis, text, fileName }: CvAnalysisDashboardPr
                         </div>
 
                         {/* Preview Document */}
-                        <div className="p-8 rounded-[2rem] bg-slate-950 border border-slate-800">
+                        <div className="p-4 md:p-8 rounded-[1.5rem] bg-slate-950 border border-slate-800">
                             <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-6 flex items-center gap-2">
                                 <FileText size={14} /> Full Text Scan
                             </h4>
@@ -148,7 +148,7 @@ const CvAnalysisDashboard = ({ analysis, text, fileName }: CvAnalysisDashboardPr
                         </div>
 
                         {/* Signature */}
-                        <div className="p-6 rounded-[2rem] bg-indigo-600 border border-indigo-400 shadow-xl shadow-indigo-600/20 text-center group cursor-pointer active:scale-95 transition-all">
+                        <div className="p-4 md:p-8 rounded-[1.5rem] bg-indigo-600 border border-indigo-400 shadow-xl shadow-indigo-600/20 text-center group cursor-pointer active:scale-95 transition-all">
                             <FileSearch className="text-white mx-auto mb-4" />
                             <h4 className="text-sm font-black text-white uppercase tracking-widest mb-2">Premium Unlock</h4>
                             <p className="text-[10px] text-indigo-100 mb-6 px-4">Get the AI-reconstructed PDF version of this resume.</p>

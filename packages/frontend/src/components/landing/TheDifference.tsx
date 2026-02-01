@@ -2,22 +2,22 @@ import { Shield, Zap, Code2, Heart } from 'lucide-react';
 
 export const TheDifference = () => {
     return (
-        <section className="max-w-7xl mx-auto px-6 py-32">
-            <div className="text-center mb-20">
+        <section className="max-w-7xl mx-auto px-4 md:px-6 py-20 md:py-32">
+            <div className="text-center mb-12 md:mb-20 px-4">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-[10px] font-bold text-slate-400 mb-6 uppercase tracking-widest">
                     Why This Tool
                 </div>
-                <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-white mb-6">
+                <h2 className="text-3xl md:text-6xl font-black tracking-tighter text-white mb-6 text-center">
                     What Makes It Different.
                 </h2>
-                <p className="text-slate-500 text-lg max-w-2xl mx-auto">
+                <p className="text-slate-500 text-base md:text-lg max-w-2xl mx-auto text-center">
                     Built with reliability, privacy, and accessibility as core principles.
                 </p>
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {/* Multi-Source */}
-                <div className="p-8 rounded-3xl bg-slate-900 border border-slate-800 relative overflow-hidden group hover:border-indigo-500/50 transition-all">
+                <div className="p-4 md:p-8 rounded-[1.5rem] bg-slate-900 border border-slate-800 relative overflow-hidden group hover:border-indigo-500/50 transition-all">
                     <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
                     <div className="relative">
@@ -44,7 +44,7 @@ export const TheDifference = () => {
                 </div>
 
                 {/* AI Reliability */}
-                <div className="p-8 rounded-3xl bg-slate-900 border border-slate-800 relative overflow-hidden group hover:border-blue-500/50 transition-all">
+                <div className="p-4 md:p-8 rounded-[1.5rem] bg-slate-900 border border-slate-800 relative overflow-hidden group hover:border-blue-500/50 transition-all">
                     <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
                     <div className="relative">
@@ -71,7 +71,7 @@ export const TheDifference = () => {
                 </div>
 
                 {/* Open Source */}
-                <div className="p-8 rounded-3xl bg-slate-900 border border-slate-800 relative overflow-hidden group hover:border-emerald-500/50 transition-all">
+                <div className="p-4 md:p-8 rounded-[1.5rem] bg-slate-900 border border-slate-800 relative overflow-hidden group hover:border-emerald-500/50 transition-all">
                     <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
                     <div className="relative">
@@ -98,7 +98,7 @@ export const TheDifference = () => {
                 </div>
 
                 {/* Privacy */}
-                <div className="p-8 rounded-3xl bg-slate-900 border border-slate-800 relative overflow-hidden group hover:border-purple-500/50 transition-all">
+                <div className="p-4 md:p-8 rounded-[1.5rem] bg-slate-900 border border-slate-800 relative overflow-hidden group hover:border-purple-500/50 transition-all">
                     <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
                     <div className="relative">

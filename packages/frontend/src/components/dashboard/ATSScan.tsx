@@ -59,7 +59,7 @@ export const ATSScan = () => {
                     {/* Improvements */}
                     <div className="space-y-6">
                         {improvements.map((imp, i) => (
-                            <div key={i} className="p-8 rounded-[2.5rem] bg-slate-900 border border-slate-800 group hover:border-purple-500/30 transition-all">
+                            <div key={i} className="p-4 md:p-8 rounded-[1.5rem] bg-slate-900 border border-slate-800 group hover:border-purple-500/30 transition-all">
                                 <div className="flex justify-between items-start mb-4">
                                     <span className="px-3 py-1 bg-purple-500/10 border border-purple-500/20 rounded-full text-[10px] font-black text-purple-400 uppercase tracking-widest">
                                         {imp.category}

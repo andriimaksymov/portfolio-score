@@ -2,15 +2,15 @@ import { Upload, BrainCircuit, Target, ArrowRight } from 'lucide-react';
 
 export const HowItWorks = () => {
     return (
-        <section id="how-it-works" className="max-w-7xl mx-auto px-6 py-32">
-            <div className="text-center mb-20">
+        <section id="how-it-works" className="max-w-7xl mx-auto px-4 md:px-6 py-20 md:py-32">
+            <div className="text-center mb-12 md:mb-20 px-4">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-[10px] font-bold text-slate-400 mb-6 uppercase tracking-widest">
                     The Process
                 </div>
-                <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-white mb-6">
+                <h2 className="text-3xl md:text-6xl font-black tracking-tighter text-white mb-6">
                     How It Works.
                 </h2>
-                <p className="text-slate-500 text-lg max-w-2xl mx-auto">
+                <p className="text-slate-500 text-base md:text-lg max-w-2xl mx-auto">
                     Three steps to get a comprehensive analysis of your developer profile.
                 </p>
             </div>
@@ -21,7 +21,7 @@ export const HowItWorks = () => {
 
                 {/* Step 1: Submit */}
                 <div className="relative">
-                    <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8 relative overflow-hidden group hover:border-indigo-500/50 transition-all">
+                    <div className="bg-slate-900 border border-slate-800 rounded-[1.5rem] p-4 md:p-8 relative overflow-hidden group hover:border-indigo-500/50 transition-all">
                         <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
                         <div className="relative">
@@ -52,7 +52,7 @@ export const HowItWorks = () => {
 
                 {/* Step 2: AI Analysis */}
                 <div className="relative">
-                    <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8 relative overflow-hidden group hover:border-blue-500/50 transition-all">
+                    <div className="bg-slate-900 border border-slate-800 rounded-[1.5rem] p-4 md:p-8 relative overflow-hidden group hover:border-blue-500/50 transition-all">
                         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
                         <div className="relative">
@@ -95,7 +95,7 @@ export const HowItWorks = () => {
 
                 {/* Step 3: Get Insights */}
                 <div className="relative">
-                    <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8 relative overflow-hidden group hover:border-purple-500/50 transition-all">
+                    <div className="bg-slate-900 border border-slate-800 rounded-[1.5rem] p-4 md:p-8 relative overflow-hidden group hover:border-purple-500/50 transition-all">
                         <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
                         <div className="relative">

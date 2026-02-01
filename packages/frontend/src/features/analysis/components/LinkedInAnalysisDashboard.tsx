@@ -40,22 +40,22 @@ const LinkedInAnalysisDashboard = ({ analysis, profile }: LinkedInAnalysisDashbo
     return (
         <div className="min-h-screen bg-slate-950 text-slate-200 animate-fade-in">
             <Navbar />
-            <div className="max-w-7xl mx-auto px-6 pt-28 pb-20">
+            <div className="max-w-7xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-20">
 
                 {/* Header Section */}
-                <div className="relative p-8 md:p-12 rounded-[3.5rem] bg-slate-900 border border-slate-800 shadow-3xl mb-12 overflow-hidden">
-                    <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/5 blur-[100px] rounded-full -mr-20 -mt-20" />
+                <div className="relative p-4 md:p-8 rounded-[1.5rem] bg-slate-900 border border-slate-800 shadow-3xl mb-12 overflow-hidden">
+                    <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/5 blur-[100px] rounded-full -mr-20 -mt-20 lg:block hidden" />
 
-                    <div className="relative flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+                    <div className="relative flex flex-col md:flex-row justify-between items-center md:items-center gap-8 text-center md:text-left">
                         <div className="flex flex-col md:flex-row items-center gap-8">
                             {profile?.avatarUrl ? (
                                 <img
                                     src={profile.avatarUrl}
                                     alt={profile.fullName}
-                                    className="w-32 h-32 rounded-3xl border border-blue-500/20 object-cover shadow-2xl"
+                                    className="w-28 h-28 md:w-32 md:h-32 rounded-3xl border border-blue-500/20 object-cover shadow-2xl"
                                 />
                             ) : (
-                                <div className="w-32 h-32 rounded-3xl bg-blue-600/10 p-1 flex items-center justify-center border border-blue-500/20">
+                                <div className="w-28 h-28 md:w-32 md:h-32 rounded-3xl bg-blue-600/10 p-1 flex items-center justify-center border border-blue-500/20">
                                     <Users size={60} className="text-blue-400" />
                                 </div>
                             )}
@@ -81,14 +81,14 @@ const LinkedInAnalysisDashboard = ({ analysis, profile }: LinkedInAnalysisDashbo
                 </div>
 
                 {/* Stats Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-12">
                     {stats.map((stat, i) => (
-                        <div key={i} className="p-6 rounded-3xl bg-slate-900 border border-slate-800 shadow-xl group hover:border-blue-500/30 transition-all flex flex-col">
+                        <div key={i} className="p-5 md:p-6 rounded-2xl md:rounded-3xl bg-slate-900 border border-slate-800 shadow-xl group hover:border-blue-500/30 transition-all flex flex-col">
                             <div className="flex justify-between items-start mb-4">
                                 <div className="p-2 bg-slate-950 rounded-xl border border-slate-800">{stat.icon}</div>
-                                <div className="text-[10px] font-black text-slate-600 uppercase tracking-widest">Live Audit</div>
+                                <div className="text-[9px] md:text-[10px] font-black text-slate-600 uppercase tracking-widest">Live Audit</div>
                             </div>
-                            <div className="text-3xl font-black text-white mb-1">{stat.val}</div>
+                            <div className="text-2xl md:text-3xl font-black text-white mb-1">{stat.val}</div>
                             <div className="text-xs text-slate-500 font-bold mb-4">{stat.label}</div>
 
                             {/* Insight List */}
@@ -112,7 +112,7 @@ const LinkedInAnalysisDashboard = ({ analysis, profile }: LinkedInAnalysisDashbo
                     {/* Main Insights */}
                     <div className="md:col-span-8 space-y-8">
                         {/* Semantic Summary */}
-                        <div className="p-8 rounded-[2.5rem] bg-gradient-to-br from-blue-900/20 to-slate-950 border border-blue-500/20 shadow-2xl relative">
+                        <div className="p-4 md:p-8 rounded-[1.5rem] bg-gradient-to-br from-blue-900/20 to-slate-950 border border-blue-500/20 shadow-2xl relative">
                             <div className="flex items-center gap-3 mb-6">
                                 <Sparkles className="text-blue-400" size={20} />
                                 <h3 className="text-lg font-black uppercase tracking-widest text-white">AI Executive Narrative</h3>
@@ -123,7 +123,7 @@ const LinkedInAnalysisDashboard = ({ analysis, profile }: LinkedInAnalysisDashbo
                         </div>
 
                         {/* Recommendations */}
-                        <div className="p-8 rounded-[2.5rem] bg-slate-900 border border-slate-800">
+                        <div className="p-4 md:p-8 rounded-[1.5rem] bg-slate-900 border border-slate-800">
                             <h3 className="text-lg font-black uppercase tracking-widest flex items-center gap-3 mb-8">
                                 <Target size={20} className="text-amber-500" /> AI Optimization Strategy
                             </h3>
@@ -154,7 +154,7 @@ const LinkedInAnalysisDashboard = ({ analysis, profile }: LinkedInAnalysisDashbo
                         </div>
 
                         {/* Experience Optimization */}
-                        <div className="p-8 rounded-[2.5rem] bg-slate-900 border border-slate-800 shadow-xl">
+                        <div className="p-4 md:p-8 rounded-[1.5rem] bg-slate-900 border border-slate-800 shadow-xl">
                             <h3 className="text-lg font-black uppercase tracking-widest flex items-center gap-3 mb-8">
                                 <Briefcase size={20} className="text-blue-500" /> Work Experience Optimization
                             </h3>
@@ -191,7 +191,7 @@ const LinkedInAnalysisDashboard = ({ analysis, profile }: LinkedInAnalysisDashbo
                     {/* Sidebar */}
                     <div className="md:col-span-4 space-y-8">
                         {/* Action Plan */}
-                        <div className="p-8 rounded-[2rem] bg-slate-900 border border-slate-800">
+                        <div className="p-4 md:p-8 rounded-[1.5rem] bg-slate-900 border border-slate-800">
                             <h4 className="text-xs font-black uppercase tracking-widest text-slate-500 mb-8 flex items-center gap-2">
                                 <TrendingUp size={16} /> Roadmap (Next 60 Days)
                             </h4>
@@ -208,7 +208,7 @@ const LinkedInAnalysisDashboard = ({ analysis, profile }: LinkedInAnalysisDashbo
                         </div>
 
                         {/* Keywords */}
-                        <div className="p-8 rounded-[2rem] bg-indigo-600/5 border border-indigo-500/20 relative overflow-hidden">
+                        <div className="p-4 md:p-8 rounded-[1.5rem] bg-indigo-600/5 border border-indigo-500/20 relative overflow-hidden">
                             <h4 className="text-[10px] font-black uppercase tracking-widest text-indigo-400 mb-6 font-mono">Missing Visibility Keywords</h4>
                             <div className="flex flex-wrap gap-2">
                                 {missingKeywords.map((kw: string) => (

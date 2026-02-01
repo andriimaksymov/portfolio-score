@@ -31,7 +31,7 @@ export const NetworkMap = () => {
                 {/* Main Content */}
                 <div className="md:col-span-8 space-y-8">
                     {/* Narrative */}
-                    <div className="p-8 rounded-[2.5rem] bg-gradient-to-br from-blue-900/20 to-slate-950 border border-blue-500/20 shadow-2xl relative">
+                    <div className="p-4 md:p-8 rounded-[1.5rem] bg-gradient-to-br from-blue-900/20 to-slate-950 border border-blue-500/20 shadow-2xl relative">
                         <div className="flex items-center gap-3 mb-6">
                             <Sparkles className="text-blue-400" size={20} />
                             <h3 className="text-lg font-black uppercase tracking-widest text-white">AI Executive Narrative</h3>
@@ -42,7 +42,7 @@ export const NetworkMap = () => {
                     </div>
 
                     {/* Optimization Card */}
-                    <div className="p-8 rounded-[2.5rem] bg-slate-900 border border-slate-800 shadow-xl">
+                    <div className="p-4 md:p-8 rounded-[1.5rem] bg-slate-900 border border-slate-800 shadow-xl">
                         <h3 className="text-lg font-black uppercase tracking-widest flex items-center gap-3 mb-8">
                             <Target size={20} className="text-amber-500" /> AI Optimization Strategy
                         </h3>
@@ -62,7 +62,7 @@ export const NetworkMap = () => {
 
                 {/* Sidebar */}
                 <div className="md:col-span-4 space-y-8">
-                    <div className="p-8 rounded-[2rem] bg-slate-900 border border-slate-800 shadow-xl">
+                    <div className="p-4 md:p-8 rounded-[1.5rem] bg-slate-900 border border-slate-800 shadow-xl">
                         <h4 className="text-xs font-black uppercase tracking-widest text-slate-500 mb-8 flex items-center gap-2">
                             <Briefcase size={16} /> 60-Day Roadmap
                         </h4>

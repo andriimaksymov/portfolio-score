@@ -86,14 +86,14 @@ export const Hero = ({ activeTab, setActiveTab, inputValue, setInputValue, isAna
                     Multi-Source Portfolio Analyzer • GitHub + LinkedIn + CV
                 </div>
 
-                <h1 className="text-6xl md:text-9xl font-black mb-10 tracking-tighter leading-[0.85] text-white">
+                <h1 className="text-4xl sm:text-6xl md:text-9xl font-black mb-10 tracking-tighter leading-[0.85] text-white">
                     Your Complete <br />
                     <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-blue-500 to-purple-500">
                         Dev Profile, Scored.
                     </span>
                 </h1>
 
-                <p className="max-w-3xl mx-auto text-lg md:text-xl text-slate-400 mb-16 leading-relaxed font-medium">
+                <p className="max-w-3xl mx-auto text-base md:text-xl text-slate-400 mb-12 md:mb-16 leading-relaxed font-medium px-4">
                     Analyze your GitHub contributions, LinkedIn presence, and resume impact in one place.
                 </p>
 
@@ -119,28 +119,28 @@ export const Hero = ({ activeTab, setActiveTab, inputValue, setInputValue, isAna
                         </div>
                     )}
 
-                    <div className="flex p-1.5 bg-slate-900/80 backdrop-blur-md border border-slate-800 rounded-3xl w-fit mx-auto mb-8 shadow-2xl">
+                    <div className="flex p-1.5 bg-slate-900/80 backdrop-blur-md border border-slate-800 rounded-2xl md:rounded-3xl w-full sm:w-fit mx-auto mb-8 shadow-2xl overflow-x-auto no-scrollbar">
                         {[
-                            { id: 'github', label: 'GitHub Audit', icon: <Github size={14} /> },
-                            { id: 'linkedin', label: 'LinkedIn Audit', icon: <Linkedin size={14} /> },
-                            { id: 'cv', label: 'Resume Scan', icon: <FileText size={14} /> }
+                            { id: 'github', label: 'GitHub', icon: <Github size={14} /> },
+                            { id: 'linkedin', label: 'LinkedIn', icon: <Linkedin size={14} /> },
+                            { id: 'cv', label: 'Resume', icon: <FileText size={14} /> }
                         ].map(tab => (
                             <button
                                 key={tab.id}
                                 onClick={() => { setActiveTab(tab.id); setInputValue(''); }}
                                 className={cn(
-                                    "flex items-center gap-2 px-8 py-3 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all cursor-pointer",
+                                    "flex items-center gap-2 px-4 md:px-8 py-3 rounded-xl md:rounded-2xl text-[10px] md:text-[11px] font-black uppercase tracking-widest transition-all cursor-pointer whitespace-nowrap flex-1 sm:flex-none justify-center",
                                     activeTab === tab.id
                                         ? 'bg-white text-slate-950 shadow-[0_0_30px_rgba(255,255,255,0.1)]'
                                         : 'text-slate-500 hover:text-slate-300'
                                 )}
                             >
-                                {tab.icon} {tab.label}
+                                {tab.icon} <span className="hidden xs:inline">{tab.label}</span><span className="xs:hidden">{tab.id === 'github' ? 'GH' : tab.id === 'linkedin' ? 'LI' : 'CV'}</span>
                             </button>
                         ))}
                     </div>
 
-                    <div className="flex flex-col md:flex-row gap-4 p-3 bg-slate-900/50 border-2 border-slate-800 rounded-[2rem] md:rounded-full shadow-[0_0_50px_rgba(0,0,0,0.5)] focus-within:border-blue-500/30 transition-all duration-700 relative z-10">
+                    <div className="flex flex-col md:flex-row gap-4 p-3 bg-slate-900/50 border-2 border-slate-800 rounded-3xl md:rounded-full shadow-[0_0_50px_rgba(0,0,0,0.5)] focus-within:border-blue-500/30 transition-all duration-700 relative z-10">
                         {renderInputArea()}
                         <Button
                             onClick={() => {
@@ -155,7 +155,10 @@ export const Hero = ({ activeTab, setActiveTab, inputValue, setInputValue, isAna
                             disabled={isAnalyzing || !inputValue}
                             variant="demo"
                             size="xl"
-                            className={cn(isAnalyzing || !inputValue ? 'bg-slate-800 text-slate-500' : '')}
+                            className={cn(
+                                "w-full md:w-auto",
+                                isAnalyzing || !inputValue ? 'bg-slate-800 text-slate-500' : ''
+                            )}
                         >
                             {isAnalyzing ? 'Processing...' : 'Run Analysis'}
                             <ArrowRight size={18} className={isAnalyzing ? 'animate-spin' : ''} />

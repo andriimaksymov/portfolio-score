@@ -9,13 +9,13 @@ interface DashboardPreviewProps {
 
 export const DashboardPreview = ({ activeTab }: DashboardPreviewProps) => {
     return (
-        <section className="max-w-7xl mx-auto px-6 pb-40">
+        <section className="max-w-7xl mx-auto px-4 md:px-6 pb-24 md:pb-40">
             <div className="relative group">
-                <div className="absolute -inset-10 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-indigo-600/10 blur-[100px] rounded-full opacity-50 transition-opacity group-hover:opacity-70" />
+                <div className="absolute -inset-4 md:-inset-10 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-indigo-600/10 blur-[100px] rounded-full opacity-50 transition-opacity group-hover:opacity-70" />
 
-                <div className="relative bg-slate-950 border border-slate-800/80 rounded-[4rem] overflow-hidden shadow-2xl">
+                <div className="relative bg-slate-950 border border-slate-800/80 rounded-[2rem] md:rounded-[4rem] overflow-hidden shadow-2xl">
                     {/* Console Header */}
-                    <div className="border-b border-slate-800 px-10 py-8 flex flex-col md:flex-row items-center justify-between bg-slate-950/80 backdrop-blur-md gap-4">
+                    <div className="border-b border-slate-800 px-6 md:px-10 py-6 md:py-8 flex flex-col md:flex-row items-center justify-between bg-slate-950/80 backdrop-blur-md gap-4">
                         <div className="flex items-center gap-6">
                             <div className="flex -space-x-3">
                                 {[1, 2, 3].map(i => (
@@ -41,7 +41,7 @@ export const DashboardPreview = ({ activeTab }: DashboardPreviewProps) => {
                         </div>
                     </div>
 
-                    <div className="p-8 md:p-16">
+                    <div className="p-6 sm:p-8 md:p-16">
                         {activeTab === 'github' && <RepoAudit />}
                         {activeTab === 'linkedin' && <NetworkMap />}
                         {activeTab === 'cv' && <ATSScan />}

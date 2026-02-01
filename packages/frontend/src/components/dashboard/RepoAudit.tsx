@@ -31,7 +31,7 @@ export const RepoAudit = () => {
                 {/* Main Content */}
                 <div className="md:col-span-8 space-y-8">
                     {/* Executive Summary */}
-                    <div className="p-8 rounded-[2.5rem] bg-gradient-to-br from-indigo-900/20 to-slate-950 border border-indigo-500/20 shadow-2xl relative overflow-hidden">
+                    <div className="p-4 md:p-8 rounded-[1.5rem] bg-gradient-to-br from-indigo-900/20 to-slate-950 border border-indigo-500/20 shadow-2xl relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-5"><Sparkles size={120} /></div>
                         <div className="flex items-center gap-3 mb-6">
                             <Sparkles className="text-indigo-400" size={20} />
@@ -43,7 +43,7 @@ export const RepoAudit = () => {
                     </div>
 
                     {/* Flagship Projects */}
-                    <div className="p-8 rounded-[2.5rem] bg-slate-900 border border-slate-800 shadow-xl">
+                    <div className="p-4 md:p-8 rounded-[1.5rem] bg-slate-900 border border-slate-800 shadow-xl">
                         <div className="flex justify-between items-center mb-10">
                             <h3 className="text-lg font-black uppercase tracking-widest flex items-center gap-3">
                                 <Code size={20} className="text-slate-500" /> Flagship Repositories
@@ -77,7 +77,7 @@ export const RepoAudit = () => {
 
                 {/* Sidebar */}
                 <div className="md:col-span-4 space-y-8">
-                    <div className="p-8 rounded-[2rem] bg-slate-900 border border-slate-800 shadow-xl">
+                    <div className="p-4 md:p-8 rounded-[1.5rem] bg-slate-900 border border-slate-800 shadow-xl">
                         <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-6 flex items-center gap-2">
                             <TrendingUp size={14} /> Career Trajectory
                         </h4>
@@ -88,7 +88,7 @@ export const RepoAudit = () => {
                         </div>
                     </div>
 
-                    <div className="p-8 rounded-[2rem] bg-indigo-600/5 border border-indigo-500/20 relative overflow-hidden">
+                    <div className="p-4 md:p-8 rounded-[1.5rem] bg-indigo-600/5 border border-indigo-500/20 relative overflow-hidden">
                         <div className="flex justify-between items-center mb-6">
                             <h4 className="text-[10px] font-black uppercase tracking-widest text-indigo-400 font-mono">Core Strengths</h4>
                         </div>

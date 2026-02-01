@@ -1,18 +1,8 @@
-import { Github, Settings, Sparkles } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { Github, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export const Navbar = () => {
-    const [isScrolled, setIsScrolled] = useState(false);
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 20);
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
 
     const scrollToSection = (id: string) => {
         const element = document.getElementById(id);
@@ -24,18 +14,18 @@ export const Navbar = () => {
     };
 
     return (
-        <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-slate-950/80 backdrop-blur-xl border-b border-slate-800/50 py-3' : 'bg-transparent py-6'}`}>
-            <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+        <nav className="fixed top-0 w-full z-50 transition-all duration-500 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800/50 py-3">
+            <div className="max-w-7xl mx-auto px-4 md:px-6 flex justify-between items-center">
                 <div
-                    className="flex items-center gap-3 group cursor-pointer"
+                    className="flex items-center gap-2 md:gap-3 group cursor-pointer"
                     onClick={() => navigate('/')}
                 >
-                    <div className="bg-gradient-to-br from-indigo-600 to-purple-600 p-2.5 rounded-xl shadow-lg shadow-indigo-500/20 group-hover:scale-110 transition-transform">
-                        <Sparkles className="w-5 h-5 text-white" />
+                    <div className="bg-gradient-to-br from-indigo-600 to-purple-600 p-2 md:p-2.5 rounded-xl shadow-lg shadow-indigo-500/20 group-hover:scale-110 transition-transform">
+                        <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-white" />
                     </div>
-                    <span className="text-2xl font-black text-white tracking-tighter">DevScore</span>
+                    <span className="text-xl md:text-2xl font-black text-white tracking-tighter">DevScore</span>
                 </div>
-                <div className="hidden md:flex items-center gap-10 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
+                <div className="hidden lg:flex items-center gap-10 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
                     <button
                         onClick={() => scrollToSection('how-it-works')}
                         className="hover:text-indigo-400 transition-colors cursor-pointer"
@@ -63,9 +53,16 @@ export const Navbar = () => {
                         <Github size={14} /> Source
                     </a>
                 </div>
-                <button className="md:hidden p-2 text-slate-400 cursor-pointer hover:text-white transition-colors">
-                    <Settings size={20} />
-                </button>
+                <div className="flex items-center gap-3">
+                    <a
+                        href="https://github.com/andriimaksymov"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="lg:hidden p-2 text-slate-400 hover:text-white transition-colors"
+                    >
+                        <Github size={20} />
+                    </a>
+                </div>
             </div>
         </nav>
     );
