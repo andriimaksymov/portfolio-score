@@ -111,7 +111,7 @@ const GitHubAnalysisDashboard = ({ analysis }: GitHubAnalysisDashboardProps) => 
                         <div key={i} className="p-5 md:p-6 rounded-2xl md:rounded-3xl bg-slate-900 border border-slate-800 shadow-xl group hover:border-indigo-500/30 transition-all flex flex-col">
                             <div className="flex justify-between items-start mb-4">
                                 <div className="p-2 bg-slate-950 rounded-xl border border-slate-800">{stat.icon}</div>
-                                <div className="text-[9px] md:text-[10px] font-black text-slate-600 uppercase tracking-widest">Live Audit</div>
+                                <div className="text-[9px] md:text-[10px] font-black text-slate-600 uppercase tracking-widest">Live Analysis</div>
                             </div>
                             <div className="text-2xl md:text-3xl font-black text-white mb-1">{stat.val}</div>
                             <div className="text-xs text-slate-500 font-bold">{stat.label}</div>
@@ -132,7 +132,7 @@ const GitHubAnalysisDashboard = ({ analysis }: GitHubAnalysisDashboardProps) => 
                             </div>
                             <div className="flex items-center gap-3 mb-6">
                                 <Sparkles className="text-indigo-400" size={20} />
-                                <h3 className="text-sm md:text-lg font-black uppercase tracking-widest">AI Executive Summary</h3>
+                                <h3 className="text-sm md:text-lg font-black uppercase tracking-widest">Technical Summary</h3>
                             </div>
                             <p className="text-slate-300 leading-relaxed text-base md:text-lg italic">
                                 "{analysis.aiInsights?.summary || 'Detailed analysis suggests a strong focus on consistent architectural patterns and modularity.'}"
@@ -199,7 +199,7 @@ const GitHubAnalysisDashboard = ({ analysis }: GitHubAnalysisDashboardProps) => 
                         {/* General Improvements */}
                         <div className="p-4 md:p-8 rounded-[1.5rem] bg-indigo-600/5 border border-indigo-500/20 shadow-xl">
                             <h3 className="text-lg font-black uppercase tracking-widest flex items-center gap-3 mb-8 text-white">
-                                <Zap size={20} className="text-amber-400" /> Strategic Improvements
+                                <Zap size={20} className="text-amber-400" /> Impact Roadmap
                             </h3>
                             <div className="space-y-4">
                                 {analysis.aiInsights?.improvements?.length ? (

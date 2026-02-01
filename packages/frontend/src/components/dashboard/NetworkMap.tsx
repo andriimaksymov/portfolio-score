@@ -16,7 +16,7 @@ export const NetworkMap = () => {
                     <div key={i} className="p-6 rounded-3xl bg-slate-900 border border-slate-800 shadow-xl group hover:border-blue-500/30 transition-all flex flex-col">
                         <div className="flex justify-between items-start mb-4">
                             <div className="p-2 bg-slate-950 rounded-xl border border-slate-800">{stat.icon}</div>
-                            <div className="text-[10px] font-black text-slate-600 uppercase tracking-widest">Live Audit</div>
+                            <div className="text-[10px] font-black text-slate-600 uppercase tracking-widest">Live Analysis</div>
                         </div>
                         <div className="text-3xl font-black text-white mb-1 group-hover:text-blue-400 transition-colors">{stat.val}</div>
                         <div className="text-xs text-slate-500 font-bold mb-4">{stat.label}</div>
@@ -34,7 +34,7 @@ export const NetworkMap = () => {
                     <div className="p-4 md:p-8 rounded-[1.5rem] bg-gradient-to-br from-blue-900/20 to-slate-950 border border-blue-500/20 shadow-2xl relative">
                         <div className="flex items-center gap-3 mb-6">
                             <Sparkles className="text-blue-400" size={20} />
-                            <h3 className="text-lg font-black uppercase tracking-widest text-white">AI Executive Narrative</h3>
+                            <h3 className="text-lg font-black uppercase tracking-widest text-white">Growth Summary</h3>
                         </div>
                         <p className="text-slate-300 leading-relaxed text-lg italic">
                             "A highly specialized Platform Lead with a clear emphasis on <span className="text-white font-bold">distributed systems efficiency</span>. The profile has reached critical mass in the DevOps sector, with significant organic engagement from Staff-level influencers."

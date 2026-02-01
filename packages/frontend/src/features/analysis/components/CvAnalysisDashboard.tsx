@@ -55,7 +55,7 @@ const CvAnalysisDashboard = ({ analysis, text, fileName }: CvAnalysisDashboardPr
                                 </div>
                             </div>
                             <div className="text-center md:text-left">
-                                <h1 className="text-4xl font-black text-white tracking-tight mb-2">CV Compatibility Audit</h1>
+                                <h1 className="text-4xl font-black text-white tracking-tight mb-2">Resume Scanner</h1>
                                 <p className="text-slate-500 font-mono text-[11px] tracking-widest uppercase flex items-center gap-2">
                                     <Layers size={14} className="text-purple-400" /> {fileName || ''}
                                 </p>
@@ -81,7 +81,7 @@ const CvAnalysisDashboard = ({ analysis, text, fileName }: CvAnalysisDashboardPr
                             <div className="absolute top-0 right-0 p-8 opacity-5"><BrainCircuit size={120} /></div>
                             <div className="flex items-center gap-3 mb-6">
                                 <Sparkles className="text-purple-400" size={20} />
-                                <h3 className="text-lg font-black uppercase tracking-widest text-white">AI Content Critique</h3>
+                                <h3 className="text-lg font-black uppercase tracking-widest text-white">Technical Summary</h3>
                             </div>
                             <p className="text-slate-300 leading-relaxed text-lg italic">
                                 "{summary.critique}"
@@ -91,7 +91,7 @@ const CvAnalysisDashboard = ({ analysis, text, fileName }: CvAnalysisDashboardPr
                         {/* Improvements */}
                         <div className="space-y-6">
                             <h3 className="text-lg font-black uppercase tracking-widest flex items-center gap-3 px-4">
-                                <FileSearch size={22} className="text-emerald-500" /> Strategic Enhancements
+                                <FileSearch size={22} className="text-emerald-500" /> Technical Refinements
                             </h3>
                             {improvements.map((imp: any, i: number) => (
                                 <div key={i} className="p-4 md:p-8 rounded-[1.5rem] bg-slate-900 border border-slate-800 group hover:border-purple-500/30 transition-all">
@@ -150,7 +150,7 @@ const CvAnalysisDashboard = ({ analysis, text, fileName }: CvAnalysisDashboardPr
                         {/* Signature */}
                         <div className="p-4 md:p-8 rounded-[1.5rem] bg-indigo-600 border border-indigo-400 shadow-xl shadow-indigo-600/20 text-center group cursor-pointer active:scale-95 transition-all">
                             <FileSearch className="text-white mx-auto mb-4" />
-                            <h4 className="text-sm font-black text-white uppercase tracking-widest mb-2">Premium Unlock</h4>
+                            <h4 className="text-sm font-black text-white uppercase tracking-widest mb-2">Generate PDF Report</h4>
                             <p className="text-[10px] text-indigo-100 mb-6 px-4">Get the AI-reconstructed PDF version of this resume.</p>
                             <button className="w-full py-3 bg-white text-indigo-600 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-100 transition-all">
                                 Download PDF

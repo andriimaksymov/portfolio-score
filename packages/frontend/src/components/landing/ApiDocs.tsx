@@ -74,7 +74,7 @@ export const ApiDocs = () => {
                                 <span className="text-[10px] font-black text-white uppercase tracking-widest">AI Synthesis</span>
                             </div>
                             <p className="text-[11px] text-slate-500 leading-normal">
-                                Dynamic prompt engineering transforms low-level GitHub metadata into high-level career insights.
+                                Context-aware prompt engineering maps low-level activity patterns into high-level technical summaries.
                             </p>
                         </div>
                     </div>

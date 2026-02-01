@@ -11,7 +11,7 @@ export const HowItWorks = () => {
                     How It Works.
                 </h2>
                 <p className="text-slate-500 text-base md:text-lg max-w-2xl mx-auto">
-                    Three steps to get a comprehensive analysis of your developer profile.
+                    Three steps to get a deep analysis of your developer profile.
                 </p>
             </div>
 

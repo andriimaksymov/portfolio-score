@@ -61,7 +61,7 @@ const LinkedInAnalysisDashboard = ({ analysis, profile }: LinkedInAnalysisDashbo
                             )}
                             <div className="text-center md:text-left">
                                 <h1 className="text-4xl font-black text-white tracking-tight mb-2">
-                                    {profile?.fullName ? `${profile.fullName}'s Influence Audit` : 'Network Influence Audit'}
+                                    {profile?.fullName ? `${profile.fullName}'s Network Visibility Report` : 'Network Visibility Report'}
                                 </h1>
                                 <p className="text-slate-500 font-mono text-[11px] tracking-widest uppercase flex items-center gap-2">
                                     <Globe size={14} className="text-blue-400" /> {summary.seniorityGuess}
@@ -86,7 +86,7 @@ const LinkedInAnalysisDashboard = ({ analysis, profile }: LinkedInAnalysisDashbo
                         <div key={i} className="p-5 md:p-6 rounded-2xl md:rounded-3xl bg-slate-900 border border-slate-800 shadow-xl group hover:border-blue-500/30 transition-all flex flex-col">
                             <div className="flex justify-between items-start mb-4">
                                 <div className="p-2 bg-slate-950 rounded-xl border border-slate-800">{stat.icon}</div>
-                                <div className="text-[9px] md:text-[10px] font-black text-slate-600 uppercase tracking-widest">Live Audit</div>
+                                <div className="text-[9px] md:text-[10px] font-black text-slate-600 uppercase tracking-widest">Live Analysis</div>
                             </div>
                             <div className="text-2xl md:text-3xl font-black text-white mb-1">{stat.val}</div>
                             <div className="text-xs text-slate-500 font-bold mb-4">{stat.label}</div>
@@ -115,7 +115,7 @@ const LinkedInAnalysisDashboard = ({ analysis, profile }: LinkedInAnalysisDashbo
                         <div className="p-4 md:p-8 rounded-[1.5rem] bg-gradient-to-br from-blue-900/20 to-slate-950 border border-blue-500/20 shadow-2xl relative">
                             <div className="flex items-center gap-3 mb-6">
                                 <Sparkles className="text-blue-400" size={20} />
-                                <h3 className="text-lg font-black uppercase tracking-widest text-white">AI Executive Narrative</h3>
+                                <h3 className="text-lg font-black uppercase tracking-widest text-white">Growth Summary</h3>
                             </div>
                             <p className="text-slate-300 leading-relaxed text-lg italic">
                                 "{summary.text}"
@@ -125,7 +125,7 @@ const LinkedInAnalysisDashboard = ({ analysis, profile }: LinkedInAnalysisDashbo
                         {/* Recommendations */}
                         <div className="p-4 md:p-8 rounded-[1.5rem] bg-slate-900 border border-slate-800">
                             <h3 className="text-lg font-black uppercase tracking-widest flex items-center gap-3 mb-8">
-                                <Target size={20} className="text-amber-500" /> AI Optimization Strategy
+                                <Target size={20} className="text-amber-500" /> Profile Improvements
                             </h3>
                             <div className="space-y-6">
                                 <div className="p-5 bg-slate-950 border-l-4 border-blue-500 rounded-r-2xl">
