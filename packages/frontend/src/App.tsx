@@ -1,26 +1,27 @@
-import { Routes, Route } from 'react-router-dom';
-import { Box } from '@mui/material';
-import HomePage from './pages/HomePage';
-import LinkedinAnalysisPage from './pages/LinkedinAnalysisPage';
+import { Outlet, Route, Routes } from 'react-router-dom';
 import AnalysisResultsPage from './pages/AnalysisResultsPage';
 import CvAnalysisPage from './pages/CvAnalysisPage';
-import { Navbar } from './shared/components/Navbar';
-import { Footer } from './shared/components/Footer';
+import HomePage from './pages/HomePage';
+import LinkedinAnalysisPage from './pages/LinkedinAnalysisPage';
+
+const MainLayout = () => (
+  <div className="flex flex-col min-h-screen bg-transparent">
+    <main className="flex-grow">
+      <Outlet />
+    </main>
+  </div>
+);
 
 function App() {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: 'transparent' }}>
-      <Navbar />
-      <Box component="main" sx={{ flexGrow: 1 }}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/linkedin/results" element={<LinkedinAnalysisPage />} />
-          <Route path="/cv/results" element={<CvAnalysisPage />} />
-          <Route path="/results" element={<AnalysisResultsPage />} />
-        </Routes>
-      </Box>
-      <Footer />
-    </Box>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route element={<MainLayout />}>
+        <Route path="/analysis/:username" element={<AnalysisResultsPage />} />
+        <Route path="/linkedin" element={<LinkedinAnalysisPage />} />
+        <Route path="/cv" element={<CvAnalysisPage />} />
+      </Route>
+    </Routes>
   );
 }
 

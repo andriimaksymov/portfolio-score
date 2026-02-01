@@ -1,251 +1,124 @@
-# Portfolio Analyzer
+# DevScore (Full-Stack Portfolio Intelligence)
 
-A professional full-stack application that analyzes developer portfolios through GitHub integration, providing structured feedback, scoring, and actionable recommendations.
-
-## 🎯 Purpose
-
-Portfolio Analyzer helps junior to mid-level developers understand their portfolio's strengths and weaknesses, offering data-driven insights to improve their career readiness and market competitiveness.
-
-## ✨ Features
-
-### Current Features
-- **AI-Powered Analysis**: Deep insights into profile reputation using **Google Gemini**
-- **Visual Metrics Visualization**: Radar charts comparing Activity, Quality, Stack, and Consistency
-- **Interactive Action Checklist**: Strategic 30-60 day plan with local progress tracking
-- **GitHub Integration**: Fetch and analyze public profiles with metadata (avatar, bio, followers)
-- **Flagship Project Analysis**: Automated identification of top repos with specific improvement advice
-- **Role Personalization**: Tailored recommendations based on target career path (Frontend, Backend, etc.)
-- **Modern UI**: Polished, glassmorphism dashboard with smooth animations and responsive design
-
-### Planned
-- **Authentication**: GitHub OAuth for persistent user profiles
-- **History Tracking**: Store and compare analysis over time
-- **CV & LinkedIn Analysis**: Parse and match resume data with GitHub presence
-- **Exportable Reports**: Professional PDF and LinkedIn summary generation (Currently handles copy-to-clipboard)
-- **Email Notifications**: Weekly progress updates and recommendations
-
-## 🏗️ Architecture
-
-This project demonstrates production-ready patterns and best practices:
-
-### Frontend (`packages/frontend`)
-- **React 18** with **TypeScript** for type-safe UI development
-- **Vite** for lightning-fast development and optimized builds
-- **TanStack Query** for declarative server state management
-- **Material-UI (MUI)** for comprehensive, customizable components
-- **Feature-based structure** for scalability
-
-### Backend (`packages/backend`)
-- **NestJS** for enterprise-grade Node.js architecture
-- **TypeScript** for end-to-end type safety
-- **Modular design** with clear separation of concerns:
-  - **Analysis Module**: Core business logic for portfolio evaluation
-  - **GitHub Module**: GitHub API integration and data fetching
-  - **Scoring Module**: Pluggable scoring strategies
-- **DTO validation** with class-validator
-- **Environment-based configuration**
-
-### Key Architectural Decisions
-
-1. **Monorepo Structure**: Keeps frontend and backend in sync while maintaining clear boundaries
-2. **Feature-Based Organization**: Code is organized by feature, not by technical layer
-3. **Dependency Injection**: NestJS DI container for testability and maintainability
-4. **Type Safety**: Shared types and DTOs prevent runtime errors
-5. **Separation of Concerns**: Controllers handle HTTP, services contain business logic
-
-```
-┌─────────────────┐
-│   React UI      │
-│  (Frontend)     │
-└────────┬────────┘
-         │ HTTP/REST
-         ▼
-┌─────────────────┐
-│  NestJS API     │
-│  (Backend)      │
-├─────────────────┤
-│ Analysis Module │◄──┐
-│ GitHub Module   │   │ Scoring
-│ Scoring Module  │───┘ Strategies
-└─────────────────┘
-         │
-         ▼
-┌─────────────────┐
-│  GitHub API     │
-└─────────────────┘
-```
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- **Node.js**: >= 18.0.0
-- **pnpm**: >= 8.0.0 (install with `npm install -g pnpm`)
-- **GitHub Personal Access Token**: [Create one here](https://github.com/settings/tokens)
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd portfolio-score
-   ```
-
-2. **Install dependencies**
-   ```bash
-   pnpm install
-   ```
-
-3. **Set up environment variables**
-   ```bash
-   cp .env.example .env
-   # Edit .env and add your GitHub token
-   ```
-
-4. **Start development servers**
-   ```bash
-   # Start both frontend and backend
-   pnpm dev
-
-   # Or start individually
-   pnpm dev:frontend  # Frontend on http://localhost:5173
-   pnpm dev:backend   # Backend on http://localhost:3001
-   ```
-
-## 📦 Project Structure
-
-```
-portfolio-score/
-├── packages/
-│   ├── frontend/          # React + Vite application
-│   │   ├── src/
-│   │   │   ├── features/  # Feature modules (analysis, portfolio)
-│   │   │   ├── shared/    # Reusable components and utilities
-│   │   │   ├── api/       # API client configuration
-│   │   │   └── pages/     # Route components
-│   │   └── README.md
-│   │
-│   └── backend/           # NestJS application
-│       ├── src/
-│       │   ├── modules/   # Feature modules
-│       │   ├── common/    # Shared utilities
-│       │   └── config/    # Configuration
-│       └── README.md
-│
-├── .env.example           # Environment template
-├── package.json           # Root workspace config
-└── README.md             # This file
-```
-
-## 🛠️ Development
-
-### Available Scripts
-
-```bash
-# Development
-pnpm dev              # Start both frontend and backend
-pnpm dev:frontend     # Start frontend only
-pnpm dev:backend      # Start backend only
-
-# Building
-pnpm build            # Build both packages
-
-# Code Quality
-pnpm lint             # Lint all packages
-pnpm format           # Format code with Prettier
-pnpm format:check     # Check formatting
-pnpm type-check       # TypeScript type checking
-```
-
-### Code Quality
-
-This project enforces code quality through:
-- **ESLint**: Catches common errors and enforces best practices
-- **Prettier**: Ensures consistent code formatting
-- **TypeScript**: Provides compile-time type safety
-- **Strict Mode**: Enabled for maximum type safety
-
-## 🧪 Testing
-
-Testing infrastructure is prepared for:
-- **Unit Tests**: Business logic and utilities
-- **Integration Tests**: API endpoints
-- **E2E Tests**: Critical user flows
-
-*Testing implementation is planned for the next phase.*
-
-## 📚 Tech Stack
-
-### Frontend
-- React 18
-- TypeScript
-- Vite
-- TanStack Query (React Query)
-- Material-UI (MUI)
-- React Router v6
-- Axios
-
-### Backend
-- NestJS
-- TypeScript
-- Class Validator
-- Axios
-- dotenv
-
-### Development Tools
-- ESLint
-- Prettier
-- pnpm
-
-## 🗺️ Roadmap
-
-### Phase 1: MVP ✅
-- [x] Project initialization
-- [x] GitHub API integration
-- [x] Basic scoring algorithm
-- [x] Results dashboard UI
-- [x] Portfolio input form
-
-### Phase 2: Enhancement ✅
-- [x] AI-powered analysis (Google Gemini)
-- [x] Visual Metric Charts (Radar charts)
-- [x] Detailed "Flagship Project" recommendations
-- [x] Interactive Action Checklist with persistence
-- [x] AI Follow-up Question feature
-- [x] UI polish and glassmorphism design
-
-### Phase 3: Persistence
-- [ ] Database integration (PostgreSQL + Prisma)
-- [ ] GitHub OAuth authentication
-- [ ] Analysis history
-- [ ] User profiles
-
-### Phase 4: Advanced Features
-- [ ] CV parsing and analysis
-- [ ] LinkedIn integration
-- [ ] Industry benchmarking
-- [ ] Exportable reports (PDF)
-- [ ] Email notifications
-
-### Phase 5: Production
-- [ ] Comprehensive test coverage
-- [ ] Docker containerization
-- [ ] CI/CD pipeline
-- [ ] Deployment guides
-- [ ] Monitoring and logging
-
-## 🤝 Contributing
-
-This is a portfolio project, but suggestions and feedback are welcome! Please open an issue to discuss proposed changes.
-
-## 📄 License
-
-MIT License - feel free to use this project as a reference for your own work.
-
-## 👤 Author
-
-**Andrii Maksymov**
+**DevScore** is a premium full-stack platform that performs deep-tier analysis of technical careers. By integrating **GitHub**, **LinkedIn**, and **Resume (PDF)** data, it provides developers with a 360-degree technical audit, AI-driven strategic roadmaps, and actionable refactor recommendations.
 
 ---
 
-**Note**: This project is designed to showcase production-ready full-stack development skills. It prioritizes clean architecture, type safety, and scalability over quick hacks.
+## 🚀 Vision
+Bridge the gap between engineering history and professional impact. DevScore isn't just a scraper; it's a career intelligence engine that translates complex code patterns and professional experience into a quantifiable technical signature.
+
+## ✨ Core Capabilities
+
+### ⚡️ Multi-Source Analysis
+- **GitHub Audit**: Deep-semantic analysis of commit history, repository quality, and architecture patterns.
+- **LinkedIn Intelligence**: Extracts professional trajectory and market positioning from public profiles.
+- **CV Vector Scanning**: High-fidelity PDF parsing that identifies "Semantic Career Entities" and impact metrics.
+
+### 🧠 Triple-Fallback AI Engine
+- Utilizes a robust fallback architecture (**OpenAI GPT-4o** → **Google Gemini 1.5 Pro** → **Groq Llama 3**) to ensure 99%+ uptime and high-reasoning accuracy.
+- **Project Refactor Advice**: Specific, actionable technical advice for individual repositories.
+- **Strategic Improvements**: A 3-tier roadmap (Immediate Fixes → Working On → Current Strengths).
+
+### 💎 Premium Interface
+- **Modern Dark Aesthetic**: A high-fidelity, glassmorphism UI built with **Tailwind CSS v4**.
+- **Performance First**: Zero-overhead design—migrated from MUI to pure Tailwind for maximum responsiveness and minimal bundle weight.
+- **Dynamic Previews**: Real-time analysis simulations and interactive dashboards.
+
+---
+
+## 🏗️ Architecture
+
+### Frontend (`packages/frontend`)
+- **React 19**: Utilizing the latest concurrent features and hook patterns.
+- **Tailwind CSS v4**: Modern utility-first styling with high-performance CSS-in-JS alternatives.
+- **TanStack Query (v5)**: Robust server state management and caching.
+- **Lucide Icons**: Consistent, lightweight vector iconography.
+
+### Backend (`packages/backend`)
+- **NestJS**: Enterprise-grade modular Node.js framework.
+- **AI Orchestration**: Custom service layer for handling multi-LLM fallbacks and prompt engineering.
+- **PDF Vector Engine**: `pdf-parse` integration for extraction of structured data from CVs.
+- **Cheerio + Scrapers**: Targeted data extraction for LinkedIn profile intelligence.
+
+---
+
+## 🛠️ Tech Stack & Dependencies
+
+### **Frontend**
+- **Core**: React 19, TypeScript, Vite 7
+- **Styling**: Tailwind CSS v4, Lucide React
+- **Data**: TanStack Query, Axios
+- **Routing**: React Router v6
+
+### **Backend**
+- **Core**: NestJS 11, TypeScript
+- **AI**: OpenAI SDK, Google Generative AI, Groq SDK
+- **Parsing**: PDF-Parse, Cheerio
+- **Validation**: Class Validator, Class Transformer
+
+---
+
+## 🚀 Getting Started
+
+### 1. Prerequisites
+- **Node.js**: >= 20.x
+- **pnpm**: >= 8.x
+- **API Keys**: (Required for AI features) `OPENAI_API_KEY`, `GEMINI_API_KEY`, or `GROQ_API_KEY`.
+
+### 2. Installation
+```bash
+git clone https://github.com/andriimaksymov/portfolio-score.git
+cd portfolio-score
+pnpm install
+```
+
+### 3. Environment Configuration
+Create a `.env` file in the root:
+```env
+# AI Keys
+OPENAI_API_KEY=your_key
+GEMINI_API_KEY=your_key
+GROQ_API_KEY=your_key
+
+# GitHub Integration
+GITHUB_API_TOKEN=your_token
+```
+
+### 4. Development
+```bash
+# Start Frontend & Backend concurrently
+pnpm dev
+
+# Accessible at:
+# Frontend: http://localhost:5173
+# API:      http://localhost:3001/api
+```
+
+---
+
+## 🗺️ Roadmap Progress
+
+### **Phase 1: Foundation (GitHub) ✅**
+- [x] GitHub API Semantic Scraper
+- [x] Tech Stack Diversity Scoring
+- [x] Flagship Repository Identification
+
+### **Phase 2: Multi-Source Expansion ✅**
+- [x] **LinkedIn Integration**: Profile intelligence and trajectory analysis.
+- [x] **CV Scanning**: Support for PDF resume parsing and entity extraction.
+- [x] **Strategic UI**: Migration to Tailwind v4 for a premium, lightweight experience.
+
+### **Phase 3: Deep Reasoning ✅**
+- [x] Project-specific Refactor Recommendations
+- [x] Automated Strategic Improvement Roadmaps
+- [x] Multi-LLM Fallback Architecture
+
+---
+
+## 👤 Author
+**Andrii Maksymov**
+- [LinkedIn](https://www.linkedin.com/in/maksymov-andrii/)
+- [GitHub](https://github.com/andriimaksymov)
+
+---
+**Note**: This project is built to demonstrate production-ready full-stack capabilities, focusing on AI orchestration, architectural scalability, and premium UI/UX design.

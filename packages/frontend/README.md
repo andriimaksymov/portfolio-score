@@ -1,217 +1,78 @@
-# Frontend - Sparkfolio
+# DevScore Frontend - Premium Career Intelligence
 
-React + TypeScript frontend for the Sparkfolio application.
+The frontend for **DevScore**, a high-fidelity React application designed for deep-tier technical audit visualization. Migrated from MUI to **Tailwind CSS v4** for maximum performance and a custom, glassmorphism aesthetic.
 
-## Tech Stack
+## 💎 Design Philosophy
+- **Performance First**: Zero-overhead styling using Tailwind CSS v4.
+- **Micro-Interactions**: Smooth transitions and hover states for a premium, application-like feel.
+- **Information Density**: Clean, modular dashboards that present complex AI insights without cognitive overload.
 
-- **React 19** - UI library
-- **TypeScript** - Type safety
-- **Vite** - Build tool and dev server
-- **TanStack Query** - Server state management
-- **Material-UI (MUI)** - Component library
-- **Recharts** - Data visualization (Radar charts)
-- **React Router v6** - Routing
-- **Axios** - HTTP client
+## 🛠 Tech Stack
+- **Framework**: [React 19](https://react.dev/)
+- **Build Tool**: [Vite 7](https://vitejs.dev/)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **State Management**: [TanStack Query v5](https://tanstack.com/query/latest)
+- **Data Fetching**: Axios
 
-## Project Structure
-
+## 📦 Project Structure
 ```
 src/
-├── features/              # Feature-based modules
-│   ├── analysis/          # Analysis results feature
-│   │   ├── components/    # Feature-specific components
-│   │   ├── hooks/         # Feature-specific hooks
-│   │   ├── types/         # Feature-specific types
-│   │   └── api/           # Feature-specific API calls
-│   └── portfolio/         # Portfolio input feature
-│       ├── components/
-│       ├── hooks/
-│       └── types/
-├── shared/                # Shared utilities
-│   ├── components/        # Reusable UI components
-│   ├── hooks/             # Shared hooks
-│   ├── utils/             # Helper functions
-│   └── types/             # Shared types
-├── api/                   # API configuration
-│   ├── client.ts          # Axios instance
-│   └── endpoints.ts       # API endpoints
-├── pages/                 # Route components
-│   └── HomePage.tsx
-├── App.tsx                # Main app component
-│   └── main.tsx           # Entry point
+├── api/                   # Global API client configuration
+├── components/
+│   ├── landing/           # Home page sections (Hero, Navbar, Footer, etc.)
+│   ├── ui/                # Core UI primitives (Button, Card, etc.)
+│   └── dashboard/         # Shared dashboard preview components
+├── features/
+│   └── analysis/          # Core Feature: Analysis Dashboards
+│       ├── api/           # Feature-specific hooks
+│       ├── components/    # GitHub, LinkedIn, and CV Dashboards
+│       ├── types/         # Domain-specific TypeScript interfaces
+│       └── hooks/         # Logic for analysis state management
+├── pages/                 # Full-page route components
+└── lib/                   # Utility functions
 ```
 
-## Getting Started
+## 🚀 Getting Started
 
-### Install Dependencies
-
+### Installation
 ```bash
 pnpm install
 ```
 
 ### Development
-
 ```bash
 pnpm dev
 ```
+Accessible at `http://localhost:5173`.
 
-The app will be available at [http://localhost:5173](http://localhost:5173)
-
-### Build
-
+### Production Build
 ```bash
 pnpm build
 ```
 
-### Preview Production Build
+## 🎨 Styling with Tailwind v4
+The project utilizes the modern Tailwind v4 `@theme` block in `index.css`. 
+- **Custom Accents**: Indigo, Purple, and Slate palettes.
+- **Shadows**: Custom "Premium" shadows for glass cards.
+- **Glassmorphism**: Native backdrop-blur utilities combined with border-slate-800/50.
 
-```bash
-pnpm preview
-```
+## ✨ Key Interactive Features
 
-### Type Checking
+### GitHub Analysis Dashboard
+- **flagship-cards**: Identification of top projects with specific AI-generated refactor advice.
+- **strategic-improvements**: A categorized roadmap for profile enhancement.
 
-```bash
-pnpm type-check
-```
+### LinkedIn Analysis Dashboard
+- **market-positioning**: AI evaluation of profile traction and technical narrative.
 
-### Linting
+### CV / ATS Scan Dashboard
+- **entity-extraction**: Visual breakdown of skills, impact metrics, and missing keywords.
 
-```bash
-pnpm lint
-```
-
-## Development Guidelines
-
-### Component Organization
-
-- **Feature Components**: Place in `features/[feature-name]/components/`
-- **Shared Components**: Place in `shared/components/`
-- **Page Components**: Place in `pages/`
-
-### State Management
-
-- **Server State**: Use TanStack Query (React Query)
-- **Client State**: Use React hooks (useState, useReducer)
-- **Global State**: Context API (when needed)
-
-### API Calls
-
-1. Define endpoints in `api/endpoints.ts`
-2. Create API functions in feature's `api/` folder
-3. Use TanStack Query hooks for data fetching
-
-Example:
-
-```typescript
-// features/analysis/api/analysisApi.ts
-import apiClient from '@/api/client';
-import { API_ENDPOINTS } from '@/api/endpoints';
-
-export const analyzePortfolio = async (username: string) => {
-  const response = await apiClient.post(API_ENDPOINTS.ANALYZE_PORTFOLIO, {
-    username,
-  });
-  return response.data;
-};
-
-// features/analysis/hooks/useAnalyzePortfolio.ts
-import { useMutation } from '@tanstack/react-query';
-import { analyzePortfolio } from '../api/analysisApi';
-
-export const useAnalyzePortfolio = () => {
-  return useMutation({
-    mutationFn: analyzePortfolio,
-  });
-};
-```
-
-### Styling
-
-- Use MUI's `sx` prop for component-specific styles
-- Use MUI theme for consistent design tokens
-- Avoid inline styles
-
-### Path Aliases
-
-Use `@/` prefix for absolute imports:
-
-```typescript
-import apiClient from '@/api/client';
-import Button from '@/shared/components/Button';
-```
-
-## Key Features
-
-### React Query Configuration
-
-- Automatic refetch disabled on window focus
-- 1 retry on failed requests
-- 5-minute stale time
-
-### MUI Theme
-
-- Light mode by default
-- Primary color: `#1976d2`
-- Secondary color: `#dc004e`
-
-### API Proxy
-
-Development server proxies `/api` requests to `http://localhost:3001`
-
-## ✨ Visual Components
-
-### Radar Metrics Chart
-Visualizes the "shape" of a developer's profile across four key dimensions: **Activity**, **Quality**, **Stack**, and **Consistency**. Built with `recharts`.
-
-### Action Checklist
-Interactive, per-user checklist for portfolio improvements. Features metric tags and persistence using `localStorage`.
-
-### Role Selector
-Allows users to specify their target career path (e.g., Frontend, Backend), adjusting AI analysis priorities and recommendations.
-
-### Profile Snapshot
-Identity card showcasing GitHub metadata (avatar, bio, stats) combined with an AI-generated professional summary.
-
-### AI Follow-up Question
-Contextual chat interface allowing users to ask specific questions about their analysis results.
-
-## Environment Variables
-
-Create a `.env.local` file for local development:
-
-```env
-# No environment variables needed yet
-# Future: VITE_API_URL, VITE_GITHUB_CLIENT_ID, etc.
-```
-
-## Scripts Reference
-
-- `pnpm dev` - Start development server
-- `pnpm build` - Build for production
-- `pnpm preview` - Preview production build
-- `pnpm lint` - Run ESLint
-- `pnpm type-check` - Run TypeScript compiler check
-
-## Notes
-
-- This project uses strict TypeScript configuration
-- All components should be functional components with hooks
-- Prefer composition over inheritance
-- Keep components small and focused
-
-## 🗺️ Roadmap & Progress
-
-- [x] Interactive AI-powered analysis
-- [x] Visual metric charts with Recharts
-- [x] Role-based personalization
-- [x] Actionable checklist with local persistence
-- [x] LinkedIn/Export placeholder actions
-- [ ] Add authentication flow (GitHub OAuth)
-- [ ] Implement error boundaries and improved error states
-- [ ] Add loading skeletons for better UX
-- [ ] Create reusable form components
-- [ ] Add unit tests (Vitest)
-- [ ] Add E2E tests (Playwright)
-- [ ] Implement dark mode toggle
-- [ ] Add internationalization (i18n)
+## 🛣 Roadmap Progress
+- [x] Full migration from MUI to Tailwind v4 ✅
+- [x] Multi-source support (GitHub, LinkedIn, CV) ✅
+- [x] Premium dark-mode dashboard designs ✅
+- [x] Responsive tablet and mobile layouts ✅
+- [ ] Interactive Export (PDF) generation
+- [ ] Comparison mode (Benchmarking against peers)
