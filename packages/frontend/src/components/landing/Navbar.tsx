@@ -15,7 +15,7 @@ export const Navbar = () => {
 
     return (
         <nav className="fixed top-0 w-full z-50 transition-all duration-500 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800/50 py-3">
-            <div className="max-w-7xl mx-auto px-4 md:px-6 flex justify-between items-center">
+            <div className="max-w-7xl mx-auto px-4 md:px-6 flex items-center">
                 <div
                     className="flex items-center gap-2 md:gap-3 group cursor-pointer"
                     onClick={() => navigate('/')}
@@ -25,7 +25,7 @@ export const Navbar = () => {
                     </div>
                     <span className="text-xl md:text-2xl font-black text-white tracking-tighter">DevScore</span>
                 </div>
-                <div className="hidden lg:flex items-center gap-10 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
+                <div className="hidden lg:flex items-center gap-10 ml-auto text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
                     <button
                         onClick={() => scrollToSection('how-it-works')}
                         className="hover:text-indigo-400 transition-colors cursor-pointer"
@@ -53,7 +53,7 @@ export const Navbar = () => {
                         <Github size={14} /> Source
                     </a>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex ml-auto items-center gap-3">
                     <a
                         href="https://github.com/andriimaksymov"
                         target="_blank"
