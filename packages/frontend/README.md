@@ -14,6 +14,7 @@ The frontend for **DevScore**, a high-fidelity React application designed for de
 - **Icons**: [Lucide React](https://lucide.dev/)
 - **State Management**: [TanStack Query v5](https://tanstack.com/query/latest)
 - **Data Fetching**: Axios
+- **Testing**: [Vitest](https://vitest.dev/), [React Testing Library](https://testing-library.com/), [Playwright](https://playwright.dev/)
 
 ## 📦 Project Structure
 ```
@@ -30,7 +31,8 @@ src/
 │       ├── types/         # Domain-specific TypeScript interfaces
 │       └── hooks/         # Logic for analysis state management
 ├── pages/                 # Full-page route components
-└── lib/                   # Utility functions
+├── lib/                   # Utility functions
+└── e2e/                   # Playwright E2E tests
 ```
 
 ## 🚀 Getting Started
@@ -46,6 +48,15 @@ pnpm dev
 ```
 Accessible at `http://localhost:5173`.
 
+### Testing
+```bash
+# Unit Tests
+pnpm test
+
+# End-to-End Tests
+pnpm test:e2e
+```
+
 ### Production Build
 ```bash
 pnpm build
@@ -60,19 +71,21 @@ The project utilizes the modern Tailwind v4 `@theme` block in `index.css`.
 ## ✨ Key Interactive Features
 
 ### GitHub Analysis Dashboard
-- **flagship-cards**: Identification of top projects with specific AI-generated refactor advice.
-- **strategic-improvements**: A categorized roadmap for profile enhancement.
+- **Impact Roadmap**: Strategic improvements categorized by effort and impact.
+- **Technical Summary**: High-level executive summary of code quality.
 
 ### LinkedIn Analysis Dashboard
-- **market-positioning**: AI evaluation of profile traction and technical narrative.
+- **Growth Summary**: AI evaluation of profile trajectory and gaps.
+- **Network Visibility**: Insights into professional reach.
 
 ### CV / ATS Scan Dashboard
-- **entity-extraction**: Visual breakdown of skills, impact metrics, and missing keywords.
+- **Technical Summary**: Detailed breakdown of resume strength and missing keywords.
 
 ## 🛣 Roadmap Progress
 - [x] Full migration from MUI to Tailwind v4 ✅
 - [x] Multi-source support (GitHub, LinkedIn, CV) ✅
 - [x] Premium dark-mode dashboard designs ✅
 - [x] Responsive tablet and mobile layouts ✅
+- [x] Comprehensive Test Coverage (Unit + E2E) ✅
 - [ ] Interactive Export (PDF) generation
 - [ ] Comparison mode (Benchmarking against peers)

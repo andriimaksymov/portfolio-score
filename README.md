@@ -16,13 +16,17 @@ Bridge the gap between engineering history and professional impact. DevScore isn
 
 ### 🧠 Triple-Fallback AI Engine
 - Utilizes a robust fallback architecture (**OpenAI GPT-4o** → **Google Gemini 1.5 Pro** → **Groq Llama 3**) to ensure 99%+ uptime and high-reasoning accuracy.
-- **Project Refactor Advice**: Specific, actionable technical advice for individual repositories.
-- **Strategic Improvements**: A 3-tier roadmap (Immediate Fixes → Working On → Current Strengths).
+- **Context-Aware Prompt Engineering**: Maps low-level activity patterns into high-level technical summaries.
+- **Strategic Improvements**: A 3-tier roadmap (Impact Roadmap → Technical Summary → Profile Improvements).
 
 ### 💎 Premium Interface
 - **Modern Dark Aesthetic**: A high-fidelity, glassmorphism UI built with **Tailwind CSS v4**.
 - **Performance First**: Zero-overhead design—migrated from MUI to pure Tailwind for maximum responsiveness and minimal bundle weight.
 - **Dynamic Previews**: Real-time analysis simulations and interactive dashboards.
+
+### 🧪 Comprehensive Testing Strategy
+- **Unit & Integration**: Vitest + React Testing Library for component reliability.
+- **End-to-End**: Playwright for full user flow verification across browsers.
 
 ---
 
@@ -32,13 +36,12 @@ Bridge the gap between engineering history and professional impact. DevScore isn
 - **React 19**: Utilizing the latest concurrent features and hook patterns.
 - **Tailwind CSS v4**: Modern utility-first styling with high-performance CSS-in-JS alternatives.
 - **TanStack Query (v5)**: Robust server state management and caching.
-- **Lucide Icons**: Consistent, lightweight vector iconography.
+- **Vitest & Playwright**: Modern testing infrastructure.
 
 ### Backend (`packages/backend`)
 - **NestJS**: Enterprise-grade modular Node.js framework.
 - **AI Orchestration**: Custom service layer for handling multi-LLM fallbacks and prompt engineering.
 - **PDF Vector Engine**: `pdf-parse` integration for extraction of structured data from CVs.
-- **Cheerio + Scrapers**: Targeted data extraction for LinkedIn profile intelligence.
 
 ---
 
@@ -47,6 +50,7 @@ Bridge the gap between engineering history and professional impact. DevScore isn
 ### **Frontend**
 - **Core**: React 19, TypeScript, Vite 7
 - **Styling**: Tailwind CSS v4, Lucide React
+- **Testing**: Vitest, React Testing Library, Playwright
 - **Data**: TanStack Query, Axios
 - **Routing**: React Router v6
 
@@ -55,6 +59,7 @@ Bridge the gap between engineering history and professional impact. DevScore isn
 - **AI**: OpenAI SDK, Google Generative AI, Groq SDK
 - **Parsing**: PDF-Parse, Cheerio
 - **Validation**: Class Validator, Class Transformer
+- **Testing**: Jest
 
 ---
 
@@ -94,6 +99,15 @@ pnpm dev
 # API:      http://localhost:3001/api
 ```
 
+### 5. Testing
+```bash
+# Unit Tests
+pnpm test
+
+# E2E Tests
+pnpm test:e2e
+```
+
 ---
 
 ## 🗺️ Roadmap Progress
@@ -112,6 +126,10 @@ pnpm dev
 - [x] Project-specific Refactor Recommendations
 - [x] Automated Strategic Improvement Roadmaps
 - [x] Multi-LLM Fallback Architecture
+
+### **Phase 4: Reliability & Polish ✅**
+- [x] **Comprehensive Testing**: Full coverage with Vitest and Playwright.
+- [x] **Content Refinement**: Technical language optimization across all dashboards.
 
 ---
 

@@ -4,13 +4,15 @@ import { Sparkles } from 'lucide-react';
 import client from '@/api/client';
 import CvAnalysisDashboard from '../features/analysis/components/CvAnalysisDashboard';
 
+import type { CvAnalysisResult } from '@/features/analysis/types/analysis.types';
+
 export default function CvAnalysisPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const [analysisState, setAnalysisState] = useState<{
     loading: boolean;
     text: string;
-    analysis: any;
+    analysis: CvAnalysisResult | null;
     error: string | null;
   }>({
     loading: true,
@@ -21,11 +23,18 @@ export default function CvAnalysisPage() {
 
   const file = location.state?.file;
 
+  // Check for file on mount/render
   useEffect(() => {
     if (!file) {
-      setAnalysisState(s => ({ ...s, loading: false, error: 'No file provided' }));
-      return;
+      // Don't set state errors here if we can handle in render, 
+      // but to satisfy linter/logic, we'll mark as error state only if not redirecting.
+      // Better pattern: redirect if no file.
+      navigate('/');
     }
+  }, [file, navigate]);
+
+  useEffect(() => {
+    if (!file) return;
 
     const uploadAndAnalyze = async () => {
       const formData = new FormData();
@@ -42,13 +51,21 @@ export default function CvAnalysisPage() {
           analysis: res.data.analysis,
           error: null
         });
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error(err);
+        let message = 'Failed to analyze CV';
+        if (typeof err === 'object' && err !== null && 'response' in err) {
+          const response = (err as { response?: { data?: { message?: string } } }).response;
+          if (response?.data?.message) {
+            message = response.data.message;
+          }
+        }
+
         setAnalysisState({
           loading: false,
           text: '',
           analysis: null,
-          error: err.response?.data?.message || 'Failed to analyze CV'
+          error: message
         });
       }
     };

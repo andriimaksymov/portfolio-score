@@ -64,3 +64,55 @@ export interface AnalysisResult {
 export interface AnalyzePortfolioRequest {
   username: string;
 }
+
+export interface CvAnalysisResult {
+  summary: {
+    critique: string;
+    professionalLikelihood: number;
+  };
+  improvements: {
+    category: string;
+    suggestion: string;
+    quote: string;
+    rewritten: string;
+  }[];
+  missingKeywords: string[];
+}
+
+export interface LinkedInProfile {
+  fullName: string;
+  avatarUrl?: string;
+}
+
+export interface LinkedInAnalysisResult {
+  summary: {
+    text: string;
+    seniorityGuess: string;
+  };
+  dimensions: {
+    overall: number;
+    profile: { score: number; status: string; insights: string[] };
+    headline: { score: number; status: string; insights: string[] };
+    experience: { score: number; status: string; insights: string[] };
+    skills: { score: number; status: string; insights: string[] };
+    branding: { score: number; status: string; insights: string[] };
+  };
+  recommendations: {
+    headlines: string[];
+    aboutSuggestions: {
+      missing: string;
+      rewritten: string;
+    };
+    experienceEdits: {
+      role: string;
+      company: string;
+      improvements: string[];
+    }[];
+  };
+  missingKeywords: string[];
+  actionPlan: {
+    thisWeek: string[];
+    next30Days: string[];
+    next60Days: string[];
+  };
+}

@@ -4,6 +4,8 @@ import { Sparkles } from 'lucide-react';
 import client from '@/api/client';
 import LinkedInAnalysisDashboard from '../features/analysis/components/LinkedInAnalysisDashboard';
 
+import type { LinkedInAnalysisResult, LinkedInProfile } from '@/features/analysis/types/analysis.types';
+
 export default function LinkedinAnalysisPage() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -12,13 +14,13 @@ export default function LinkedinAnalysisPage() {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<{ analysis: LinkedInAnalysisResult; profile: LinkedInProfile } | null>(null);
   const hasStarted = useRef(false);
 
   useEffect(() => {
     if (!targetUrl) {
-      setError('No LinkedIn URL provided.');
-      setLoading(false);
+      // Redirect instead of setting state synchronously in effect
+      navigate('/');
       return;
     }
 
@@ -30,15 +32,22 @@ export default function LinkedinAnalysisPage() {
         const res = await client.post('/linkedin/analyze-url', { url: targetUrl });
         setData(res.data);
         setLoading(false);
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error(err);
-        setError(err.response?.data?.message || 'Failed to analyze LinkedIn profile.');
+        let message = 'Failed to analyze LinkedIn profile.';
+        if (typeof err === 'object' && err !== null && 'response' in err) {
+          const response = (err as { response?: { data?: { message?: string } } }).response;
+          if (response?.data?.message) {
+            message = response.data.message;
+          }
+        }
+        setError(message);
         setLoading(false);
       }
     };
 
     runAnalysis();
-  }, [targetUrl]);
+  }, [targetUrl, navigate]);
 
   if (loading) {
     return (

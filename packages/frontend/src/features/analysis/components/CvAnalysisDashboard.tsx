@@ -10,8 +10,10 @@ import { useNavigate } from 'react-router-dom';
 import { Navbar } from '@/components/landing/Navbar';
 import { Footer } from '@/components/landing/Footer';
 
+import type { CvAnalysisResult } from '@/features/analysis/types/analysis.types';
+
 interface CvAnalysisDashboardProps {
-    analysis: any;
+    analysis: CvAnalysisResult;
     text: string;
     fileName?: string;
 }
@@ -93,7 +95,7 @@ const CvAnalysisDashboard = ({ analysis, text, fileName }: CvAnalysisDashboardPr
                             <h3 className="text-lg font-black uppercase tracking-widest flex items-center gap-3 px-4">
                                 <FileSearch size={22} className="text-emerald-500" /> Technical Refinements
                             </h3>
-                            {improvements.map((imp: any, i: number) => (
+                            {improvements.map((imp, i) => (
                                 <div key={i} className="p-4 md:p-8 rounded-[1.5rem] bg-slate-900 border border-slate-800 group hover:border-purple-500/30 transition-all">
                                     <div className="flex justify-between items-start mb-4">
                                         <span className="px-3 py-1 bg-purple-500/10 border border-purple-500/20 rounded-full text-[10px] font-black text-purple-400 uppercase tracking-widest">

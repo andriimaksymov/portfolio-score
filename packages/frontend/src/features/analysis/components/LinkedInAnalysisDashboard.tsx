@@ -13,9 +13,11 @@ import { useNavigate } from 'react-router-dom';
 import { Navbar } from '@/components/landing/Navbar';
 import { Footer } from '@/components/landing/Footer';
 
+import type { LinkedInAnalysisResult, LinkedInProfile } from '@/features/analysis/types/analysis.types';
+
 interface LinkedInAnalysisDashboardProps {
-    analysis: any;
-    profile: any;
+    analysis: LinkedInAnalysisResult;
+    profile: LinkedInProfile;
 }
 
 const LinkedInAnalysisDashboard = ({ analysis, profile }: LinkedInAnalysisDashboardProps) => {
@@ -160,7 +162,7 @@ const LinkedInAnalysisDashboard = ({ analysis, profile }: LinkedInAnalysisDashbo
                             </h3>
                             <div className="space-y-8">
                                 {recommendations.experienceEdits?.length ? (
-                                    recommendations.experienceEdits.map((edit: any, i: number) => (
+                                    recommendations.experienceEdits.map((edit, i) => (
                                         <div key={i} className="p-6 rounded-2xl bg-slate-950/50 border border-slate-800 hover:border-blue-500/30 transition-colors">
                                             <div className="flex justify-between items-start mb-4">
                                                 <div>
