@@ -32,10 +32,18 @@ export function configureApp(app: INestApplication): void {
   );
 
   // CORS: only allow the configured frontend origin(s), not every caller.
+  // Origins are matched exactly against the browser's `Origin` header, which
+  // never carries a trailing slash — so strip it. A FRONTEND_URL of
+  // "https://example.com/" would otherwise silently match nothing and surface
+  // as a CORS failure in the browser.
   const frontendUrl =
     configService.get<string>('frontendUrl') ?? 'http://localhost:5173';
+  const allowedOrigins = frontendUrl
+    .split(',')
+    .map((o) => o.trim().replace(/\/+$/, ''))
+    .filter(Boolean);
   app.enableCors({
-    origin: frontendUrl.split(',').map((o) => o.trim()),
+    origin: allowedOrigins,
     credentials: true,
   });
 

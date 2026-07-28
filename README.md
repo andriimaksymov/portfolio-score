@@ -173,7 +173,7 @@ See [docs/API.md](docs/API.md) for request/response examples.
 - `GET /api/reports` / `GET /api/reports/:id` — saved analysis history and shareable snapshots
 - `GET /api/reports/status` — whether history is configured
 
-More detail: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) · [CONTRIBUTING.md](CONTRIBUTING.md) · improvement plan and status: [docs/IMPROVEMENT_PLAN.md](docs/IMPROVEMENT_PLAN.md)
+More detail: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) · [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ## Roadmap
 
